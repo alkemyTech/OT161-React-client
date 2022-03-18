@@ -1,0 +1,6 @@
+{
+	"useTabs": true,
+	"singleQuote": true,
+	"jaxSingleQuote": true,
+	"arrowParens": "avoid"
+}
