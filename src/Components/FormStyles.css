@@ -1,29 +1,52 @@
-.form-container{
-    width: 60%;
-    margin: 15px auto;
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
+.form-container {
+  width: 60%;
+  margin: 15px auto;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
 }
 
-.input-field{
-    padding: 15px 30px;
-    border: 1px solid #c1c1c1;
+.input-field {
+  padding: 15px 30px;
+  border: 1px solid #c1c1c1;
+}
+.input-error {
+  font-size: 10px;
+  color: rgb(155, 0, 0);
+  height: 0;
+  transform: translateY(-14px);
+}
+.input-file {
+  width: fit-content;
+  border: 2px solid #3498db;
+  color: #3498db;
+  background: white;
+  font-weight: 600;
+  padding: 5px 8px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: 0.2s ease-in-out;
+}
+.input-file:hover {
+  background: #3498db;
+  color: white;
+}
+.input-file input[type='file'] {
+  display: none;
+}
+.select-field {
+  padding: 10px;
+  border: 1px solid #c1c1c1;
 }
 
-.select-field{
-    padding: 10px;
-    border: 1px solid #c1c1c1;
+.submit-btn {
+  background-color: #2e86c1;
+  padding: 10px 15px;
+  border: none;
+  color: #fff;
 }
 
-.submit-btn{
-    background-color: #2E86C1;
-    padding: 10px 15px;
-    border: none;
-    color: #fff;
-}
-
-.submit-btn:hover{
-    cursor: pointer;
-    background-color: #3498DB;
+.submit-btn:hover {
+  cursor: pointer;
+  background-color: #3498db;
 }
