@@ -3,9 +3,17 @@ import "../../Components/FormStyles.css";
 import { Formik } from "formik";
 
 const NewsForm = () => {
+  function getBase64(file) {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => resolve(reader.result);
+      reader.onerror = (error) => reject(error);
+    });
+  }
   return (
     <Formik
-      initialValues={{ title: "", content: "", category: "" }}
+      initialValues={{ title: "", content: "", image: "", category: "" }}
       //   validate={(values) => {
       //     const errors = {};
       //     if (!values.email) {
@@ -32,7 +40,7 @@ const NewsForm = () => {
         handleBlur,
         handleSubmit,
         isSubmitting,
-        /* and other goodies */
+        setFieldValue,
       }) => (
         <form onSubmit={handleSubmit}>
           <input
@@ -50,6 +58,17 @@ const NewsForm = () => {
             onBlur={handleBlur}
             value={values.content}
           />
+
+          <input
+            type="file"
+            name="image"
+            accept="image/*"
+            onChange={async (e) => {
+              const imageBase64 = await getBase64(e.target.files[0]);
+              setFieldValue("image", imageBase64);
+            }}
+          />
+
           {/* {errors.password && touched.password && errors.password} */}
           <select
             className="select-field"
