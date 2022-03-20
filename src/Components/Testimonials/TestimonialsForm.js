@@ -1,25 +1,36 @@
-import React, { useState } from 'react';
-import '../FormStyles.css';
+import axios from 'axios';
+import React, { useEffect, useState } from 'react';
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
-const TestimonialForm = ({ method = 'POST' }) => {
-  const [previewImage, setPreviewImage] = useState();
-  const SUPPORTED_FORMATS = /(jpg|png)/g;
+/**
+ *  Testimonial Form
+ * @param {Object} props
+ * @param {Object} [props.patchData] testimonial data
+ * @param {number} props.patchData.id testimonial id
+ * @param {string} props.patchData.name testimonial name
+ * @param {string} props.patchData.image testimonial image
+ * @param {string} props.patchData.description testimonial description
+ */
+function TestimonialForm({ patchData }) {
+  const [previewImage, setPreviewImage] = useState(patchData?.image || null);
+  const [statusForm, setStatusForm] = useState(false);
+  const SUPPORTED_FORMATS = /(jpg|png)/;
   const {
     handleSubmit,
     handleChange,
     handleBlur,
+    values,
     errors,
     setFieldTouched,
     touched,
     setFieldValue,
   } = useFormik({
     initialValues: {
-      name: '',
-      description: '',
-      photo: null,
+      name: patchData?.name || '',
+      description: patchData?.description || '',
+      image: patchData?.image || '',
     },
 
     validationSchema: Yup.object({
@@ -29,19 +40,40 @@ const TestimonialForm = ({ method = 'POST' }) => {
       description: Yup.string().required(
         'La description es un campo requerido'
       ),
-      photo: Yup.mixed()
+      image: Yup.mixed()
         .required('La imagen es requerida')
-        .test('fileType', 'El formato no es correcto', (data) => {
-          if (!SUPPORTED_FORMATS.test(data?.type)) return false;
-          setPreviewImage(URL.createObjectURL(data));
+        .test('fileType', 'El formato no es correcto', (image) => {
+          if (!SUPPORTED_FORMATS.test(image)) return false;
+          setPreviewImage(image);
           return true;
         }),
     }),
-    onSubmit: handleTestimonialFetch,
+    onSubmit: async (testimonial) => {
+      setStatusForm(true);
+      const now = new Date().toISOString();
+      const method = patchData?.id ? 'PATCH' : 'POST';
+      const id = patchData?.id ? patchData.id : '';
+      const url = `https://ongapi.alkemy.org/api/testimonials/${id}`;
+      const data = patchData?.id
+        ? { ...testimonial, updated_at: now }
+        : { ...testimonial, created_at: now };
+      try {
+        const result = await axios({ method, url, data });
+        console.log(result.data);
+      } catch (error) {
+        console.error(error);
+      } finally {
+        setStatusForm(false);
+      }
+    },
   });
-
-  function handleTestimonialFetch(data) {
-    console.log(data);
+  function getBase64(file) {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => resolve(reader.result);
+      reader.onerror = (error) => reject(error);
+    });
   }
 
   return (
@@ -51,11 +83,14 @@ const TestimonialForm = ({ method = 'POST' }) => {
         type="text"
         name="name"
         onChange={handleChange}
+        value={values.name}
         onBlur={handleBlur}
         placeholder="Testimonial Title"
       />
       <span className="input-error">{touched.name && errors.name}</span>
+
       <CKEditor
+        data={values.description}
         editor={ClassicEditor}
         onBlur={() => setFieldTouched('description', true)}
         onChange={(event, editor) => {
@@ -72,13 +107,14 @@ const TestimonialForm = ({ method = 'POST' }) => {
         <input
           type="file"
           accept="image/png, image/jpeg"
-          onChange={(event) => {
-            setFieldTouched('photo', true);
-            setFieldValue('photo', event.target.files[0]);
+          onChange={async (event) => {
+            setFieldTouched('image', true);
+            const imageBase64 = await getBase64(event.target.files[0]);
+            setFieldValue('image', imageBase64);
           }}
         />
       </label>
-      <span className="input-error">{touched.photo && errors.photo}</span>
+      <span className="input-error">{touched.image && errors.image}</span>
       {previewImage && (
         <img
           src={previewImage}
@@ -88,11 +124,11 @@ const TestimonialForm = ({ method = 'POST' }) => {
           style={{ objectFit: 'cover' }}
         />
       )}
-      <button className="submit-btn" type="submit">
-        Send
+      <button className="submit-btn" type="submit" disabled={statusForm}>
+        {patchData?.id ? 'Update' : 'Send'}
       </button>
     </form>
   );
-};
+}
 
 export default TestimonialForm;
