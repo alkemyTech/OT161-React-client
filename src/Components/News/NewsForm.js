@@ -43,22 +43,26 @@ const NewsForm = () => {
         setFieldValue,
       }) => (
         <form onSubmit={handleSubmit}>
+          <label htmlFor="title">Titulo</label>
           <input
             type="text"
             name="title"
             onChange={handleChange}
             onBlur={handleBlur}
             value={values.title}
+            placeholder="Titulo"
           />
           {/* {errors.email && touched.email && errors.email} */}
+          <label htmlFor="content">Contenido</label>
           <input
             type="text"
             name="content"
             onChange={handleChange}
             onBlur={handleBlur}
             value={values.content}
+            placeholder="contenido"
           />
-
+          <label htmlFor="image">Imagen</label>
           <input
             type="file"
             name="image"
@@ -70,6 +74,7 @@ const NewsForm = () => {
           />
 
           {/* {errors.password && touched.password && errors.password} */}
+          <label htmlFor="category">Categoria</label>
           <select
             className="select-field"
             name="category"
