@@ -1,12 +1,19 @@
 import React from "react";
 import styles from "./Dashboard.module.css";
 import { useHistory } from "react-router";
+import PropTypes from "prop-types";
 
 const CardDashboard = ({ title, icon, link }) => {
   const history = useHistory();
 
+  CardDashboard.propTypes = {
+    title: PropTypes.string,
+    icon: PropTypes.string,
+    link: PropTypes.string,
+  };
+
   const linked = () => {
-    history.push(`${link}`);
+    history.push(link);
   };
 
   return (
@@ -26,9 +33,5 @@ const CardDashboard = ({ title, icon, link }) => {
     </div>
   );
 };
-// Para evitar los errores de consola por las props, en las reglas de configuaración de ESLint:
-// "rules": {
-//     "react/prop-types": "off"
-//   }
 
 export default CardDashboard;
