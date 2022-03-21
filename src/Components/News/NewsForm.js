@@ -1,10 +1,12 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import '../../Components/FormStyles.css';
 import { Formik } from 'formik';
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+import axios from 'axios';
 
 const NewsForm = () => {
+	const [categories, setCategories] = useState([]);
 	function getBase64(file) {
 		return new Promise((resolve, reject) => {
 			const reader = new FileReader();
@@ -13,6 +15,28 @@ const NewsForm = () => {
 			reader.onerror = error => reject(error);
 		});
 	}
+
+	const getCategory = async () => {
+		const url = 'https://ongapi.alkemy.org/api/categories';
+
+		try {
+			const res = await axios.get(url);
+			res.data.data.forEach(element => {
+				const category = {
+					id: element.id,
+					name: element.name,
+				};
+				setCategories(categories => [...categories, category]);
+			});
+		} catch (err) {
+			console.log(err);
+		}
+	};
+
+	useEffect(() => {
+		getCategory();
+	}, []);
+
 	return (
 		<Formik
 			initialValues={{ title: '', content: '', image: '', category: '' }}
@@ -89,10 +113,11 @@ const NewsForm = () => {
 						<option value='' disabled>
 							Select category
 						</option>
-						<option value='1'>Demo option 1</option>
-						<option value='2'>Demo option 2</option>
-						<option value='3'>Demo option 3</option>
+						{categories.map((el, index) => (
+							<option key={index}>{el.name}</option>
+						))}
 					</select>
+
 					<button type='submit' disabled={isSubmitting}>
 						Submit
 					</button>
