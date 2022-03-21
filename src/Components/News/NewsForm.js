@@ -1,6 +1,8 @@
-import React, { useState } from 'react';
+import React from 'react';
 import '../../Components/FormStyles.css';
 import { Formik } from 'formik';
+import { CKEditor } from '@ckeditor/ckeditor5-react';
+import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 
 const NewsForm = () => {
 	function getBase64(file) {
@@ -54,13 +56,16 @@ const NewsForm = () => {
 					/>
 					{/* {errors.email && touched.email && errors.email} */}
 					<label htmlFor='content'>Contenido</label>
-					<input
-						type='text'
-						name='content'
-						onChange={handleChange}
-						onBlur={handleBlur}
-						value={values.content}
-						placeholder='contenido'
+					<CKEditor
+						editor={ClassicEditor}
+						data={values.content}
+						onReady={editor => {
+							console.log('El editor esta listo', editor);
+						}}
+						onChange={(event, editor) => {
+							const data = editor.getData();
+							setFieldValue('content', data);
+						}}
 					/>
 					<label htmlFor='image'>Imagen</label>
 					<input
