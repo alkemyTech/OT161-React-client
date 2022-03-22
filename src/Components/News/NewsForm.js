@@ -6,6 +6,7 @@ import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import axios from 'axios';
 import * as Yup from 'yup';
 import PropTypes from 'prop-types';
+import './NewsForm.css';
 
 const NewsForm = ({ news }) => {
 	const [categories, setCategories] = useState([]);
@@ -93,62 +94,63 @@ const NewsForm = ({ news }) => {
 				handleSubmit,
 				setFieldValue,
 			}) => (
-				<form onSubmit={handleSubmit}>
-					<label htmlFor='name'>Titulo</label>
-					<input
-						type='text'
-						name='name'
-						onChange={handleChange}
-						onBlur={handleBlur}
-						value={values.name}
-						placeholder='Titulo'
-					/>
-					{touched.name && errors.name}
-					<label htmlFor='content'>Contenido</label>
-					<CKEditor
-						editor={ClassicEditor}
-						data={values.content}
-						onReady={editor => {
-							console.log('El editor esta listo', editor);
-						}}
-						onChange={(event, editor) => {
-							const data = editor.getData();
-							setFieldValue('content', data);
-						}}
-					/>
-					{touched.content && errors.content}
-					<label htmlFor='image'>Imagen</label>
-					<input
-						type='file'
-						name='image'
-						accept='image/*'
-						onChange={async e => {
-							const imageBase64 = await getBase64(e.target.files[0]);
-							setFieldValue('image', imageBase64);
-						}}
-					/>
-
-					{touched.image && errors.image}
-					<label htmlFor='category_id'>Categoria</label>
-					<select
-						className='select-field'
-						name='category_id'
-						value={values.category_id || ''}
-						onChange={handleChange}
-					>
-						<option value='' disabled>
-							Select category
-						</option>
-						{categories.map((el, index) => (
-							<option key={index} value={el.id}>
-								{el.name}
+				<section className='new-section'>
+					<form className='new-form' onSubmit={handleSubmit}>
+						<label htmlFor='name'>Titulo</label>
+						<input
+							type='text'
+							name='name'
+							onChange={handleChange}
+							onBlur={handleBlur}
+							value={values.name}
+							placeholder='Titulo'
+						/>
+						<span>{touched.name && errors.name}</span>
+						<label htmlFor='content'>Contenido</label>
+						<CKEditor
+							editor={ClassicEditor}
+							data={values.content}
+							onReady={editor => {
+								console.log('El editor esta listo', editor);
+							}}
+							onChange={(event, editor) => {
+								const data = editor.getData();
+								setFieldValue('content', data);
+							}}
+						/>
+						<span>{touched.content && errors.content}</span>
+						<label htmlFor='image'>Imagen</label>
+						<input
+							type='file'
+							name='image'
+							accept='image/*'
+							onChange={async e => {
+								const imageBase64 = await getBase64(e.target.files[0]);
+								setFieldValue('image', imageBase64);
+							}}
+						/>
+						<span>{touched.image && errors.image}</span>
+						<label htmlFor='category_id'>Categoria</label>
+						<select
+							className='select-field'
+							name='category_id'
+							value={values.category_id || ''}
+							onChange={handleChange}
+						>
+							<option value='' disabled>
+								Select category
 							</option>
-						))}
-					</select>
-					{touched.category_id && errors.category_id}
+							{categories.map((el, index) => (
+								<option key={index} value={el.id}>
+									{el.name}
+								</option>
+							))}
+						</select>
+						<span>{touched.category_id && errors.category_id}</span>
 
-					<button type='submit'>Submit</button>
-				</form>
+						<button type='submit'>Submit</button>
+					</form>
+				</section>
 			)}
 		</Formik>
 	);
