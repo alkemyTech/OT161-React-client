@@ -65,13 +65,16 @@ const NewsForm = ({ news }) => {
 				const url = news?.id
 					? `https://ongapi.alkemy.org/api/news${id}`
 					: 'https://ongapi.alkemy.org/api/news';
-				const data = {
+				const newsObj = {
 					name: values.name,
 					content: values.content,
 					image: values.image,
 					category_id: Number.parseInt(values.category_id),
-					created_at: date,
 				};
+
+				const data = news?.id
+					? { ...newsObj, updated_at: date }
+					: { ...newsObj, created_at: date };
 				try {
 					const res = await axios(
 						{ method, url, data },
