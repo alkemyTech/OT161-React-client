@@ -5,8 +5,9 @@ import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import axios from 'axios';
 import * as Yup from 'yup';
+import PropTypes from 'prop-types';
 
-const NewsForm = () => {
+const NewsForm = ({ news }) => {
 	const [categories, setCategories] = useState([]);
 	function getBase64(file) {
 		return new Promise((resolve, reject) => {
@@ -49,22 +50,30 @@ const NewsForm = () => {
 
 	return (
 		<Formik
-			initialValues={{ name: '', content: '', image: '', category_id: '' }}
+			initialValues={{
+				name: news?.name || '',
+				content: news?.content || '',
+				image: news?.image || '',
+				category_id: news?.category_id || '',
+			}}
 			validationSchema={validacionShema}
 			onSubmit={async values => {
-				const URL_POST = 'https://ongapi.alkemy.org/api/news';
 				const date = new Date().toISOString();
-				console.log(values);
+				const method = news?.id ? 'PATCH' : 'POST';
+				const id = news?.id ? `/${news.id}` : '';
+				const url = news?.id
+					? `https://ongapi.alkemy.org/api/news${id}`
+					: 'https://ongapi.alkemy.org/api/news';
+				const data = {
+					name: values.name,
+					content: values.content,
+					image: values.image,
+					category_id: Number.parseInt(values.category_id),
+					created_at: date,
+				};
 				try {
-					const res = await axios.post(
-						URL_POST,
-						JSON.stringify({
-							name: values.name,
-							content: values.content,
-							image: values.image,
-							category_id: Number.parseInt(values.category_id),
-							created_at: date,
-						}),
+					const res = await axios(
+						{ method, url, data },
 						{
 							headers: { 'Content-Type': 'application/json' },
 						}
@@ -82,7 +91,6 @@ const NewsForm = () => {
 				handleChange,
 				handleBlur,
 				handleSubmit,
-				isSubmitting,
 				setFieldValue,
 			}) => (
 				<form onSubmit={handleSubmit}>
@@ -147,3 +155,13 @@ const NewsForm = () => {
 };
 
 export default NewsForm;
+
+NewsForm.propTypes = {
+	news: PropTypes.shape({
+		id: PropTypes.number.isRequired,
+		name: PropTypes.string,
+		content: PropTypes.string,
+		image: PropTypes.string,
+		category_id: PropTypes.number,
+	}),
+};
