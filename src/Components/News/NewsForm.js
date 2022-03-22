@@ -22,13 +22,11 @@ const NewsForm = () => {
 
 		try {
 			const res = await axios.get(url);
-			// console.log(res.data.data);
 			res.data.data.forEach(element => {
 				const category = {
 					id: element.id,
 					name: element.name,
 				};
-				// console.log(category);
 				setCategories(categories => [...categories, category]);
 			});
 		} catch (err) {
@@ -41,24 +39,40 @@ const NewsForm = () => {
 	}, []);
 
 	const validacionShema = Yup.object().shape({
-		title: Yup.string()
+		name: Yup.string()
 			.required('El titulo es requerido')
 			.min(4, 'El titulo debe tener minimo 4 caracteres'),
 		content: Yup.string().required('El contenido es requerido'),
 		image: Yup.mixed().required('La imagen es requerida'),
-		category: Yup.string().required('La categoria es requerida'),
+		category_id: Yup.string().required('La categoria es requerida'),
 	});
 
 	return (
 		<Formik
-			initialValues={{ title: '', content: '', image: '', category: '' }}
+			initialValues={{ name: '', content: '', image: '', category_id: '' }}
 			validationSchema={validacionShema}
-			onSubmit={(values, { setSubmitting }) => {
-				setTimeout(() => {
-					alert(JSON.stringify(values, null, 2));
-					console.log(values);
-					setSubmitting(false);
-				}, 400);
+			onSubmit={async values => {
+				const URL_POST = 'https://ongapi.alkemy.org/api/news';
+				const date = new Date().toISOString();
+				console.log(values);
+				try {
+					const res = await axios.post(
+						URL_POST,
+						JSON.stringify({
+							name: values.name,
+							content: values.content,
+							image: values.image,
+							category_id: Number.parseInt(values.category_id),
+							created_at: date,
+						}),
+						{
+							headers: { 'Content-Type': 'application/json' },
+						}
+					);
+					console.log(res);
+				} catch (err) {
+					console.log('Error', err);
+				}
 			}}
 		>
 			{({
@@ -72,16 +86,16 @@ const NewsForm = () => {
 				setFieldValue,
 			}) => (
 				<form onSubmit={handleSubmit}>
-					<label htmlFor='title'>Titulo</label>
+					<label htmlFor='name'>Titulo</label>
 					<input
 						type='text'
-						name='title'
+						name='name'
 						onChange={handleChange}
 						onBlur={handleBlur}
-						value={values.title}
+						value={values.name}
 						placeholder='Titulo'
 					/>
-					{touched.title && errors.title}
+					{touched.name && errors.name}
 					<label htmlFor='content'>Contenido</label>
 					<CKEditor
 						editor={ClassicEditor}
@@ -107,11 +121,11 @@ const NewsForm = () => {
 					/>
 
 					{touched.image && errors.image}
-					<label htmlFor='category'>Categoria</label>
+					<label htmlFor='category_id'>Categoria</label>
 					<select
 						className='select-field'
-						name='category'
-						value={values.category || ''}
+						name='category_id'
+						value={values.category_id || ''}
 						onChange={handleChange}
 					>
 						<option value='' disabled>
@@ -123,11 +137,9 @@ const NewsForm = () => {
 							</option>
 						))}
 					</select>
-					{touched.category && errors.category}
+					{touched.category_id && errors.category_id}
 
-					<button type='submit' disabled={isSubmitting}>
-						Submit
-					</button>
+					<button type='submit'>Submit</button>
 				</form>
 			)}
 		</Formik>
