@@ -1,36 +1,86 @@
-import React, { useState } from 'react';
+import { Formik, Form, Field, ErrorMessage } from 'formik';
+import React from 'react';
 import '../FormStyles.css';
 
 const RegisterForm = () => {
-    const [initialValues, setInitialValues] = useState({
-        email: '',
-        password: '',
-        confirmPassword: ''
-    })
+	return (
+		<>
+			<Formik
+				initialValues={{
+					email: '',
+					password: '',
+					confirmPassword: '',
+				}}
+				onSubmit={(values, { resetForm }) => {
+					resetForm();
+					console.log(values)
+				}}
+				validate={values => {
+					const errors = {}
+                    // validate email
+					if (!values.email) {
+						errors.email = 'El email es obligatorio';
+					} else if (
+						!/^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/.test(
+							values.email
+						)
+					){
+						errors.email =
+							'Escriba un correo válido';
+					}
 
-    const {email, password, confirmPassword} = initialValues
-    
-    const handleChange = ({target}) => {
-        setInitialValues({
-            ...initialValues,
-            [ target.name ]: target.value
-        });
-    }
+                    // validate password
+                    if(!values.password){
+                        errors.password = 'La contraseña es obligatoria'
+                    } else if (!/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?&#.$($)$-$_])[A-Za-z\d$@$!%*?&#.$($)$-$_]{6,15}$/.test(values.password)){
+                        errors.password = 'La contraseña debe terner mínimo 6 caracteres, contener una mayúscula, un número y un carácter especial'
+                    } 
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        console.log(initialValues);
-        localStorage.setItem('token', 'tokenValueExample')
-    }
+                    if(!values.confirmPassword){
+                        errors.confirmPassword = 'Escriba nuevamente la contraseña'
+                    } else if (!(values.confirmPassword === values.password)){
+                        errors.confirmPassword = 'Ambas contraseñas deben coincidir'
+                    }
+					return errors;
+				}}
+			>
+				{({ errors, touched, handleChange, handleBlur, values }) => (
+					<Form className='form-container'>
+						<Field
+							className='input-field'
+							type='text'
+							name='email'
+							placeholder='Enter email'
+						/>
+                        <ErrorMessage name='email' component={() => (
+                            <div className='error-message-form'>{errors.email}</div>
+                        )} />
+						<Field
+							className='input-field'
+							type='password'
+							name='password'
+							placeholder='Enter password'
+						/>
+                        <ErrorMessage name='password' component={() => (
+                            <div className='error-message-form'>{errors.password}</div>
+                        )} />
+						<Field
+							className='input-field'
+							type='password'
+							name='confirmPassword'
+							placeholder='Confirm password'
+						/>
+                        <ErrorMessage name='confirmPassword' component={() => (
+                            <div className='error-message-form'>{errors.confirmPassword}</div>
+                        )} />
+						<button className='submit-btn' type='submit'>
+							Log In
+						</button>
+					</Form>
+				)}
+			</Formik>
+		</>
+	);
+};
 
-    return (
-        <form className="form-container" onSubmit={handleSubmit}>
-            <input className="input-field" type="text" name="email" value={email} onChange={handleChange} placeholder="Enter email"></input>
-            <input className="input-field" type="password" name="password" value={password} onChange={handleChange} placeholder="Enter password"></input>
-            <input className="input-field" type="password" name="confirmPassword" value={confirmPassword} onChange={handleChange} placeholder="Confirm password"></input>
-            <button className="submit-btn" type="submit">Register</button>
-        </form>
-    );
-}
- 
 export default RegisterForm;
