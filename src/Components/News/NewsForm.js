@@ -4,6 +4,7 @@ import { Formik } from 'formik';
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import axios from 'axios';
+import * as Yup from 'yup';
 
 const NewsForm = () => {
 	const [categories, setCategories] = useState([]);
@@ -21,11 +22,13 @@ const NewsForm = () => {
 
 		try {
 			const res = await axios.get(url);
+			// console.log(res.data.data);
 			res.data.data.forEach(element => {
 				const category = {
 					id: element.id,
 					name: element.name,
 				};
+				// console.log(category);
 				setCategories(categories => [...categories, category]);
 			});
 		} catch (err) {
@@ -37,23 +40,23 @@ const NewsForm = () => {
 		getCategory();
 	}, []);
 
+	const validacionShema = Yup.object().shape({
+		title: Yup.string()
+			.required('El titulo es requerido')
+			.min(4, 'El titulo debe tener minimo 4 caracteres'),
+		content: Yup.string().required('El contenido es requerido'),
+		image: Yup.mixed().required('La imagen es requerida'),
+		category: Yup.string().required('La categoria es requerida'),
+	});
+
 	return (
 		<Formik
 			initialValues={{ title: '', content: '', image: '', category: '' }}
-			//   validate={(values) => {
-			//     const errors = {};
-			//     if (!values.email) {
-			//       errors.email = "Required";
-			//     } else if (
-			//       !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)
-			//     ) {
-			//       errors.email = "Invalid email address";
-			//     }
-			//     return errors;
-			//   }}
+			validationSchema={validacionShema}
 			onSubmit={(values, { setSubmitting }) => {
 				setTimeout(() => {
 					alert(JSON.stringify(values, null, 2));
+					console.log(values);
 					setSubmitting(false);
 				}, 400);
 			}}
@@ -78,7 +81,7 @@ const NewsForm = () => {
 						value={values.title}
 						placeholder='Titulo'
 					/>
-					{/* {errors.email && touched.email && errors.email} */}
+					{touched.title && errors.title}
 					<label htmlFor='content'>Contenido</label>
 					<CKEditor
 						editor={ClassicEditor}
@@ -91,6 +94,7 @@ const NewsForm = () => {
 							setFieldValue('content', data);
 						}}
 					/>
+					{touched.content && errors.content}
 					<label htmlFor='image'>Imagen</label>
 					<input
 						type='file'
@@ -102,7 +106,7 @@ const NewsForm = () => {
 						}}
 					/>
 
-					{/* {errors.password && touched.password && errors.password} */}
+					{touched.image && errors.image}
 					<label htmlFor='category'>Categoria</label>
 					<select
 						className='select-field'
@@ -114,9 +118,12 @@ const NewsForm = () => {
 							Select category
 						</option>
 						{categories.map((el, index) => (
-							<option key={index}>{el.name}</option>
+							<option key={index} value={el.id}>
+								{el.name}
+							</option>
 						))}
 					</select>
+					{touched.category && errors.category}
 
 					<button type='submit' disabled={isSubmitting}>
 						Submit
