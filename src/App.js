@@ -14,6 +14,7 @@ import ToysCampaign from './Campaigns/Toys/ToysCampaign';
 import MembersForm from './Components/Members/MembersForm';
 import ProjectsForm from './Components/Projects/ProjectsForm';
 import OrganizationData from './Components/Organization/OrganizationData';
+import Dashboard from './Components/Dashboard/Dashboard';
 
 function App() {
 	return (
@@ -27,6 +28,7 @@ function App() {
 					<Route path='/backoffice/create-slide' component={SlidesForm} />
 					<Route path='/create-testimonials' component={TestimonialForm} />
 					<Route path='/backoffice/organization' component={OrganizationData} />
+					<Route path='/backoffice' component={Dashboard} />
 					<Route path='/create-user' component={UserForm} />
 					<Route path='/create-member' component={MembersForm} />
 					<Route path='/create-project' component={ProjectsForm} />
