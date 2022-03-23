@@ -5,6 +5,7 @@ import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import * as Yup from 'yup';
 import PropTypes from 'prop-types';
+import axios from 'axios';
 
 const MembersForm = ({ member }) => {
 	const SUPPORTED_FORMATS = /(jpg|png)/;
@@ -48,32 +49,33 @@ const MembersForm = ({ member }) => {
 			validationSchema={validacionShema}
 			onSubmit={async values => {
 				console.log(values);
-				// const date = new Date().toISOString();
-				// const method = news?.id ? 'PATCH' : 'POST';
-				// const id = news?.id ? `/${news.id}` : '';
-				// const url = news?.id
-				// 	? `https://ongapi.alkemy.org/api/news${id}`
-				// 	: 'https://ongapi.alkemy.org/api/news';
-				// const newsObj = {
-				// 	name: values.name,
-				// 	content: values.content,
-				// 	image: values.image,
-				// 	category_id: Number.parseInt(values.category_id),
-				// };
-				// const data = news?.id
-				// 	? { ...newsObj, updated_at: date }
-				// 	: { ...newsObj, created_at: date };
-				// try {
-				// 	const res = await axios(
-				// 		{ method, url, data },
-				// 		{
-				// 			headers: { 'Content-Type': 'application/json' },
-				// 		}
-				// 	);
-				// 	console.log(res);
-				// } catch (err) {
-				// 	console.log('Error', err);
-				// }
+				const date = new Date().toISOString();
+				const method = member?.id ? 'PATCH' : 'POST';
+				const id = member?.id ? `/${member.id}` : '';
+				const url = member?.id
+					? `https://ongapi.alkemy.org/api/members${id}`
+					: 'https://ongapi.alkemy.org/api/members';
+				const memberObj = {
+					name: values.name,
+					image: values.image,
+					descripcion: values.descripcion,
+					facebookUrl: values.facebookUrl,
+					linkedinUrl: values.linkedinUrl,
+				};
+				const data = member?.id
+					? { ...memberObj, updated_at: date }
+					: { ...memberObj, created_at: date };
+				try {
+					const res = await axios(
+						{ method, url, data },
+						{
+							headers: { 'Content-Type': 'application/json' },
+						}
+					);
+					console.log(res);
+				} catch (err) {
+					console.log('Error', err);
+				}
 			}}
 		>
 			{({
