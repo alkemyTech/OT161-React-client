@@ -115,7 +115,7 @@ const MembersForm = ({ member }) => {
 							}}
 						/>
 						<span>{touched.image && errors.image}</span>
-						<label htmlFor='content'>Description</label>
+						<label htmlFor='description'>Description</label>
 						<CKEditor
 							editor={ClassicEditor}
 							data={values.description}
