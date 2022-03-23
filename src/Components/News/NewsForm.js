@@ -8,6 +8,18 @@ import * as Yup from 'yup';
 import PropTypes from 'prop-types';
 import './NewsForm.css';
 
+/**
+ *  news Form
+ * @param {Object} props
+ * @param {Object} [props.patchData] news data
+ * @param {number} props.patchData.id news id
+ * @param {string} props.patchData.name news name
+ * @param {string} props.patchData.content news description
+ * @param {string} props.patchData.image news image
+ * @param {number} props.patchData.category_id news image
+ *
+ */
+
 const NewsForm = ({ news }) => {
 	const [categories, setCategories] = useState([]);
 	function getBase64(file) {
@@ -46,7 +58,7 @@ const NewsForm = ({ news }) => {
 			.min(4, 'El titulo debe tener minimo 4 caracteres'),
 		content: Yup.string().required('El contenido es requerido'),
 		image: Yup.mixed().required('La imagen es requerida'),
-		category_id: Yup.string().required('La categoria es requerida'),
+		category_id: Yup.number().required('La categoria es requerida'),
 	});
 
 	return (
@@ -58,23 +70,15 @@ const NewsForm = ({ news }) => {
 				category_id: news?.category_id || '',
 			}}
 			validationSchema={validacionShema}
-			onSubmit={async values => {
+			onSubmit={async news => {
 				const date = new Date().toISOString();
 				const method = news?.id ? 'PATCH' : 'POST';
 				const id = news?.id ? `/${news.id}` : '';
-				const url = news?.id
-					? `https://ongapi.alkemy.org/api/news${id}`
-					: 'https://ongapi.alkemy.org/api/news';
-				const newsObj = {
-					name: values.name,
-					content: values.content,
-					image: values.image,
-					category_id: Number.parseInt(values.category_id),
-				};
+				const url = `https://ongapi.alkemy.org/api/news${id}`;
 
 				const data = news?.id
-					? { ...newsObj, updated_at: date }
-					: { ...newsObj, created_at: date };
+					? { ...news, updated_at: date }
+					: { ...news, created_at: date };
 				try {
 					const res = await axios(
 						{ method, url, data },
@@ -141,7 +145,7 @@ const NewsForm = ({ news }) => {
 							onChange={handleChange}
 						>
 							<option value='' disabled>
-								Select category
+								Selecciona categoria
 							</option>
 							{categories.map((el, index) => (
 								<option key={index} value={el.id}>
