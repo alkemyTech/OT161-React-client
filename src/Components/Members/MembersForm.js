@@ -7,6 +7,18 @@ import * as Yup from 'yup';
 import PropTypes from 'prop-types';
 import axios from 'axios';
 
+/**
+ *  member Form
+ * @param {Object} props
+ * @param {Object} [props.member] member data
+ * @param {number} props.member.id member id
+ * @param {string} props.member.name member name
+ * @param {string} props.member.image member image
+ * @param {string} props.member.description member description
+ * @param {string} props.member.facebookUrl member image
+ * @param {string} props.member.linkedinUrl member description
+ */
+
 const MembersForm = ({ member }) => {
 	const SUPPORTED_FORMATS = /(jpg|png)/;
 	function getBase64(file) {
@@ -47,24 +59,17 @@ const MembersForm = ({ member }) => {
 				linkedinUrl: member?.linkedinUrl || '',
 			}}
 			validationSchema={validacionShema}
-			onSubmit={async values => {
-				console.log(values);
+			onSubmit={async member => {
+				console.log(member);
 				const date = new Date().toISOString();
 				const method = member?.id ? 'PATCH' : 'POST';
 				const id = member?.id ? `/${member.id}` : '';
 				const url = member?.id
 					? `https://ongapi.alkemy.org/api/members${id}`
 					: 'https://ongapi.alkemy.org/api/members';
-				const memberObj = {
-					name: values.name,
-					image: values.image,
-					descripcion: values.descripcion,
-					facebookUrl: values.facebookUrl,
-					linkedinUrl: values.linkedinUrl,
-				};
 				const data = member?.id
-					? { ...memberObj, updated_at: date }
-					: { ...memberObj, created_at: date };
+					? { ...member, updated_at: date }
+					: { ...member, created_at: date };
 				try {
 					const res = await axios(
 						{ method, url, data },
