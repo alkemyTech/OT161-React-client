@@ -54,7 +54,7 @@ const MembersForm = ({ member }) => {
 			initialValues={{
 				name: member?.name || '',
 				image: member?.image || '',
-				descripcion: member?.descripcion || '',
+				description: member?.description || '',
 				facebookUrl: member?.facebookUrl || '',
 				linkedinUrl: member?.linkedinUrl || '',
 			}}
@@ -115,19 +115,19 @@ const MembersForm = ({ member }) => {
 							}}
 						/>
 						<span>{touched.image && errors.image}</span>
-						<label htmlFor='content'>Descripcion</label>
+						<label htmlFor='content'>Description</label>
 						<CKEditor
 							editor={ClassicEditor}
-							data={values.descripcion}
+							data={values.description}
 							onReady={editor => {
 								console.log('El editor esta listo', editor);
 							}}
 							onChange={(event, editor) => {
 								const data = editor.getData();
-								setFieldValue('descripcion', data);
+								setFieldValue('description', data);
 							}}
 						/>
-						<span>{touched.descripcion && errors.descripcion}</span>
+						<span>{touched.description && errors.description}</span>
 						<label htmlFor='facebookUrl'>Facebook</label>
 						<input
 							type='text'
@@ -165,7 +165,7 @@ MembersForm.propTypes = {
 		id: PropTypes.number.isRequired,
 		name: PropTypes.string,
 		image: PropTypes.string,
-		descripcion: PropTypes.string,
+		description: PropTypes.string,
 		facebookUrl: PropTypes.string,
 		linkedinUrl: PropTypes.string,
 	}),
