@@ -3,10 +3,11 @@ import React from 'react';
 import { Formik } from 'formik';
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
-// import * as Yup from 'yup';
+import * as Yup from 'yup';
 import PropTypes from 'prop-types';
 
 const MembersForm = ({ member }) => {
+	const SUPPORTED_FORMATS = /(jpg|png)/;
 	function getBase64(file) {
 		return new Promise((resolve, reject) => {
 			const reader = new FileReader();
@@ -16,14 +17,24 @@ const MembersForm = ({ member }) => {
 		});
 	}
 
-	// const validacionShema = Yup.object().shape({
-	// 	name: Yup.string()
-	// 		.required('El titulo es requerido')
-	// 		.min(4, 'El titulo debe tener minimo 4 caracteres'),
-	// 	content: Yup.string().required('El contenido es requerido'),
-	// 	image: Yup.mixed().required('La imagen es requerida'),
-	// 	category_id: Yup.string().required('La categoria es requerida'),
-	// });
+	const validacionShema = Yup.object().shape({
+		name: Yup.string()
+			.required('El titulo es requerido')
+			.min(4, 'El titulo debe tener minimo 4 caracteres'),
+		descripcion: Yup.string().required('La descripcion es requerida'),
+		image: Yup.mixed()
+			.required('La imagen es requerida')
+			.test('fileType', 'El formato no es correcto', image => {
+				if (!SUPPORTED_FORMATS.test(image)) return false;
+				return true;
+			}),
+		facebookUrl: Yup.string()
+			.required('El campo Facebook es requerido')
+			.url('La url invalida'),
+		linkedinUrl: Yup.string()
+			.required('El campo linkedin es requerido')
+			.url('La url invalida'),
+	});
 
 	return (
 		<Formik
@@ -34,7 +45,7 @@ const MembersForm = ({ member }) => {
 				facebookUrl: member?.facebookUrl || '',
 				linkedinUrl: member?.linkedinUrl || '',
 			}}
-			// validationSchema={validacionShema}
+			validationSchema={validacionShema}
 			onSubmit={async values => {
 				console.log(values);
 				// const date = new Date().toISOString();
@@ -90,7 +101,7 @@ const MembersForm = ({ member }) => {
 						<input
 							type='file'
 							name='image'
-							accept='image/*'
+							accept='image/png, image/jpeg'
 							onChange={async e => {
 								const imageBase64 = await getBase64(e.target.files[0]);
 								setFieldValue('image', imageBase64);
