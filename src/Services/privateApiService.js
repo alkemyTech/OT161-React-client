@@ -1,15 +1,20 @@
 import axios from 'axios';
+const BASE_URL = 'https://ongapi.alkemy.org/api';
 
-const config = {
-    headers: {
-        Group: 01                //Aqui va el ID del equipo!!
-    }
+/**
+ * Function to generate a POST request
+ * @param {string} route  Endpoint's route. Example: "/testimonials"
+ * @param {string} token Object with the post data
+ * @param {Object} patchData Object with the post data
+ * @returns {Promise}
+ */
+ async function privatePatchRequest(route, token, patchData) {
+	try {
+		const {data} = await axios.patch(`${BASE_URL}${route}`, patchData, {headers: {"Authorization": token}});
+        return data
+	} catch (error) {
+		return error
+	}
 }
 
-const Get = () => {
-    axios.get('https://jsonplaceholder.typicode.com/users', config)
-    .then(res => console.log(res))
-    .catch(err => console.log(err))
-}
-
-export default Get
+export { privatePatchRequest };
