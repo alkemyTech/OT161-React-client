@@ -44,7 +44,6 @@ const SlidesForm = (props) => {
                 name: patchData ? patchData.name : '',
                 order: patchData ? patchData.order : 0,
                 description: patchData ? patchData.description : '',
-                due_date: "???"
             }}
             onSubmit={(values, { setSubmitting }) => handleSubmit(values, setSubmitting)}
             validationSchema={slideSchema}
