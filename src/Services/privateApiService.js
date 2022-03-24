@@ -19,4 +19,15 @@ async function privatePatchRequest(route, token, patchData) {
 	}
 }
 
+export function tokenFromLocalStorage() {
+	const token = window.localStorage.getItem('token');
+	if (!token) {
+		console.log('No token in local storage');
+		return null;
+	}
+	return {
+		Authorization: `Bearer ${token}`,
+	};
+}
+
 export { privatePatchRequest };
