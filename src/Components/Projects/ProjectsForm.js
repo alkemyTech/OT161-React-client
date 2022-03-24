@@ -41,7 +41,6 @@ function ProjectsForm({ patchData }) {
 					setPreviewImage(image);
 					return true;
 				}),
-      	
 		}),
 		onSubmit: fetchProjects,
 	});
@@ -144,5 +143,6 @@ ProjectsForm.propTypes = {
 		name: PropTypes.string,
 		description: PropTypes.string,
 		image: PropTypes.string,
+		due_date: PropTypes.string,
 	}),
 };
