@@ -50,3 +50,8 @@
   cursor: pointer;
   background-color: #3498db;
 }
+
+.preview-img{
+    width: 30vh;
+    align-self: center;
+}
