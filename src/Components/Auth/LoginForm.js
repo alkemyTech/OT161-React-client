@@ -1,33 +1,80 @@
-import React, { useState } from 'react';
+import { Formik, Form, Field, ErrorMessage } from 'formik';
+import React from 'react';
 import '../FormStyles.css';
 
 const LoginForm = () => {
-    const [initialValues, setInitialValues] = useState({
-        email: '',
-        password: ''
-    });
+	return (
+		<>
+			<Formik
+				initialValues={{
+					email: '',
+					password: '',
+				}}
+				onSubmit={(values, { resetForm }) => {
+					resetForm();
+					console.log(values);
+				}}
+				validate={values => {
+					const errors = {};
+					// validate email
+					if (!values.email) {
+						errors.email = 'El email es obligatorio';
+					} else if (
+						!/^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/.test(
+							values.email
+						)
+					) {
+						errors.email = 'Escriba un correo válido';
+					}
 
-    const handleChange = (e) => {
-        if(e.target.name === 'email'){
-            setInitialValues({...initialValues, email: e.target.value})
-        } if(e.target.name === 'password'){
-            setInitialValues({...initialValues, password: e.target.value})
-        }
-    }
-    
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        console.log(initialValues);
-        localStorage.setItem('token', 'tokenValueExample')
-    }
+					// validate password
+					if (!values.password) {
+						errors.password = 'La contraseña es obligatoria';
+					} else if (
+						!/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?&#.$($)$-$_])[A-Za-z\d$@$!%*?&#.$($)$-$_]{6,15}$/.test(
+							values.password
+						)
+					) {
+						errors.password =
+							'La contraseña debe terner mínimo 6 caracteres, contener una mayúscula, un número y un carácter especial';
+					}
+					return errors;
+				}}
+			>
+				{({ errors, touched, handleChange, handleBlur, values }) => (
+					<Form className='form-container'>
+						<Field
+							className='input-field'
+							type='text'
+							name='email'
+							placeholder='Enter email'
+						/>
+						<ErrorMessage
+							name='email'
+							component={() => (
+								<div className='error-message-form'>{errors.email}</div>
+							)}
+						/>
+						<Field
+							className='input-field'
+							type='password'
+							name='password'
+							placeholder='Enter password'
+						/>
+						<ErrorMessage
+							name='password'
+							component={() => (
+								<div className='error-message-form'>{errors.password}</div>
+							)}
+						/>
+						<button className='submit-btn' type='submit'>
+							Log In
+						</button>
+					</Form>
+				)}
+			</Formik>
+		</>
+	);
+};
 
-    return (
-        <form className="form-container" onSubmit={handleSubmit}>
-            <input className="input-field" type="text" name="email" value={initialValues.name} onChange={handleChange} placeholder="Enter email"></input>
-            <input className="input-field" type="text" name="password" value={initialValues.password} onChange={handleChange} placeholder="Enter password"></input>
-            <button className="submit-btn" type="submit">Log In</button>
-        </form>
-    );
-}
- 
 export default LoginForm;
