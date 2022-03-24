@@ -8,12 +8,14 @@ const BASE_URL = 'https://ongapi.alkemy.org/api';
  * @param {Object} patchData Object with the post data
  * @returns {Promise}
  */
- async function privatePatchRequest(route, token, patchData) {
+async function privatePatchRequest(route, token, patchData) {
 	try {
-		const {data} = await axios.patch(`${BASE_URL}${route}`, patchData, {headers: {"Authorization": token}});
-        return data
+		const { data } = await axios.patch(`${BASE_URL}${route}`, patchData, {
+			headers: { Authorization: token },
+		});
+		return data;
 	} catch (error) {
-		return error
+		return error;
 	}
 }
 
