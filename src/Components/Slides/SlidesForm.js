@@ -1,32 +1,101 @@
 import React, { useState } from 'react';
+import { CKEditor } from '@ckeditor/ckeditor5-react';
+import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+import axios from 'axios';
+import * as yup from "yup"
+import { Formik, Form, Field, ErrorMessage } from 'formik'
+import PropTypes from 'prop-types';
 import '../FormStyles.css';
 
-const SlidesForm = () => {
-    const [initialValues, setInitialValues] = useState({
-        name: '',
-        description: ''
-    });
 
-    const handleChange = (e) => {
-        if(e.target.name === 'name'){
-            setInitialValues({...initialValues, name: e.target.value})
-        } if(e.target.name === 'description'){
-            setInitialValues({...initialValues, description: e.target.value})
-        }
-    }
+const SlidesForm = (props) => {
+    const { patchData } = props
+    const [previewImage, setPreviewImage] = useState("")
 
-    const handleSubmit = (e) =>{
-        e.preventDefault();
-        console.log(initialValues);
+    const slideSchema = yup.object().shape({
+        image: yup.string().required("Se requiere una imagen"),
+        name: yup.string().min(4, "El nombre debe contener más de 4 caracteres").required("Se requiere nombre"),
+        order: yup.number().required(),
+        description: yup.string().required("Se requiere una descripción")
+    })
+
+    const handleSubmit = (values, setSubmitting) => {
+        const now = new Date().toISOString()
+        const method = patchData ? "patch" : "post"
+        const id = patchData && patchData.id
+        const url = patchData ?
+            `https://ongapi.alkemy.org/api/slides/${id}`
+            :
+            `https://ongapi.alkemy.org/api/slides`
+        const data = patchData ?
+            { ...values, updated_at: now }
+            :
+            { ...values, created_at: now }
+        axios({ method, url, data })
+            .then(res => console.log(res))
+            .catch(err => console.err(err))
+        setSubmitting(false)
     }
 
     return (
-        <form className="form-container" onSubmit={handleSubmit}>
-            <input className="input-field" type="text" name="name" value={initialValues.name} onChange={handleChange} placeholder="Slide Title"></input>
-            <input className="input-field" type="text" name="description" value={initialValues.description} onChange={handleChange} placeholder="Write the description"></input>
-            <button className="submit-btn" type="submit">Send</button>
-        </form>
+        <Formik
+            initialValues={{
+                image: patchData ? patchData.image : '',
+                name: patchData ? patchData.name : '',
+                order: patchData ? patchData.order : 0,
+                description: patchData ? patchData.description : '',
+            }}
+            onSubmit={(values, { setSubmitting }) => handleSubmit(values, setSubmitting)}
+            validationSchema={slideSchema}
+        >
+            {({ isSubmitting, setFieldValue }) => (
+                <Form className="form-container">
+                    {
+                        previewImage &&
+                        <img className="preview-img" src={previewImage} alt="Slide" />
+                    }
+                    <input className="input-field" type="file" name="image"
+                        onChange={(e) => {
+                            const reader = new FileReader()
+                            const file = e.target.files[0]
+                            reader.onload = () => {
+                                setFieldValue("image", reader.result)
+                                setPreviewImage(reader.result)
+                            }
+                            reader.readAsDataURL(file);
+                        }
+                        } accept="image/png, image/jpeg" required></input>
+                    <ErrorMessage className="input-error" name="image" component="div" />
+                    <Field className="input-field" type="text" name="name"
+                        placeholder="Slide Title" required />
+                    <ErrorMessage className="input-error" name="name" component="div" />
+                    <Field className="input-field" type="number" name="order"
+                        placeholder="Slide Order" required />
+                    <ErrorMessage className="input-error" name="order" component="div" />
+                    <CKEditor
+                        editor={ClassicEditor}
+                        onChange={(event, editor) => {
+                            setFieldValue("description", editor.getData())
+                        }}
+                    />
+                    <ErrorMessage className="input-error" name="description" component="div" />
+                    <button className="submit-btn" type="submit" disabled={isSubmitting}>
+                        Send
+                    </button>
+                </Form>
+            )}
+        </Formik>
     );
 }
- 
+
 export default SlidesForm;
+
+SlidesForm.propTypes = {
+    patchData: PropTypes.shape({
+        id: PropTypes.number.isRequired,
+        order: PropTypes.number.isRequired,
+        name: PropTypes.string,
+        description: PropTypes.string,
+        image: PropTypes.string
+    }),
+};
