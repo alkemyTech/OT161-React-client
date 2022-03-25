@@ -4,27 +4,19 @@ import axios from 'axios';
 
 const HomeForms = () => {
 	const [image, setImage] = useState('');
-
-	// function getBase64(file) {
-	// 	return new Promise((resolve, reject) => {
-	// 	  const reader = new FileReader();
-	// 	  reader.readAsDataURL(file);
-	// 	  reader.onload = () => resolve(reader.result);
-	// 	  reader.onerror = (error) => reject(error);
-	// 	});
-	//   }
+	const [image2, setImage2] = useState('');
+	const [image3, setImage3] = useState('');
 
 	const toBase64 = archivos => {
 		Array.from(archivos).forEach(archivo => {
 			const reader = new FileReader();
 			reader.readAsDataURL(archivo);
 			reader.onload = function () {
-				let auxiliarArr = [];
 				const base64 = reader.result;
-				// console.log(base64);
-				auxiliarArr = base64.split(',');
-				setImage(auxiliarArr[1]);
-				// console.log(auxiliarArr[1]);
+
+				setImage(base64);
+				setImage2(base64);
+				setImage3(base64);
 			};
 		});
 	};
@@ -32,54 +24,106 @@ const HomeForms = () => {
 		<div>
 			<Formik
 				initialValues={{
+					textWelcome: '',
 					textSlide: '',
 					slideImage: '',
+					textSlide2: '',
+					slideImage2: '',
+					textSlide3: '',
+					slideImage3: '',
 				}}
 				validate={valores => {
 					const errors = {};
-					if (!valores.textSlide) {
-						errors.textSlide = (
-							<div>
-								<p>Por favor inserte un título</p>
-							</div>
-						);
+					if (valores.textWelcome.length > 20) {
+						errors.textWelcome =
+							'El texto de bienvenida no puede contener más de 20 caracteres';
 					}
-					// else if (valores.textSlide.length > 20) {
-					// 	errors.textSlide = (
-					// 		<div>
-					// 			<p>El titulo no puede contener más de 20 caracteres</p>
-					// 		</div>
-					// 	);
-					// }
-
-					// if (!valores.slideImage) {
-					// 	errors.slideImage = (
-					// 		<div>
-					// 			<p>Please insert a Image</p>
-					// 		</div>
-					// 	);
-					// }
 
 					return errors;
 				}}
-				onSubmit={async ({ textSlide }, { resetForm }) => {
+				onSubmit={(
+					{ textSlide, textSlide2, textSlide3, textWelcome },
+					{ resetForm }
+				) => {
 					resetForm();
 					// console.log('El choclo de base 64:', image);
-					// console.log(valores);
+
 					console.log({ textSlide, image });
-					try {
-						// no se si esta es la ruta
-						await axios.post('https://ongapi.alkemy.org/api/slides', {
-							name: textSlide,
-							image: image,
-						});
-					} catch (err) {
-						console.log(err);
+					console.log(textSlide2);
+					console.log(textSlide3);
+					console.log(textWelcome);
+
+					const welcomeText = async () => {
+						try {
+							await axios.patch(`https://ongapi.alkemy.org/api/organization`, {
+								welcome_text: textWelcome,
+							});
+						} catch (err) {
+							console.log(err);
+						}
+					};
+					const slideOne = async () => {
+						try {
+							await axios.put(`https://ongapi.alkemy.org/api/slides/995`, {
+								name: textSlide,
+								image: image,
+							});
+						} catch (err) {
+							console.log(err);
+						}
+					};
+					const slideTwo = async () => {
+						try {
+							await axios.put(`https://ongapi.alkemy.org/api/slides/1004`, {
+								name: textSlide2,
+								image: image2,
+							});
+						} catch (err) {
+							console.log(err);
+						}
+					};
+					const slideThree = async () => {
+						try {
+							await axios.put(`https://ongapi.alkemy.org/api/slides/1005`, {
+								name: textSlide3,
+								image: image3,
+							});
+						} catch (err) {
+							console.log(err);
+						}
+					};
+					if (textWelcome) {
+						welcomeText();
+					}
+
+					if (textSlide) {
+						slideOne();
+					}
+					if (textSlide2) {
+						slideTwo();
+					}
+					if (textSlide3) {
+						slideThree();
 					}
 				}}
 			>
 				{({ values, errors, handleSubmit, handleChange, handleBlur }) => (
 					<form className="form-container" onSubmit={handleSubmit}>
+						<h3>Texto de bienvenida</h3>
+						<input
+							className="input-field"
+							type="text"
+							name="textWelcome"
+							value={values.textWelcome}
+							onChange={handleChange}
+							onBlur={handleBlur}
+							placeholder="textWelcome"
+						/>
+						<ErrorMessage
+							name="textWelcome"
+							component={() => <p>{errors.textWelcome}</p>}
+						/>
+						<h3>Slide numero 1</h3>
 						<input
 							className="input-field"
 							type="text"
@@ -89,16 +133,12 @@ const HomeForms = () => {
 							onBlur={handleBlur}
 							placeholder="textSlide"
 						/>
-						<ErrorMessage
-							name="textSlide"
-							component={() => <p>{errors.textSlide}</p>}
-						/>
+
 						<input
 							className="input-field"
 							type="file"
 							id="slideImage"
 							name="slideImage"
-							// value={values.slideImage}
 							onChange={e => toBase64(e.target.files)}
 							placeholder="Write some slideImage"
 						/>
@@ -110,10 +150,60 @@ const HomeForms = () => {
 							/>
 						)}
 
-						<ErrorMessage
-							name="slideImage"
-							component={() => <p>{errors.slideImage}</p>}
+						<h3>Slide numero 2</h3>
+						<input
+							className="input-field"
+							type="text"
+							name="textSlide2"
+							value={values.textSlide2}
+							onChange={handleChange}
+							onBlur={handleBlur}
+							placeholder="textSlide2"
 						/>
+
+						<input
+							className="input-field"
+							type="file"
+							id="slideImage2"
+							name="slideImage2"
+							onChange={e => toBase64(e.target.files)}
+							placeholder="Write some slideImage2"
+						/>
+						{image2 && (
+							<img
+								src={image2}
+								alt="No se pudo mostrar la imagen"
+								style={{ width: '300px' }}
+							/>
+						)}
+
+						<h3>Slide numero 3</h3>
+						<input
+							className="input-field"
+							type="text"
+							name="textSlide3"
+							value={values.textSlide3}
+							onChange={handleChange}
+							onBlur={handleBlur}
+							placeholder="textSlide3"
+						/>
+
+						<input
+							className="input-field"
+							type="file"
+							id="slideImage3"
+							name="slideImage3"
+							onChange={e => toBase64(e.target.files)}
+							placeholder="Write some slideImage3"
+						/>
+						{image3 && (
+							<img
+								src={image3}
+								alt="No se pudo mostrar la imagen"
+								style={{ width: '300px' }}
+							/>
+						)}
+
 						<button className="submit-btn" type="submit">
 							Send
 						</button>

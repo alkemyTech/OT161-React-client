@@ -1,32 +1,132 @@
+import axios from 'axios';
 import React, { useState } from 'react';
-import '../FormStyles.css';
+import { CKEditor } from '@ckeditor/ckeditor5-react';
+import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+import { useFormik } from 'formik';
+import * as Yup from 'yup';
+import PropTypes from 'prop-types';
 
-const ActivitiesForm = () => {
-    const [initialValues, setInitialValues] = useState({
-        name: '',
-        description: ''
-    });
+function ActivitiesForm({ patchData }) {
+	const [previewImage, setPreviewImage] = useState(patchData?.image || null);
+	const [statusForm, setStatusForm] = useState(false);
+	const SUPPORTED_FORMATS = /(jpg|png)/;
+	const {
+		handleSubmit,
+		handleChange,
+		handleBlur,
+		values,
+		errors,
+		setFieldTouched,
+		touched,
+		setFieldValue,
+	} = useFormik({
+		initialValues: {
+			name: patchData?.name || '',
+			description: patchData?.description || '',
+			image: patchData?.image || '',
+		},
 
-    const handleChange = (e) => {
-        if(e.target.name === 'name'){
-            setInitialValues({...initialValues, name: e.target.value})
-        } if(e.target.name === 'description'){
-            setInitialValues({...initialValues, description: e.target.value})
-        }
-    }
+		validationSchema: Yup.object({
+			name: Yup.string()
+				.required('El nombre es un campo requerido')
+				.min(4, 'El nombre deberia contenter mas de 4 caracteres'),
+			image: Yup.mixed()
+				.required('La imagen es requerida')
+				.test('fileType', 'El formato no es correcto', image => {
+					if (!SUPPORTED_FORMATS.test(image)) return false;
+					setPreviewImage(image);
+					return true;
+				}),
+		}),
+		onSubmit: fetchActivities,
+	});
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        console.log(initialValues);
-    }
-    
-    return (
-        <form className="form-container" onSubmit={handleSubmit}>
-            <input className="input-field" type="text" name="name" value={initialValues.name} onChange={handleChange} placeholder="Activity Title"></input>
-            <input className="input-field" type="text" name="description" value={initialValues.description} onChange={handleChange} placeholder="Write some activity description"></input>
-            <button className="submit-btn" type="submit">Send</button>
-        </form>
-    );
+	async function fetchActivities(activities) {
+		setStatusForm(true);
+		const now = new Date().toISOString();
+		const method = patchData?.id ? 'PATCH' : 'POST';
+		const id = patchData?.id ? `/${patchData.id}` : '';
+		const url = `https://ongapi.alkemy.org/api/activities${id}`;
+		const data = patchData?.id
+			? { ...activities, updated_at: now }
+			: { ...activities, created_at: now };
+		try {
+			const result = await axios({ method, url, data });
+			console.log(result.data);
+		} catch (error) {
+			console.error(error);
+		} finally {
+			setStatusForm(false);
+		}
+	}
+	function getBase64(file) {
+		return new Promise((resolve, reject) => {
+			const reader = new FileReader();
+			reader.readAsDataURL(file);
+			reader.onload = () => resolve(reader.result);
+			reader.onerror = error => reject(error);
+		});
+	}
+
+	return (
+		<form className='form-container' onSubmit={handleSubmit}>
+			<input
+				className='input-field'
+				type='text'
+				name='name'
+				onChange={handleChange}
+				value={values.name}
+				onBlur={handleBlur}
+				placeholder='Activities Title'
+			/>
+			<span className='input-error'>{touched.name && errors.name}</span>
+
+			<CKEditor
+				data={values.description}
+				editor={ClassicEditor}
+				onBlur={() => setFieldTouched('description', true)}
+				onChange={(_, editor) => {
+					const data = editor.getData();
+					setFieldValue('description', data);
+				}}
+			/>
+
+			<label className='input-file'>
+				Subir imagen
+				<input
+					type='file'
+					accept='image/png, image/jpeg'
+					onChange={async event => {
+						setFieldTouched('image', true);
+						const imageBase64 = await getBase64(event.target.files[0]);
+						setFieldValue('image', imageBase64);
+					}}
+				/>
+			</label>
+			<span className='input-error'>{touched.image && errors.image}</span>
+			{previewImage && (
+				<img
+					src={previewImage}
+					alt='preview'
+					width={100}
+					height={100}
+					style={{ objectFit: 'cover' }}
+				/>
+			)}
+			<button className='submit-btn' type='submit' disabled={statusForm}>
+				{patchData?.id ? 'Update' : 'Send'}
+			</button>
+		</form>
+	);
 }
- 
+
 export default ActivitiesForm;
+
+ActivitiesForm.propTypes = {
+	patchData: PropTypes.shape({
+		id: PropTypes.number.isRequired,
+		name: PropTypes.string,
+		description: PropTypes.string,
+		image: PropTypes.string,
+	}),
+};

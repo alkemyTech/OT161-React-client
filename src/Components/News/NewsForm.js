@@ -1,41 +1,176 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import '../../Components/FormStyles.css';
+import { Formik } from 'formik';
+import { CKEditor } from '@ckeditor/ckeditor5-react';
+import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+import axios from 'axios';
+import * as Yup from 'yup';
+import PropTypes from 'prop-types';
+import './NewsForm.css';
 
-const NewsForm = () => {
-    const [initialValues, setInitialValues] = useState({
-        title: '',
-        content: '',
-        category: ''
-    });
+/**
+ *  news Form
+ * @param {Object} props
+ * @param {Object} [props.patchData] news data
+ * @param {number} props.patchData.id news id
+ * @param {string} props.patchData.name news name
+ * @param {string} props.patchData.content news description
+ * @param {string} props.patchData.image news image
+ * @param {number} props.patchData.category_id news image
+ *
+ */
 
-    const handleChange = (e) => {
-        if(e.target.name === 'title'){
-            setInitialValues({...initialValues, title: e.target.value})
-        } if(e.target.name === 'content'){
-            setInitialValues({...initialValues, content: e.target.value})
-        } if(e.target.name === 'category') {
-            setInitialValues({...initialValues, category: e.target.value})
-        }
-    }
+const NewsForm = ({ news }) => {
+	const [categories, setCategories] = useState([]);
+	function getBase64(file) {
+		return new Promise((resolve, reject) => {
+			const reader = new FileReader();
+			reader.readAsDataURL(file);
+			reader.onload = () => resolve(reader.result);
+			reader.onerror = error => reject(error);
+		});
+	}
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        console.log(initialValues);
-    }
+	const getCategory = async () => {
+		const url = 'https://ongapi.alkemy.org/api/categories';
 
-    return (
-        <form className="form-container" onSubmit={handleSubmit}>
-            <input className="input-field" type="text" name="title" value={initialValues.title || ''} onChange={handleChange}></input>
-            <input className="input-field" type="text" name="content" value={initialValues.content || ''} onChange={handleChange}></input>
-            <select className="select-field" name="category" value={initialValues.category || ''} onChange={handleChange}>
-                <option value="" disabled>Select category</option>
-                <option value="1">Demo option 1</option>
-                <option value="2">Demo option 2</option>
-                <option value="3">Demo option 3</option>
-            </select>
-            <button className="submit-btn" type="submit">Send</button>
-        </form>
-    );
-}
- 
+		try {
+			const res = await axios.get(url);
+			res.data.data.forEach(element => {
+				const category = {
+					id: element.id,
+					name: element.name,
+				};
+				setCategories(categories => [...categories, category]);
+			});
+		} catch (err) {
+			console.log(err);
+		}
+	};
+
+	useEffect(() => {
+		getCategory();
+	}, []);
+
+	const validacionShema = Yup.object().shape({
+		name: Yup.string()
+			.required('El titulo es requerido')
+			.min(4, 'El titulo debe tener minimo 4 caracteres'),
+		content: Yup.string().required('El contenido es requerido'),
+		image: Yup.mixed().required('La imagen es requerida'),
+		category_id: Yup.number().required('La categoria es requerida'),
+	});
+
+	return (
+		<Formik
+			initialValues={{
+				name: news?.name || '',
+				content: news?.content || '',
+				image: news?.image || '',
+				category_id: news?.category_id || '',
+			}}
+			validationSchema={validacionShema}
+			onSubmit={async news => {
+				const date = new Date().toISOString();
+				const method = news?.id ? 'PATCH' : 'POST';
+				const id = news?.id ? `/${news.id}` : '';
+				const url = `https://ongapi.alkemy.org/api/news${id}`;
+
+				const data = news?.id
+					? { ...news, updated_at: date }
+					: { ...news, created_at: date };
+				try {
+					const res = await axios(
+						{ method, url, data },
+						{
+							headers: { 'Content-Type': 'application/json' },
+						}
+					);
+					console.log(res);
+				} catch (err) {
+					console.log('Error', err);
+				}
+			}}
+		>
+			{({
+				values,
+				errors,
+				touched,
+				handleChange,
+				handleBlur,
+				handleSubmit,
+				setFieldValue,
+			}) => (
+				<section className='new-section'>
+					<form className='new-form' onSubmit={handleSubmit}>
+						<label htmlFor='name'>Titulo</label>
+						<input
+							type='text'
+							name='name'
+							onChange={handleChange}
+							onBlur={handleBlur}
+							value={values.name}
+							placeholder='Titulo'
+						/>
+						<span>{touched.name && errors.name}</span>
+						<label htmlFor='content'>Contenido</label>
+						<CKEditor
+							editor={ClassicEditor}
+							data={values.content}
+							onReady={editor => {
+								console.log('El editor esta listo', editor);
+							}}
+							onChange={(event, editor) => {
+								const data = editor.getData();
+								setFieldValue('content', data);
+							}}
+						/>
+						<span>{touched.content && errors.content}</span>
+						<label htmlFor='image'>Imagen</label>
+						<input
+							type='file'
+							name='image'
+							accept='image/*'
+							onChange={async e => {
+								const imageBase64 = await getBase64(e.target.files[0]);
+								setFieldValue('image', imageBase64);
+							}}
+						/>
+						<span>{touched.image && errors.image}</span>
+						<label htmlFor='category_id'>Categoria</label>
+						<select
+							className='select-field'
+							name='category_id'
+							value={values.category_id || ''}
+							onChange={handleChange}
+						>
+							<option value='' disabled>
+								Selecciona categoria
+							</option>
+							{categories.map((el, index) => (
+								<option key={index} value={el.id}>
+									{el.name}
+								</option>
+							))}
+						</select>
+						<span>{touched.category_id && errors.category_id}</span>
+
+						<button type='submit'>Submit</button>
+					</form>
+				</section>
+			)}
+		</Formik>
+	);
+};
+
 export default NewsForm;
+
+NewsForm.propTypes = {
+	news: PropTypes.shape({
+		id: PropTypes.number.isRequired,
+		name: PropTypes.string,
+		content: PropTypes.string,
+		image: PropTypes.string,
+		category_id: PropTypes.number,
+	}),
+};
