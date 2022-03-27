@@ -49,8 +49,6 @@ const HomeForms = () => {
 					// console.log('El choclo de base 64:', image);
 
 					console.log({ textSlide, image });
-					console.log(textSlide2);
-					console.log(textSlide3);
 					console.log(textWelcome);
 
 					const welcomeText = async () => {
@@ -64,7 +62,7 @@ const HomeForms = () => {
 					};
 					const slideOne = async () => {
 						try {
-							await axios.put(`https://ongapi.alkemy.org/api/slides/995`, {
+							await axios.patch(`https://ongapi.alkemy.org/api/slides/995`, {
 								name: textSlide,
 								image: image,
 							});
@@ -74,7 +72,7 @@ const HomeForms = () => {
 					};
 					const slideTwo = async () => {
 						try {
-							await axios.put(`https://ongapi.alkemy.org/api/slides/1004`, {
+							await axios.patch(`https://ongapi.alkemy.org/api/slides/1004`, {
 								name: textSlide2,
 								image: image2,
 							});
@@ -84,7 +82,7 @@ const HomeForms = () => {
 					};
 					const slideThree = async () => {
 						try {
-							await axios.put(`https://ongapi.alkemy.org/api/slides/1005`, {
+							await axios.patch(`https://ongapi.alkemy.org/api/slides/1005`, {
 								name: textSlide3,
 								image: image3,
 							});
@@ -108,103 +106,88 @@ const HomeForms = () => {
 				}}
 			>
 				{({ values, errors, handleSubmit, handleChange, handleBlur }) => (
-					<form className="form-container" onSubmit={handleSubmit}>
+					<form className='form-container' onSubmit={handleSubmit}>
 						<h3>Texto de bienvenida</h3>
 						<input
-							className="input-field"
-							type="text"
-							name="textWelcome"
+							className='input-field'
+							type='text'
+							name='textWelcome'
 							value={values.textWelcome}
 							onChange={handleChange}
 							onBlur={handleBlur}
-							placeholder="textWelcome"
+							placeholder='textWelcome'
 						/>
 						<ErrorMessage
-							name="textWelcome"
+							name='textWelcome'
 							component={() => <p>{errors.textWelcome}</p>}
 						/>
 						<h3>Slide numero 1</h3>
 						<input
-							className="input-field"
-							type="text"
-							name="textSlide"
+							className='input-field'
+							type='text'
+							name='textSlide'
 							value={values.textSlide}
 							onChange={handleChange}
 							onBlur={handleBlur}
-							placeholder="textSlide"
+							placeholder='textSlide'
 						/>
 
 						<input
-							className="input-field"
-							type="file"
-							id="slideImage"
-							name="slideImage"
+							className='input-field'
+							type='file'
+							id='slideImage'
+							name='slideImage'
 							onChange={e => toBase64(e.target.files)}
-							placeholder="Write some slideImage"
+							placeholder='Write some slideImage'
+						/>
+
+						<h3>Slide numero 2</h3>
+						<input
+							className='input-field'
+							type='text'
+							name='textSlide2'
+							value={values.textSlide2}
+							onChange={handleChange}
+							onBlur={handleBlur}
+							placeholder='textSlide2'
+						/>
+
+						<input
+							className='input-field'
+							type='file'
+							id='slideImage2'
+							name='slideImage2'
+							onChange={e => toBase64(e.target.files)}
+							placeholder='Write some slideImage2'
+						/>
+
+						<h3>Slide numero 3</h3>
+						<input
+							className='input-field'
+							type='text'
+							name='textSlide3'
+							value={values.textSlide3}
+							onChange={handleChange}
+							onBlur={handleBlur}
+							placeholder='textSlide3'
+						/>
+
+						<input
+							className='input-field'
+							type='file'
+							id='slideImage3'
+							name='slideImage3'
+							onChange={e => toBase64(e.target.files)}
+							placeholder='Write some slideImage3'
 						/>
 						{image && (
 							<img
 								src={image}
-								alt="No se pudo mostrar la imagen"
+								alt='No se pudo mostrar la imagen'
 								style={{ width: '300px' }}
 							/>
 						)}
-
-						<h3>Slide numero 2</h3>
-						<input
-							className="input-field"
-							type="text"
-							name="textSlide2"
-							value={values.textSlide2}
-							onChange={handleChange}
-							onBlur={handleBlur}
-							placeholder="textSlide2"
-						/>
-
-						<input
-							className="input-field"
-							type="file"
-							id="slideImage2"
-							name="slideImage2"
-							onChange={e => toBase64(e.target.files)}
-							placeholder="Write some slideImage2"
-						/>
-						{image2 && (
-							<img
-								src={image2}
-								alt="No se pudo mostrar la imagen"
-								style={{ width: '300px' }}
-							/>
-						)}
-
-						<h3>Slide numero 3</h3>
-						<input
-							className="input-field"
-							type="text"
-							name="textSlide3"
-							value={values.textSlide3}
-							onChange={handleChange}
-							onBlur={handleBlur}
-							placeholder="textSlide3"
-						/>
-
-						<input
-							className="input-field"
-							type="file"
-							id="slideImage3"
-							name="slideImage3"
-							onChange={e => toBase64(e.target.files)}
-							placeholder="Write some slideImage3"
-						/>
-						{image3 && (
-							<img
-								src={image3}
-								alt="No se pudo mostrar la imagen"
-								style={{ width: '300px' }}
-							/>
-						)}
-
-						<button className="submit-btn" type="submit">
+						<button className='submit-btn' type='submit'>
 							Send
 						</button>
 					</form>
