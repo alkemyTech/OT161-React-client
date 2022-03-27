@@ -1,15 +1,39 @@
 import axios from 'axios';
+const BASE_URL = 'https://ongapi.alkemy.org/api';
 
-const config = {
-    headers: {
-        Group: 01                //Aqui va el ID del equipo!!
-    }
+/**
+ * Function to generate a POST request
+ * @param {string} route  Endpoint's route. Example: "/testimonials"
+ * @param {Object} patchData Object with the post data
+ * @returns {Promise}
+ */
+async function privatePatchRequest(route, patchData) {
+	const headers = { ...tokenFromLocalStorage() };
+	try {
+		const { data } = await axios.patch(
+			`${BASE_URL}${route}`,
+			patchData,
+			headers
+		);
+		return data;
+	} catch (error) {
+		return error;
+	}
 }
 
-const Get = () => {
-    axios.get('https://jsonplaceholder.typicode.com/users', config)
-    .then(res => console.log(res))
-    .catch(err => console.log(err))
+function tokenFromLocalStorage() {
+	const noTokenValue = {
+		undefined: undefined,
+		null: null,
+	};
+	const token = window.localStorage.getItem('token');
+	if (!token || !noTokenValue[token]) {
+		console.log('No token in local storage');
+		return null;
+	}
+	return {
+		Authorization: `Bearer ${token}`,
+	};
 }
 
-export default Get
+export { privatePatchRequest };
