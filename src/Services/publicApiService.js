@@ -8,11 +8,36 @@ const BASE_URL = 'https://ongapi.alkemy.org/api';
  */
 async function publicPostRequest(route, postData) {
 	try {
-		const {data} = await axios.post(`${BASE_URL}${route}`, postData);
-        return data
+		const { data } = await axios.post(`${BASE_URL}${route}`, postData);
+		return data;
 	} catch (error) {
-		return error
+		return error;
 	}
 }
 
-export { publicPostRequest };
+const getDataMethod = async (sector, id = null, data = null) => {
+	if (sector !== 'auth') {
+		try {
+			const result = await axios.get(
+				id
+					? `https://ongapi.alkemy.org/api/${sector}/${id}`
+					: `https://ongapi.alkemy.org/api/${sector}`,
+				data
+			);
+			console.log(result);
+			return result;
+		} catch (error) {
+			console.error(error);
+		}
+	} else {
+		try {
+			const result = await axios.get(`https://ongapi.alkemy.org/auth/me`, data);
+			console.log(result);
+			return result;
+		} catch (error) {
+			console.error(error);
+		}
+	}
+};
+
+export { publicPostRequest, getDataMethod };
