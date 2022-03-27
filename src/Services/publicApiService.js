@@ -1,15 +1,18 @@
 import axios from 'axios';
+const BASE_URL = 'https://ongapi.alkemy.org/api';
 
-const config = {
-    headers: {
-        Group: 01                //Aqui va el ID del equipo!!
-    }
+/**
+ * Function to generate a POST request
+ * @param {string} route  Endpoint's route. Example: "/testimonials"
+ * @param {Object} postData Object with the post data
+ */
+async function publicPostRequest(route, postData) {
+	try {
+		const {data} = await axios.post(`${BASE_URL}${route}`, postData);
+        return data
+	} catch (error) {
+		return error
+	}
 }
 
-const Get = () => {
-    axios.get('https://jsonplaceholder.typicode.com/users', config)
-    .then(res => console.log(res))
-    .catch(err => console.log(err))
-}
-
-export default Get
+export { publicPostRequest };
