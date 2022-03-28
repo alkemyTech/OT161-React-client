@@ -16,6 +16,7 @@ import ProjectsForm from './Components/Projects/ProjectsForm';
 import OrganizationData from './Components/Organization/OrganizationData';
 import Dashboard from './Components/Dashboard/Dashboard';
 import NewsDetail from './Components/News/Detail/NewsDetail';
+import NewsPage from './Components/News/NewsPage';
 function App() {
 	return (
 		<>
@@ -37,6 +38,7 @@ function App() {
 					<Route path='/school-campaign' component={SchoolCampaign} />
 					<Route path='/toys-campaign' component={ToysCampaign} />
 					<Route path='/novedades/:id' component={NewsDetail} />
+					<Route path='/novedades' component={NewsPage} />
 				</Switch>
 			</BrowserRouter>
 			<div className='App'>
