@@ -42,6 +42,37 @@ export async function privatePatchRequest(route, patchData) {
 	}
 }
 
+const getDataMethodPrivate = async (sector, id = null) => {
+	const headers = { ...tokenFromLocalStorage() };
+	if (sector !== "auth") {
+	  try {
+		const result = await axios.get(
+		  id
+			? `https://ongapi.alkemy.org/api/${sector}/${id}`
+			: `https://ongapi.alkemy.org/api/${sector}`,
+		  headers
+		);
+		console.log(result);
+		return result;
+	  } catch (error) {
+		console.error(error);
+	  }
+	} else {
+	  try {
+		const result = await axios.get(`https://ongapi.alkemy.org/auth/me`, {
+		  headers,
+		});
+		console.log(result);
+		return result;
+	  } catch (error) {
+		console.error(error);
+	  }
+	}
+  };
+  
+  export default getDataMethodPrivate;
+  
+
 function tokenFromLocalStorage() {
 	const noTokenValue = {
 		undefined: undefined,
