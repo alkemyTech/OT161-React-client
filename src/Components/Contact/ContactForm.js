@@ -1,8 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import * as yup from 'yup';
 import { ErrorMessage, Formik, Field } from 'formik';
+import { createContact } from '../../Services/publicApiService';
 
 const ContactForm = () => {
+	const [contactStatus, setContactStatus] = useState("idle")
 	const formSchema = yup.object().shape({
 		email: yup
 			.string()
@@ -28,9 +30,21 @@ const ContactForm = () => {
 					message: '',
 				}}
 				validationSchema={formSchema}
-				onSubmit={({ name, email, phone, message }, { resetForm }) => {
-					resetForm();
-					console.log({ name, email, phone, message });
+				onSubmit={ async ({email, name, phone, message}, { resetForm }) => {
+					setContactStatus("loading")
+					try {
+						const res = await createContact({email, name, message, phone: String(phone)})
+						if(!res.success) return setContactStatus("error")
+						setContactStatus("success")
+						resetForm();
+					} catch (error) {
+						console.error("error")
+						setContactStatus("error")
+					}finally{
+						setTimeout(() => {
+							setContactStatus("idle")
+						}, 2000)
+					}
 				}}
 			>
 				{({ values, handleSubmit, handleChange, handleBlur }) => (
@@ -89,9 +103,11 @@ const ContactForm = () => {
 							className='input-error'
 						/>
 
-						<button className='submit-btn' type='submit'>
+						<button className='submit-btn' type='submit' disabled={contactStatus === "loading"}>
 							Send
 						</button>
+						{contactStatus === "success" && <span>Enviado correctamente</span>}
+						{contactStatus === "error" && <span>Enviado correctamente</span>}
 					</form>
 				)}
 			</Formik>
