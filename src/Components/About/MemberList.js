@@ -1,5 +1,6 @@
+import React from 'react';
 const MemberList = prop => {
-	const { name, image, description, facebookUrl, linkedingUrl } = prop;
+	const { name, image, description, facebookUrl, linkedinUrl } = prop;
 	return (
 		<figure>
 			<img src={image} alt={name} />
@@ -7,7 +8,7 @@ const MemberList = prop => {
 			<p>{description}</p>
 			<ul>
 				<li>{facebookUrl}</li>
-				<li>{linkedingUrl}</li>
+				<li>{linkedinUrl}</li>
 			</ul>
 		</figure>
 	);
