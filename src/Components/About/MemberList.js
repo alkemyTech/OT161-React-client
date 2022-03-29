@@ -5,11 +5,13 @@ const MemberList = prop => {
 		<figure>
 			<img src={image} alt={name} />
 			<h1>{name}</h1>
-			<p>{description}</p>
-			<ul>
-				<li>{facebookUrl}</li>
-				<li>{linkedinUrl}</li>
-			</ul>
+			<div dangerouslySetInnerHTML={{ __html: `<p>${description}</p>` }}></div>
+			<div>
+				<ul>
+					<li>{facebookUrl}</li>
+					<li>{linkedinUrl}</li>
+				</ul>
+			</div>
 		</figure>
 	);
 };
