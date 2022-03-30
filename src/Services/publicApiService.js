@@ -15,6 +15,15 @@ async function publicPostRequest(route, postData) {
 	}
 }
 
+async function publicPatchRequest(route, patchData) {
+	try {
+		const { data } = await axios.patch(`${BASE_URL}${route}`, patchData);
+		return data;
+	} catch (error) {
+		return error;
+	}
+}
+
 const getDataMethod = async (sector, id = null, data = null) => {
 	if (sector !== 'auth') {
 		try {
@@ -40,4 +49,13 @@ const getDataMethod = async (sector, id = null, data = null) => {
 	}
 };
 
-export { publicPostRequest, getDataMethod };
+export async function createSlide(data) {
+	try {
+		const resp = await publicPostRequest('/slides', data);
+		return resp;
+	} catch (error) {
+		return error;
+	}
+}
+
+export { publicPostRequest, publicPatchRequest, getDataMethod };
