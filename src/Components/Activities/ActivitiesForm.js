@@ -4,7 +4,10 @@ import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import PropTypes from 'prop-types';
-import { createActivity, updateActivity } from '../../Services/activityService';
+import {
+	createActivity,
+	updateActivity,
+} from '../../Services/activitiesService';
 
 function ActivitiesForm({ patchData }) {
 	const [previewImage, setPreviewImage] = useState(patchData?.image || null);
