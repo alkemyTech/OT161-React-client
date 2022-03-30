@@ -1,9 +1,9 @@
 import React from 'react';
-// import ShowTitle from '../../shared/ShowTitle';
+import ShowTitle from '../../shared/ShowTitle';
 import PropTypes from 'prop-types';
 
 const Contact = ({
-	title,
+	titleContact,
 	facebook,
 	linkedin,
 	instagram,
@@ -14,8 +14,7 @@ const Contact = ({
 	return (
 		<section>
 			<div>
-				{/* <ShowTitle.js title={title} /> */}
-				Titulo
+				<ShowTitle patchData={{ title: titleContact }} />
 			</div>
 			<div>
 				<ul>
@@ -34,7 +33,7 @@ const Contact = ({
 export default Contact;
 
 Contact.propTypes = {
-	title: PropTypes.string,
+	titleContact: PropTypes.string,
 	address: PropTypes.string,
 	phone: PropTypes.string,
 	linkedin: PropTypes.string,

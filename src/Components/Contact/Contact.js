@@ -18,6 +18,7 @@ const Contact = () => {
 		<div>
 			{dataContact && (
 				<DataContact
+					titleContact='Contacto'
 					key={dataContact.id}
 					address={dataContact.address}
 					phone={dataContact.phone}
