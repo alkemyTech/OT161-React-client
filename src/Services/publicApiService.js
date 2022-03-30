@@ -15,15 +15,6 @@ async function publicPostRequest(route, postData) {
 	}
 }
 
-export async function createContact(data){
-	try {
-		const res = await publicPostRequest("/contacts", data)
-	return res
-	} catch (error) {
-		return error
-	}
-}
-
 const getDataMethod = async (sector, id = null, data = null) => {
 	if (sector !== 'auth') {
 		try {

@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import * as yup from 'yup';
 import { ErrorMessage, Formik, Field } from 'formik';
-import { createContact } from '../../Services/publicApiService';
+import { createContact } from '../../Services/contactService';
 
 const ContactForm = () => {
-	const [contactStatus, setContactStatus] = useState("idle")
+	const [contactStatus, setContactStatus] = useState('idle');
 	const formSchema = yup.object().shape({
 		email: yup
 			.string()
@@ -30,20 +30,25 @@ const ContactForm = () => {
 					message: '',
 				}}
 				validationSchema={formSchema}
-				onSubmit={ async ({email, name, phone, message}, { resetForm }) => {
-					setContactStatus("loading")
+				onSubmit={async ({ email, name, phone, message }, { resetForm }) => {
+					setContactStatus('loading');
 					try {
-						const res = await createContact({email, name, message, phone: String(phone)})
-						if(!res.success) return setContactStatus("error")
-						setContactStatus("success")
+						const res = await createContact({
+							email,
+							name,
+							message,
+							phone: String(phone),
+						});
+						if (!res.success) return setContactStatus('error');
+						setContactStatus('success');
 						resetForm();
 					} catch (error) {
-						console.error("error")
-						setContactStatus("error")
-					}finally{
+						console.error('error');
+						setContactStatus('error');
+					} finally {
 						setTimeout(() => {
-							setContactStatus("idle")
-						}, 2000)
+							setContactStatus('idle');
+						}, 2000);
 					}
 				}}
 			>
@@ -103,11 +108,15 @@ const ContactForm = () => {
 							className='input-error'
 						/>
 
-						<button className='submit-btn' type='submit' disabled={contactStatus === "loading"}>
+						<button
+							className='submit-btn'
+							type='submit'
+							disabled={contactStatus === 'loading'}
+						>
 							Send
 						</button>
-						{contactStatus === "success" && <span>Enviado correctamente</span>}
-						{contactStatus === "error" && <span>Enviado correctamente</span>}
+						{contactStatus === 'success' && <span>Enviado correctamente</span>}
+						{contactStatus === 'error' && <span>Upps! Algo salio mal</span>}
 					</form>
 				)}
 			</Formik>
