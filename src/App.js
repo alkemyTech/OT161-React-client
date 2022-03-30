@@ -16,12 +16,13 @@ import ProjectsForm from './Components/Projects/ProjectsForm';
 import OrganizationData from './Components/Organization/OrganizationData';
 import Dashboard from './Components/Dashboard/Dashboard';
 import NewsDetail from './Components/News/Detail/NewsDetail';
+import Home from './Components/Home/Home';
 function App() {
 	return (
 		<>
 			<BrowserRouter>
 				<Switch>
-					{/* <Route path="/" exact component={} />           Esta ruta debe ser para el Home */}
+					<Route path="/" exact component={Home} />           Esta ruta debe ser para el Home
 					<Route path='/create-activity' component={ActivitiesForm} />
 					<Route path='/create-category' component={CategoriesForm} />
 					<Route path='/backoffice/create-news' component={NewsForm} />
