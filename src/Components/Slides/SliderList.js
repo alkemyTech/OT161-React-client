@@ -3,9 +3,24 @@ import { Link } from 'react-router-dom';
 
 const SliderList = () => {
 	const data = [
-		{ id: 1, image: 'as', name: 'slider 1', createdAt: '2022-15-01' },
-		{ id: 2, image: 'as', name: 'slider 2', createdAt: '2022-15-01' },
-		{ id: 3, image: 'as', name: 'slider 3', createdAt: '2022-15-01' },
+		{
+			id: 1,
+			image: 'https://i.ibb.co/tBTkL9p/askpopo.png',
+			name: 'slider 1',
+			createdAt: '2022-15-01',
+		},
+		{
+			id: 2,
+			image: 'https://i.ibb.co/tBTkL9p/askpopo.png',
+			name: 'slider 2',
+			createdAt: '2022-15-01',
+		},
+		{
+			id: 3,
+			image: 'https://i.ibb.co/tBTkL9p/askpopo.png',
+			name: 'slider 3',
+			createdAt: '2022-15-01',
+		},
 	];
 
 	return (
@@ -33,7 +48,9 @@ const SliderList = () => {
 							<tr key={el.id}>
 								<td>{el.id}</td>
 								<td>{el.name}</td>
-								<td>{el.image}</td>
+								<td>
+									<img src={el.image} alt={el.name} />
+								</td>
 								<td>{el.createdAt}</td>
 								<td>
 									<button>Editar</button>
