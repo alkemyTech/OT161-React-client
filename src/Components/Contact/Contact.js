@@ -19,6 +19,8 @@ const Contact = () => {
 			{dataContact && (
 				<DataContact
 					key={dataContact.id}
+					address={dataContact.address}
+					phone={dataContact.phone}
 					facebook={dataContact.facebook_url}
 					linkedin={dataContact.linkedin_url}
 					instagram={dataContact.instagram_url}

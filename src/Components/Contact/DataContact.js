@@ -22,7 +22,6 @@ const Contact = ({
 					<li>{address}</li>
 					<li>{phone}</li>
 					<li>{facebook}</li>
-					<li>{facebook}</li>
 					<li>{linkedin}</li>
 					<li>{instagram}</li>
 					<li>{twitter}</li>
