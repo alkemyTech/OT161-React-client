@@ -11,7 +11,7 @@ import getDataMethodPrivate, {
 
 const showActivity = async () => {
 	try {
-		const response = await getDataMethodPrivate('activity');
+		const response = await getDataMethodPrivate('activities');
 		return response;
 	} catch (error) {
 		console.log(error);
@@ -22,7 +22,7 @@ const showActivity = async () => {
 
 const createActivity = async data => {
 	try {
-		const response = await privatePostRequest('activity', data);
+		const response = await privatePostRequest('/activities', data);
 		return response;
 	} catch (error) {
 		console.log(error);
