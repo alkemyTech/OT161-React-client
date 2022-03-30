@@ -2,26 +2,70 @@
 
 import getDataMethodPrivate, {
 	privateDeleteRequest,
+	privatePatchRequest,
+	privatePostRequest,
+	privatePutRequest,
 } from './privateApiService';
 
 // metodo get
 
-const getActivity = async () => {
-	const data = await getDataMethodPrivate('activity');
-	return data;
+const showActivity = async () => {
+	try {
+		const response = await getDataMethodPrivate('activity');
+		return response;
+	} catch (error) {
+		console.log(error);
+	}
 };
 
 // metodo post
 
-const postActivity = async data => {};
+const createActivity = async data => {
+	try {
+		const response = await privatePostRequest('activity', data);
+		return response;
+	} catch (error) {
+		console.log(error);
+	}
+};
 
 // metodo path
+
+const updateActivity = async (url, data) => {
+	try {
+		const response = await privatePatchRequest(url, data);
+		return response;
+	} catch (error) {
+		console.log(error);
+	}
+};
 
 // metodo delete
 
 const deleteActivity = async url => {
-	const data = await privateDeleteRequest(url);
-	return data;
+	try {
+		const response = await privateDeleteRequest(url);
+		return response;
+	} catch (error) {
+		console.log(error);
+	}
 };
 
 // metodo put
+
+const updateAllActivity = async (url, data) => {
+	try {
+		const response = await privatePutRequest(url, data);
+		return response;
+	} catch (error) {
+		console.log(error);
+	}
+};
+
+export {
+	showActivity,
+	createActivity,
+	updateActivity,
+	updateAllActivity,
+	deleteActivity,
+};
