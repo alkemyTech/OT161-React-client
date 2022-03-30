@@ -1,6 +1,17 @@
 import axios from 'axios';
 const BASE_URL = 'https://ongapi.alkemy.org/api';
 
+
+export const privatePostRequest = async (route, postData) => {
+    const headers = {...tokenFromLocalStorage()}
+    try {
+        const { data } = await axios.post(`${BASE_URL}${route}`, postData, headers);
+        return data;
+    } catch (error) {
+        return error;
+    }
+}
+
 export const privatePutRequest = async ({ url, putData }) => {
 	const headers = { ...tokenFromLocalStorage() };
 	try {
@@ -41,6 +52,37 @@ export async function privatePatchRequest(route, patchData) {
 		return error;
 	}
 }
+
+const getDataMethodPrivate = async (sector, id = null) => {
+	const headers = { ...tokenFromLocalStorage() };
+	if (sector !== "auth") {
+	  try {
+		const result = await axios.get(
+		  id
+			? `https://ongapi.alkemy.org/api/${sector}/${id}`
+			: `https://ongapi.alkemy.org/api/${sector}`,
+		  headers
+		);
+		console.log(result);
+		return result;
+	  } catch (error) {
+		console.error(error);
+	  }
+	} else {
+	  try {
+		const result = await axios.get(`https://ongapi.alkemy.org/auth/me`, {
+		  headers,
+		});
+		console.log(result);
+		return result;
+	  } catch (error) {
+		console.error(error);
+	  }
+	}
+  };
+  
+  export default getDataMethodPrivate;
+  
 
 function tokenFromLocalStorage() {
 	const noTokenValue = {
