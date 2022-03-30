@@ -38,29 +38,37 @@ const NewsList = () => {
 					Crear novedad
 				</Link>
 			</header>
-			<ul className='list-container'>
+			<table className='table-container'>
+				<tr>
+					<th>Imagen</th>
+					<th>Titulo</th>
+					<th>Creado el</th>
+					<th>Opciones</th>
+				</tr>
 				{newsMock.length > 0 ? (
 					newsMock.map(element => {
 						return (
-							<li className='card-info' key={element.id}>
-								<img src={element.image} alt={element.name} />
-								<span>{element.name}</span>
-								<span>{element.createdAt}</span>
-								<span className='options'>
+							<tr key={element.id}>
+								<td>
+									<img src={element.image} alt={element.name} />
+								</td>
+								<td className='title'>{element.name}</td>
+								<td>{element.createdAt}</td>
+								<td className='options'>
 									<button>
 										<i className='fa-solid fa-pencil'></i>
 									</button>
 									<button>
 										<i className='fa-solid fa-trash'></i>
 									</button>
-								</span>
-							</li>
+								</td>
+							</tr>
 						);
 					})
 				) : (
 					<p>No hay novedades</p>
 				)}
-			</ul>
+			</table>
 		</section>
 	);
 };

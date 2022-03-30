@@ -1,16 +1,17 @@
-.list-container {
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	padding: 0 25px;
-	row-gap: 5px;
-}
 .news-header {
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
 	padding: 0 15px;
 }
+.table-container {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	padding: 0 25px;
+	row-gap: 5px;
+}
+
 .primary-button {
 	min-width: fit-content;
 	height: fit-content;
@@ -27,58 +28,57 @@
 	background: #3498db;
 	color: white;
 }
-.card-info {
+
+.table-container tr {
 	display: grid;
-	grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
-	place-items: center;
-	height: auto;
+	grid-template-columns: repeat(4, minmax(75px, 1fr));
+	align-items: center;
+	justify-content: space-between;
 	width: 100%;
-	font-size: 15px;
-	background-color: #a1d4f6;
-	row-gap: 10px;
-	padding: 5px;
-	column-gap: 10px;
+	font-size: 14px;
 	text-align: center;
-	border-radius: 5px;
 	overflow: hidden;
-	list-style: none;
-	transition: all 0.2s ease-in-out;
+
+	transition: 0.2s ease-in-out;
 }
-.card-info:hover {
-	background-color: #61bbf8;
+.table-container .title {
+	max-height: 60px;
+	text-overflow: ellipsis;
+	overflow: hidden;
+	white-space: nowrap;
 }
-.card-info img {
+
+.table-container tr:hover {
+	background-color: #61bcf850;
+}
+.table-container tr img {
 	max-height: 80px;
 }
-.card-info .options {
+.table-container .options {
+	width: 100%;
 	display: flex;
-	column-gap: 10px;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	gap: 10px;
 }
 .options button {
 	display: grid;
-	justify-content: start;
+	place-items: center;
 	width: 30px;
 	height: 30px;
-	padding: 8px;
-	background: white;
+	background: #61bbf8;
 	border: none;
 	border-radius: 50%;
 	cursor: pointer;
 	z-index: 99;
 }
 .options button:hover {
-	opacity: 0.8;
+	background-color: white;
 }
 
 @media (min-width: 500px) {
-	.card-info {
-		padding: 0;
-		padding-right: 20px;
-	}
-	.card-info img {
-		justify-self: start;
-	}
-	.card-info .options {
-		justify-self: end;
+	.table-container tr .options {
+		flex-direction: row;
 	}
 }
