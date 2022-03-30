@@ -1,5 +1,6 @@
 .cardBody{
-    width: 250px;
+    width: 20%;
+    max-width: 250px;
     height: 350px;
     display: flex;
     flex-direction: column;
