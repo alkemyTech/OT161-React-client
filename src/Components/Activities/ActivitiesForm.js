@@ -1,10 +1,13 @@
-import axios from 'axios';
 import React, { useState } from 'react';
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import PropTypes from 'prop-types';
+import {
+	createActivity,
+	updateActivity,
+} from '../../Services/activitiesService';
 
 function ActivitiesForm({ patchData }) {
 	const [previewImage, setPreviewImage] = useState(patchData?.image || null);
@@ -44,15 +47,16 @@ function ActivitiesForm({ patchData }) {
 	async function fetchActivities(activities) {
 		setStatusForm(true);
 		const now = new Date().toISOString();
-		const method = patchData?.id ? 'PATCH' : 'POST';
-		const id = patchData?.id ? `/${patchData.id}` : '';
-		const url = `https://ongapi.alkemy.org/api/activities${id}`;
+		const urlForUpdate = `https://ongapi.alkemy.org/api/activities${patchData?.id}`;
 		const data = patchData?.id
 			? { ...activities, updated_at: now }
 			: { ...activities, created_at: now };
+		const method = patchData?.id
+			? updateActivity(urlForUpdate, data)
+			: createActivity(data);
 		try {
-			const result = await axios({ method, url, data });
-			console.log(result.data);
+			const result = await method;
+			console.log(result);
 		} catch (error) {
 			console.error(error);
 		} finally {
