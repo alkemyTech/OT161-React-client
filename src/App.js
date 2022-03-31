@@ -24,7 +24,9 @@ import Home from './Components/Home/Home';
 import About from './Components/About/About';
 import Contact from './Components/Contact/Contact';
 import NewsList from './Components/News/NewsList';
+import UsersList from './Components/Users/UsersList';
 import ActivitiesList from './Components/Activities/ActivitiesList';
+
 
 function App() {
 	return (
@@ -38,6 +40,7 @@ function App() {
 					<Route path='/backoffice/activities' component={ActivitiesList} />
 					<Route path='/backoffice/organization/edit' component={HomeForms} />
 					<Route path='/backoffice/news' component={NewsList} />
+					<Route path='/backoffice/users' component={UsersList} />
 					<Route path='/backoffice/create-news' component={NewsForm} />
 					<Route path='/backoffice/create-slide' component={SlidesForm} />
 					<Route path='/create-testimonials' component={TestimonialForm} />
