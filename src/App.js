@@ -17,6 +17,7 @@ import RegisterForm from './Components/Auth/RegisterForm';
 import OrganizationData from './Components/Organization/OrganizationData';
 import Dashboard from './Components/Dashboard/Dashboard';
 import NewsDetail from './Components/News/Detail/NewsDetail';
+import HomeForms from './Components/Home/HomeForms';
 import Activities from './Components/Activities/Activities';
 import Home from './Components/Home/Home';
 import About from './Components/About/About';
@@ -32,6 +33,7 @@ function App() {
           <Route path="/auth/register" component={RegisterForm} />
 					<Route path='/create-activity' component={ActivitiesForm} />
 					<Route path='/create-category' component={CategoriesForm} />
+					<Route path='/backoffice/organization/edit' component={HomeForms} />
 					<Route path='/backoffice/news' component={NewsList} />
 					<Route path='/backoffice/create-news' component={NewsForm} />
 					<Route path='/backoffice/create-slide' component={SlidesForm} />
