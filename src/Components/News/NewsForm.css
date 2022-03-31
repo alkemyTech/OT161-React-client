@@ -1,0 +1,9 @@
+.new-form {
+	display: flex;
+	flex-direction: column;
+}
+
+.new-section {
+	width: 1024px;
+	margin: 0 auto;
+}

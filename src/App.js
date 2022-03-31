@@ -16,7 +16,7 @@ import ProjectsForm from './Components/Projects/ProjectsForm';
 import RegisterForm from './Components/Auth/RegisterForm';
 import OrganizationData from './Components/Organization/OrganizationData';
 import Dashboard from './Components/Dashboard/Dashboard';
-
+import NewsDetail from './Components/News/Detail/NewsDetail';
 function App() {
 	return (
 			<BrowserRouter>
@@ -25,16 +25,19 @@ function App() {
           <Route path="/auth/register" component={RegisterForm} />
 					<Route path='/create-activity' component={ActivitiesForm} />
 					<Route path='/create-category' component={CategoriesForm} />
-					<Route path='/create-news' component={NewsForm} />
+					<Route path='/backoffice/create-news' component={NewsForm} />
+					<Route path='/backoffice/news' component={NewsForm} />
 					<Route path='/backoffice/create-slide' component={SlidesForm} />
 					<Route path='/create-testimonials' component={TestimonialForm} />
 					<Route path='/backoffice/organization' component={OrganizationData} />
 					<Route path='/backoffice' component={Dashboard} />
 					<Route path='/create-user' component={UserForm} />
 					<Route path='/create-member' component={MembersForm} />
+					<Route path='/backoffice/members/edit' component={MembersForm} />
 					<Route path='/create-project' component={ProjectsForm} />
 					<Route path='/school-campaign' component={SchoolCampaign} />
 					<Route path='/toys-campaign' component={ToysCampaign} />
+					<Route path='/novedades/:id' component={NewsDetail} />
 				</Switch>
 			</BrowserRouter>
 	);
