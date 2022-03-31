@@ -47,12 +47,12 @@ function ActivitiesForm({ patchData }) {
 	async function fetchActivities(activities) {
 		setStatusForm(true);
 		const now = new Date().toISOString();
-		const urlForUpdate = `https://ongapi.alkemy.org/api/activities${patchData?.id}`;
+		const endPointForUpdate = `${process.env.REACT_APP_ACTIVITY_END_POINT}${patchData?.id}`;
 		const data = patchData?.id
 			? { ...activities, updated_at: now }
 			: { ...activities, created_at: now };
 		const method = patchData?.id
-			? updateActivity(urlForUpdate, data)
+			? updateActivity(endPointForUpdate, data)
 			: createActivity(data);
 		try {
 			const result = await method;
