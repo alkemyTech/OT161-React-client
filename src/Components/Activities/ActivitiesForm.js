@@ -47,7 +47,7 @@ function ActivitiesForm({ patchData }) {
 	async function fetchActivities(activities) {
 		setStatusForm(true);
 		const now = new Date().toISOString();
-		const endPointForUpdate = `${process.env.REACT_APP_ACTIVITY_END_POINT}${patchData?.id}`;
+		const endPointForUpdate = `${process.env.REACT_APP_ACTIVITY_END_POINT}/${patchData?.id}`;
 		const data = patchData?.id
 			? { ...activities, updated_at: now }
 			: { ...activities, created_at: now };
