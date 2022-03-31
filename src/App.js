@@ -1,6 +1,4 @@
 import React from 'react';
-import logo from './logo.svg';
-import { Counter } from './features/counter/Counter';
 import './App.css';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import ActivitiesForm from './Components/Activities/ActivitiesForm';
@@ -27,32 +25,32 @@ import NewsList from './Components/News/NewsList';
 
 function App() {
 	return (
-			<BrowserRouter>
-				<Switch>
-					<Route path="/" exact component={Home} />
-          <Route path='/actividades' component={Activities} />
-          <Route path="/auth/register" component={RegisterForm} />
-					<Route path='/create-activity' component={ActivitiesForm} />
-					<Route path='/create-category' component={CategoriesForm} />
-					<Route path='/backoffice/organization/edit' component={HomeForms} />
-					<Route path='/backoffice/news' component={NewsList} />
-					<Route path='/backoffice/create-news' component={NewsForm} />
-					<Route path='/backoffice/create-slide' component={SlidesForm} />
-					<Route path='/create-testimonials' component={TestimonialForm} />
-					<Route path='/backoffice/organization' component={OrganizationData} />
-					<Route path='/contact' component={Contact} />
-					<Route path='/backoffice' component={Dashboard} />
-					<Route path='/create-user' component={UserForm} />
-					<Route path='/create-member' component={MembersForm} />
-					<Route path='/backoffice/members/edit' component={MembersForm} />
-					<Route path='/create-project' component={ProjectsForm} />
-					<Route path='/school-campaign' component={SchoolCampaign} />
-					<Route path='/toys-campaign' component={ToysCampaign} />
-					<Route path='/novedades/:id' component={NewsDetail} />
-					<Route path='/novedades' component={NewsPage} />
-					<Route path='/nosotros' component={About} />
-				</Switch>
-			</BrowserRouter>
+		<BrowserRouter>
+			<Switch>
+				<Route path='/' exact component={Home} />
+				<Route path='/actividades' component={Activities} />
+				<Route path='/auth/register' component={RegisterForm} />
+				<Route path='/create-activity' component={ActivitiesForm} />
+				<Route path='/create-category' component={CategoriesForm} />
+				<Route path='/backoffice/organization/edit' component={HomeForms} />
+				<Route path='/backoffice/news' component={NewsList} />
+				<Route path='/backoffice/create-news' component={NewsForm} />
+				<Route path='/backoffice/create-slide' component={SlidesForm} />
+				<Route path='/create-testimonials' component={TestimonialForm} />
+				<Route path='/backoffice/organization' component={OrganizationData} />
+				<Route path='/contact' component={Contact} />
+				<Route path='/backoffice' component={Dashboard} />
+				<Route path='/create-user' component={UserForm} />
+				<Route path='/create-member' component={MembersForm} />
+				<Route path='/backoffice/members/edit' component={MembersForm} />
+				<Route path='/create-project' component={ProjectsForm} />
+				<Route path='/school-campaign' component={SchoolCampaign} />
+				<Route path='/toys-campaign' component={ToysCampaign} />
+				<Route path='/novedades/:id' component={NewsDetail} />
+				<Route path='/novedades' component={NewsPage} />
+				<Route path='/nosotros' component={About} />
+			</Switch>
+		</BrowserRouter>
 	);
 }
 
