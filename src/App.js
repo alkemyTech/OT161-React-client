@@ -17,6 +17,7 @@ import RegisterForm from './Components/Auth/RegisterForm';
 import OrganizationData from './Components/Organization/OrganizationData';
 import Dashboard from './Components/Dashboard/Dashboard';
 import NewsDetail from './Components/News/Detail/NewsDetail';
+import Activities from './Components/Activities/Activities';
 import Home from './Components/Home/Home';
 import About from './Components/About/About';
 import Contact from './Components/Contact/Contact';
@@ -27,6 +28,7 @@ function App() {
 			<BrowserRouter>
 				<Switch>
 					<Route path="/" exact component={Home} />
+          <Route path='/actividades' component={Activities} />
           <Route path="/auth/register" component={RegisterForm} />
 					<Route path='/create-activity' component={ActivitiesForm} />
 					<Route path='/create-category' component={CategoriesForm} />
