@@ -17,7 +17,9 @@ import RegisterForm from './Components/Auth/RegisterForm';
 import OrganizationData from './Components/Organization/OrganizationData';
 import Dashboard from './Components/Dashboard/Dashboard';
 import NewsDetail from './Components/News/Detail/NewsDetail';
+import Contact from './Components/Contact/Contact';
 import NewsList from './Components/News/NewsList';
+
 function App() {
 	return (
 			<BrowserRouter>
@@ -31,6 +33,7 @@ function App() {
 					<Route path='/backoffice/create-slide' component={SlidesForm} />
 					<Route path='/create-testimonials' component={TestimonialForm} />
 					<Route path='/backoffice/organization' component={OrganizationData} />
+					<Route path='/contact' component={Contact} />
 					<Route path='/backoffice' component={Dashboard} />
 					<Route path='/create-user' component={UserForm} />
 					<Route path='/create-member' component={MembersForm} />
