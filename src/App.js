@@ -17,6 +17,7 @@ import RegisterForm from './Components/Auth/RegisterForm';
 import OrganizationData from './Components/Organization/OrganizationData';
 import Dashboard from './Components/Dashboard/Dashboard';
 import NewsDetail from './Components/News/Detail/NewsDetail';
+import About from './Components/About/About';
 import Contact from './Components/Contact/Contact';
 import NewsList from './Components/News/NewsList';
 
@@ -42,6 +43,7 @@ function App() {
 					<Route path='/school-campaign' component={SchoolCampaign} />
 					<Route path='/toys-campaign' component={ToysCampaign} />
 					<Route path='/novedades/:id' component={NewsDetail} />
+					<Route path='/nosotros' component={About} />
 				</Switch>
 			</BrowserRouter>
 	);
