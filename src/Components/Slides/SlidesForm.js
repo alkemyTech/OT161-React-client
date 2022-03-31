@@ -5,7 +5,7 @@ import * as yup from 'yup';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import PropTypes from 'prop-types';
 import '../FormStyles.css';
-import { createSlide } from '../../Services/publicApiService';
+import { createSlide, updateSlide } from '../../Services/slidesService';
 
 const SlidesForm = props => {
 	const { patchData } = props;
@@ -23,14 +23,22 @@ const SlidesForm = props => {
 
 	const handleSubmit = async (values, setSubmitting) => {
 		const now = new Date().toISOString();
-		const data = patchData
+
+		const urlForUpdate = `https://ongapi.alkemy.org/api/slides${patchData?.id}`;
+		const data = patchData?.id
 			? { ...values, updated_at: now }
 			: { ...values, created_at: now };
-
-		createSlide(data)
-			.then(res => console.log(res))
-			.catch(err => console.err(err));
-		setSubmitting(false);
+		const method = patchData?.id
+			? updateSlide(urlForUpdate, data)
+			: createSlide(data);
+		try {
+			const result = await method;
+			console.log(result);
+		} catch (error) {
+			console.error(error);
+		} finally {
+			setSubmitting(false);
+		}
 	};
 
 	return (
