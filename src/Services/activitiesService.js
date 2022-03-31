@@ -15,7 +15,10 @@ import getDataMethodPrivate, {
 
 const showActivity = async id => {
 	try {
-		const response = await getDataMethodPrivate('activities', id);
+		const response = await getDataMethodPrivate(
+			process.env.REACT_APP_ACTIVITY_END_POINT,
+			id
+		);
 		return response;
 	} catch (error) {
 		console.log(error);
@@ -30,7 +33,10 @@ const showActivity = async id => {
 
 const createActivity = async data => {
 	try {
-		const response = await privatePostRequest('/activities', data);
+		const response = await privatePostRequest(
+			process.env.REACT_APP_ACTIVITY_END_POINT,
+			data
+		);
 		return response;
 	} catch (error) {
 		console.log(error);
