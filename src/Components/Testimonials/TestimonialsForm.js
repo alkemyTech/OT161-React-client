@@ -1,10 +1,13 @@
-import axios from 'axios';
 import React, { useState } from 'react';
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import PropTypes from 'prop-types';
+import {
+	createTestimonial,
+	updateTestimonial,
+} from '../../Services/testimonialService';
 /**
  *  Testimonial Form
  * @param {Object} props
@@ -54,14 +57,14 @@ function TestimonialForm({ patchData }) {
 	async function fetchTestimonial(testimonial) {
 		setStatusForm(true);
 		const now = new Date().toISOString();
-		const method = patchData?.id ? 'PATCH' : 'POST';
-		const id = patchData?.id ? `/${patchData.id}` : '';
-		const url = `https://ongapi.alkemy.org/api/testimonials${id}`;
 		const data = patchData?.id
 			? { ...testimonial, updated_at: now }
 			: { ...testimonial, created_at: now };
+		const method = patchData?.id
+			? updateTestimonial(patchData.id, data)
+			: createTestimonial(data);
 		try {
-			const result = await axios({ method, url, data });
+			const result = await method;
 			console.log(result.data);
 		} catch (error) {
 			console.error(error);
@@ -142,4 +145,10 @@ TestimonialForm.propTypes = {
 		description: PropTypes.string,
 		image: PropTypes.string,
 	}),
+};
+TestimonialForm.defaultProps = {
+	patchData: {
+		id: 469,
+		name: 'Testimonial 2',
+	},
 };
