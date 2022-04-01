@@ -16,6 +16,15 @@ async function publicPostRequest(route, postData) {
 	}
 }
 
+async function publicPatchRequest(route, patchData) {
+	try {
+		const { data } = await axios.patch(`${BASE_URL}${route}`, patchData);
+		return data;
+	} catch (error) {
+		return error;
+	}
+}
+
 const getDataMethod = async (sector, id = null, data = null) => {
 	if (sector !== 'auth') {
 		try {
@@ -44,4 +53,4 @@ const getDataMethod = async (sector, id = null, data = null) => {
 	}
 };
 
-export { publicPostRequest, getDataMethod };
+export { publicPostRequest, publicPatchRequest, getDataMethod };
