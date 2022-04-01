@@ -146,9 +146,3 @@ TestimonialForm.propTypes = {
 		image: PropTypes.string,
 	}),
 };
-TestimonialForm.defaultProps = {
-	patchData: {
-		id: 469,
-		name: 'Testimonial 2',
-	},
-};
