@@ -5,7 +5,8 @@ import getDataMethodPrivate, { privatePostRequest, privatePutRequest, privatePat
 // Get
 const getAllUsers = async (data = null) => {
     try {
-        await getDataMethodPrivate('/users', data)
+        const response = await getDataMethodPrivate('/users', data)
+        return response
     } catch (error) {
         console.error(error);
     }
@@ -14,7 +15,8 @@ const getAllUsers = async (data = null) => {
 // Post
 const createUser = async (data) => {
     try {
-        await privatePostRequest('/users', data)
+        const response = await privatePostRequest('/users', data)
+        return response
     } catch (error) {
         console.error(error);
     }
@@ -23,7 +25,8 @@ const createUser = async (data) => {
 // Get {id}
 const getUser = async (id, data = null) => {
     try {
-        await getDataMethodPrivate(`/users/${id}`, data)
+        const response = await getDataMethodPrivate(`/users/${id}`, data)
+        return response
     } catch (error) {
         console.error(error);
     }
@@ -32,7 +35,8 @@ const getUser = async (id, data = null) => {
 // Put {id}
 const updateUser = async (id, data) => {
     try {
-        await privatePutRequest(`/users/${id}`, data)
+        const response = await privatePutRequest(`/users/${id}`, data)
+        return response
     } catch (error) {
         console.error(error);
     }
@@ -41,7 +45,8 @@ const updateUser = async (id, data) => {
 // Patch {id}
 const patchUser = async (id, data) => {
     try {
-        await privatePatchRequest(`/users/${id}`, data)
+        const response = await privatePatchRequest(`/users/${id}`, data)
+        return response
     } catch (error) {
         console.error(error);
     }
@@ -50,7 +55,8 @@ const patchUser = async (id, data) => {
 // Delete {id}
 const removeUser = async (id, data) => {
     try {
-        await privateDeleteRequest(`/users/${id}`, data)
+        const response = await privateDeleteRequest(`/users/${id}`, data)
+        return response
     } catch (error) {
         console.error(error);
     }
