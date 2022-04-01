@@ -33,7 +33,11 @@ function OrganizationData() {
 						<img src={organization.logo} alt={organization.name} width={200} />
 						<div>
 							<h1>{organization.name}</h1>
-							<p>{organization.short_description}</p>
+							<div
+								dangerouslySetInnerHTML={{
+									__html: `<p>${organization.short_description}</p>`,
+								}}
+							></div>
 						</div>
 					</>
 				)}
