@@ -1,7 +1,7 @@
-import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import './backofficeOrganization.css';
 import { Link } from 'react-router-dom';
+import { getDataMethod } from '../../Services/publicApiService';
 function OrganizationData() {
 	const [organization, setOrganization] = useState({});
 	const [statusData, setStatusData] = useState('idle');
@@ -9,8 +9,8 @@ function OrganizationData() {
 	async function fetchOrganization() {
 		setStatusData('loading');
 		try {
-			const { data } = await axios.get(
-				'https://ongapi.alkemy.org/api/organization'
+			const { data } = await getDataMethod(
+				process.env.REACT_APP_ORGANIZATION_ENDPOINT
 			);
 			if (!data.success) return setStatusData('error');
 			setOrganization(data.data);
