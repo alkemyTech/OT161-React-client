@@ -1,8 +1,11 @@
-import { getDataMethod, publicPostRequest } from './publicApiService';
-import { privatePatchRequest, privateDeleteRequest } from './privateApiService';
+import getDataMethodPrivate, {
+	privatePatchRequest,
+	privateDeleteRequest,
+	privatePostRequest,
+} from './privateApiService';
 export async function getAllTestimonials() {
 	try {
-		const { data } = await getDataMethod(
+		const { data } = await getDataMethodPrivate(
 			process.env.REACT_APP_TESTIMONIAL_END_POINT
 		);
 		return data;
@@ -13,7 +16,7 @@ export async function getAllTestimonials() {
 
 export async function createTestimonial(contactData) {
 	try {
-		const data = await publicPostRequest(
+		const data = await privatePostRequest(
 			process.env.REACT_APP_TESTIMONIAL_END_POINT,
 			contactData
 		);
@@ -24,7 +27,7 @@ export async function createTestimonial(contactData) {
 }
 export async function getTestimonialById(id) {
 	try {
-		const { data } = await getDataMethod(
+		const { data } = await getDataMethodPrivate(
 			process.env.REACT_APP_TESTIMONIAL_END_POINT,
 			id
 		);
