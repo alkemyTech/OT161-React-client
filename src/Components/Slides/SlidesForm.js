@@ -24,9 +24,9 @@ const SlidesForm = (props) => {
         const method = patchData ? "patch" : "post"
         const id = patchData && patchData.id
         const url = patchData ?
-            `https://ongapi.alkemy.org/api/slides/${id}`
+        `${process.env.REACT_APP_SLIDES_ENDPOINT}/${id}`
             :
-            `https://ongapi.alkemy.org/api/slides`
+            process.env.REACT_APP_SLIDES_ENDPOINT
         const data = patchData ?
             { ...values, updated_at: now }
             :

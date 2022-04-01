@@ -9,7 +9,7 @@ const Carrousel = () => {
 
   const getData = async () => {
     try {
-      const data = await getDataMethod('slides')
+      const data = await getDataMethod(process.env.REACT_APP_SLIDES_ENDPOINT)
       setSlides(data.data.data)
     } catch (error) {
       console.error(error)
