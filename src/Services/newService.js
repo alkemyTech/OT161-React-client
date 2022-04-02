@@ -1,5 +1,7 @@
 import getDataMethodPrivate, {
 	privateDeleteRequest,
+	privatePostRequest,
+	privatePutRequest,
 } from './privateApiService';
 
 // metodo get
@@ -15,7 +17,7 @@ const getNews = async () => {
 // metodo post
 const postNews = async data => {
 	try {
-		const response = await getDataMethodPrivate('news', data);
+		const response = await privatePostRequest('news', data);
 		return response;
 	} catch (error) {
 		console.log(error);
@@ -23,22 +25,20 @@ const postNews = async data => {
 };
 
 // metodo get {id}
-const getNewsId = async (id, data) => {
-	const response = await getDataMethodPrivate(`news/${id}`, data);
+const getNewsId = async id => {
+	const response = await getDataMethodPrivate('news', id);
 	return response;
 };
 
 // metodo put
 const putNews = async (url, data) => {
 	try {
-		const response = await getDataMethodPrivate(url, data);
+		const response = await privatePutRequest(url, data);
 		return response;
 	} catch (error) {
 		console.log(error);
 	}
-		
-}
-
+};
 
 // metodo delete
 const deleteNews = async url => {
@@ -46,11 +46,4 @@ const deleteNews = async url => {
 	return data;
 };
 
-export {
-	getNews,
-	postNews,
-	getNewsId,
-	putNews,
-	deleteNews,
-}
-
+export { getNews, postNews, getNewsId, putNews, deleteNews };
