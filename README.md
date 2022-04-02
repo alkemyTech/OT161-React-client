@@ -28,3 +28,33 @@ The build is minified and the filenames include the hashes.<br />
 Your app is ready to be deployed!
 
 See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+
+
+## Skeleton
+
+The [MUI](https://mui.com/getting-started/installation/) dependency is used to generate a skeleton component <br/>that is rendered while the content is loading
+
+
+In this projecte the Skeleton component works with three properties and its call is <UseSkeleton/>
+
+```javascript
+<UseSkeleton
+type = 'text' //By default is null and its a rectangle
+width = {50} //By default is 50px
+height = {20} //By default is 20px
+/>
+```
+
+Documentation of Skeleton component:
+[https://mui.com/components/skeleton/](https://mui.com/components/skeleton/)
+
+To install [MUI](https://mui.com/getting-started/installation/) dependency use:
+
+```bash
+// with npm
+npm install @mui/material @emotion/react @emotion/styled
+
+// with yarn
+yarn add @mui/material @emotion/react @emotion/styled
+```
+
