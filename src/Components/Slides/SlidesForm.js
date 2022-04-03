@@ -24,22 +24,23 @@ const SlidesForm = props => {
 	const handleSubmit = async (values, setSubmitting) => {
 		const now = new Date().toISOString();
 
-		const urlForUpdate = `https://ongapi.alkemy.org/api/slides${patchData?.id}`;
-		const data = patchData?.id
-			? { ...values, updated_at: now }
-			: { ...values, created_at: now };
-		const method = patchData?.id
-			? updateSlide(urlForUpdate, data)
-			: createSlide(data);
-		try {
-			const result = await method;
-			console.log(result);
-		} catch (error) {
-			console.error(error);
-		} finally {
-			setSubmitting(false);
-		}
-	};
+    const handleSubmit = (values, setSubmitting) => {
+        const now = new Date().toISOString()
+        const method = patchData ? "patch" : "post"
+        const id = patchData && patchData.id
+        const url = patchData ?
+        `${process.env.REACT_APP_SLIDES_ENDPOINT}/${id}`
+            :
+            process.env.REACT_APP_SLIDES_ENDPOINT
+        const data = patchData ?
+            { ...values, updated_at: now }
+            :
+            { ...values, created_at: now }
+        axios({ method, url, data })
+            .then(res => console.log(res))
+            .catch(err => console.err(err))
+        setSubmitting(false)
+    }
 
 	return (
 		<Formik
