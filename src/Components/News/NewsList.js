@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { getNewsData, newsSelector } from '../../features/news/newSlice';
 import Spinner from '../../shared/Spinner';
+import showAlert from '../../shared/showAlert';
 const NewsList = () => {
 	const dispatch = useDispatch();
 	const news = useSelector(newsSelector);
@@ -17,6 +18,14 @@ const NewsList = () => {
 			dispatch(getNewsData());
 		}
 	}, [newsStatus, dispatch]);
+
+	if (newsStatus.status === 'failed') {
+		showAlert({
+			type: 'error',
+			title: 'Ups, hubo un error',
+			message: 'No fue posible mostrar las novedades, intentelo mas tarde',
+		});
+	}
 
 	return (
 		<section>
@@ -38,7 +47,6 @@ const NewsList = () => {
 					<th>Opciones</th>
 				</tr>
 				{newsStatus.status === 'loading' && <Spinner />}
-				{newsStatus.status === 'failed' && `<p>Ups, hubo un problem</p>`}
 				{newsStatus.status === 'succeeded' &&
 					news.news.data.map(element => {
 						return (
