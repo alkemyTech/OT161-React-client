@@ -5,8 +5,8 @@ import * as yup from 'yup';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import PropTypes from 'prop-types';
 import '../FormStyles.css';
-import { createSlide, updateSlide } from '../../Services/slidesService';
-
+// import { createSlide, updateSlide } from '../../Services/slidesService';
+import axios from 'axios';
 const SlidesForm = props => {
 	const { patchData } = props;
 	const [previewImage, setPreviewImage] = useState('');
@@ -21,26 +21,21 @@ const SlidesForm = props => {
 		description: yup.string().required('Se requiere una descripción'),
 	});
 
-	const handleSubmit = async (values, setSubmitting) => {
+	const handleSubmit = (values, setSubmitting) => {
 		const now = new Date().toISOString();
-
-    const handleSubmit = (values, setSubmitting) => {
-        const now = new Date().toISOString()
-        const method = patchData ? "patch" : "post"
-        const id = patchData && patchData.id
-        const url = patchData ?
-        `${process.env.REACT_APP_SLIDES_ENDPOINT}/${id}`
-            :
-            process.env.REACT_APP_SLIDES_ENDPOINT
-        const data = patchData ?
-            { ...values, updated_at: now }
-            :
-            { ...values, created_at: now }
-        axios({ method, url, data })
-            .then(res => console.log(res))
-            .catch(err => console.err(err))
-        setSubmitting(false)
-    }
+		const method = patchData ? 'patch' : 'post';
+		const id = patchData && patchData.id;
+		const url = patchData
+			? `${process.env.REACT_APP_SLIDES_ENDPOINT}/${id}`
+			: process.env.REACT_APP_SLIDES_ENDPOINT;
+		const data = patchData
+			? { ...values, updated_at: now }
+			: { ...values, created_at: now };
+		axios({ method, url, data })
+			.then(res => console.log(res))
+			.catch(err => console.log(err));
+		setSubmitting(false);
+	};
 
 	return (
 		<Formik
