@@ -1,12 +1,12 @@
-import { getDataMethod } from './publicApiService';
 import {
+	getDataMethodPrivate,
 	privatePatchRequest,
 	privateDeleteRequest,
 	privatePostRequest,
 } from './privateApiService';
 export async function getAllContacts() {
 	try {
-		const { data } = await getDataMethod(
+		const { data } = await getDataMethodPrivate(
 			process.env.REACT_APP_CONTACT_ENDPOINT
 		);
 		return data;
@@ -28,7 +28,7 @@ export async function createContact(contactData) {
 }
 export async function getContactById(id) {
 	try {
-		const { data } = await getDataMethod(
+		const { data } = await getDataMethodPrivate(
 			process.env.REACT_APP_CONTACT_ENDPOINT,
 			id
 		);
