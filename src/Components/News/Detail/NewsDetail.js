@@ -1,12 +1,33 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React, { useEffect, useState } from 'react';
 import './NewsDetail.css';
-import { useHistory } from 'react-router-dom';
-export default function NewsDetail({ title, image, content }) {
+import { useHistory, useParams } from 'react-router-dom';
+import { getNewsId } from '../../../Services/newService';
+import Spinner from '../../../shared/Spinner';
+import RenderHTML from '../../../shared/RenderHTML';
+export default function NewsDetail() {
+	const [newStatus, setNewStatus] = useState('idle');
+	const [singleNew, setSigleNew] = useState();
 	const history = useHistory();
 	function handlePrevNavigtation() {
 		history.goBack();
 	}
+	const { id } = useParams();
+	useEffect(() => {
+		async function fetchNew() {
+			setNewStatus('loading');
+			try {
+				const { data } = await getNewsId(id);
+				if (!data.success) return setNewStatus('error');
+				setSigleNew(data.data);
+				setNewStatus('success');
+			} catch (error) {
+				console.error(error);
+				setNewStatus('error');
+			}
+		}
+		fetchNew();
+	}, []);
+
 	return (
 		<section className='news__detail'>
 			<header>
@@ -15,17 +36,19 @@ export default function NewsDetail({ title, image, content }) {
 				</span>
 				Novedades
 			</header>
-			<img src={image} alt={title} />
-			<div className='news__detail--content'>
-				<h1>{title}</h1>
-				<div dangerouslySetInnerHTML={{ __html: content }}></div>
-			</div>
+			{newStatus === 'loading' && <Spinner />}
+			{newStatus === 'error' && (
+				<p>Upps! No pudimos encontrar esta novedad 📰</p>
+			)}
+			{newStatus === 'success' && (
+				<>
+					<img src={singleNew.image} alt={singleNew.name} />
+					<div className='news__detail--content'>
+						<h1>{singleNew.name}</h1>
+						<RenderHTML textHTML={singleNew.content} />
+					</div>
+				</>
+			)}
 		</section>
 	);
 }
-
-NewsDetail.propTypes = {
-	title: PropTypes.string,
-	image: PropTypes.string,
-	content: PropTypes.string,
-};

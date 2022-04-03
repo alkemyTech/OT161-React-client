@@ -29,7 +29,6 @@ Your app is ready to be deployed!
 
 See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
-
 ## Skeleton
 
 The [MUI](https://mui.com/getting-started/installation/) dependency is used to generate a skeleton component <br/>that is rendered while the content is loading
@@ -58,3 +57,23 @@ npm install @mui/material @emotion/react @emotion/styled
 yarn add @mui/material @emotion/react @emotion/styled
 ```
 
+## _**`Shared components`**_
+
+### `Spinner`
+
+El spinner es un componente SVG que puede ser reutilizado en cualquier parte del código.<br />
+La dependencia react-loader-spinner fue instalada para facilitar la utilización del mismo,<br />
+y poder acceder a diferentes diseños.<br />
+Documentación oficial: https://npm.runkit.com/react-loader-spinner<br />
+
+```javascript
+import Spinner from "../shared/Spinner";
+
+const FormLogin = () => {
+  return(
+    { isLoading ? <Spinner /> : <p>Logueado!!</p>}
+  );
+};
+
+export default FormLogin;
+```
