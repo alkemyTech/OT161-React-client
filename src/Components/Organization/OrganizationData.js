@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import './backofficeOrganization.css';
 import { Link } from 'react-router-dom';
+import LazyLoad from '../../shared/LazyLoad';
 import { getDataMethod } from '../../Services/publicApiService';
 function OrganizationData() {
 	const [organization, setOrganization] = useState({});
@@ -30,7 +31,11 @@ function OrganizationData() {
 			<div className='backoffice_organization--data '>
 				{statusData === 'success' && (
 					<>
-						<img src={organization.logo} alt={organization.name} width={200} />
+						<LazyLoad
+							src={organization.logo}
+							alt={organization.name}
+							width={200}
+						/>
 						<div>
 							<h1>{organization.name}</h1>
 							<div
