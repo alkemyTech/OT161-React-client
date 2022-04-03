@@ -24,8 +24,12 @@ const postNews = async (data) => {
 
 // metodo get {id}
 const getNewsId = async (id, data) => {
-	const response = await getDataMethodPrivate(`${process.env.REACT_APP_NEWS_END_POINT}/${id}`, data);
-	return response;
+	try {
+		const response = await getDataMethodPrivate(`${process.env.REACT_APP_NEWS_END_POINT}/${id}`, data);
+		return response;
+	} catch (error) {
+		console.log(error);
+	}
 };
 
 // metodo put
@@ -41,16 +45,24 @@ const putNews = async (id, data) => {
 
 
 // metodo delete
-const deleteNews = async  (id, data) => {
-	const response = await privateDeleteRequest(`${process.env.REACT_APP_NEWS_END_POINT}/${id}`, data);
-	return response;
+const deleteNews = async (id, data) => {
+	try {
+		const response = await privateDeleteRequest(`${process.env.REACT_APP_NEWS_END_POINT}/${id}`, data);
+		return response;
+	} catch (error) {
+		console.log(error);
+	}
 };
 
 
 // metodo patch
 const patchNews = async (id, data) => {
-	const response = await privatePatchRequest(`${process.env.REACT_APP_NEWS_END_POINT}/${id}`, data);
-	return response;
+	try {
+		const response = await privatePatchRequest(`${process.env.REACT_APP_NEWS_END_POINT}/${id}`, data);
+		return response;
+	} catch (error) {
+		console.log(error);
+	}
 };
 
 export {
