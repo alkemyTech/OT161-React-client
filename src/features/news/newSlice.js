@@ -3,11 +3,11 @@ import { getNews } from '../../Services/newService';
 
 const initialState = {
 	news: [],
-	loading: false,
+	status: 'idle',
 	error: false,
 };
 
-const getNewsData = createAsyncThunk('news/getNews', async () => {
+export const getNewsData = createAsyncThunk('news/getNews', async () => {
 	const response = await getNews();
 	return response.data;
 });
@@ -18,15 +18,15 @@ const newsSlice = createSlice({
 	reducers: {},
 	extraReducers: {
 		[getNewsData.pending]: state => {
-			state.loading = true;
+			state.status = 'loading';
 		},
 		[getNewsData.fulfilled]: (state, { payload }) => {
-			state.loading = false;
 			state.news = payload;
+			state.status = 'succeeded';
 		},
 		[getNewsData.rejected]: state => {
-			state.loading = false;
 			state.error = true;
+			state.status = 'failed';
 		},
 	},
 });
