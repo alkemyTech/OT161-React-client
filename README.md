@@ -28,3 +28,27 @@ The build is minified and the filenames include the hashes.<br />
 Your app is ready to be deployed!
 
 See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+
+## _**`Shared components`**_
+
+### `Spinner`
+
+El spinner es un componente SVG que puede ser reutilizado en cualquier parte del código.<br />
+La dependencia react-loader-spinner fue instalada para facilitar la utilización del mismo,<br />
+y poder acceder a diferentes diseños.<br />
+Documentación oficial: https://npm.runkit.com/react-loader-spinner<br />
+
+```javascript
+import Spinner from "../shared/Spinner";
+
+const FormLogin = () => {
+  return(
+    { isLoading ? <Spinner /> : <p>Logueado!!</p>}
+  );
+};
+
+export default FormLogin;
+```
+
+
+
