@@ -36,9 +36,7 @@ const putNews = async (url, data) => {
 	} catch (error) {
 		console.log(error);
 	}
-		
-}
-
+};
 
 // metodo delete
 const deleteNews = async url => {
@@ -46,11 +44,4 @@ const deleteNews = async url => {
 	return data;
 };
 
-export {
-	getNews,
-	postNews,
-	getNewsId,
-	putNews,
-	deleteNews,
-}
-
+export { getNews, postNews, getNewsId, putNews, deleteNews };
