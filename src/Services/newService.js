@@ -1,5 +1,5 @@
-import getDataMethodPrivate, {
-	privateDeleteRequest, privatePutRequest, privatePostRequest, privatePatchRequest
+import getDataMethodPrivate, {privateDeleteRequest, privatePutRequest, privatePostRequest, privatePatchRequest
+
 } from './privateApiService';
 
 // metodo get
@@ -40,9 +40,7 @@ const putNews = async (id, data) => {
 	} catch (error) {
 		console.log(error);
 	}
-
 }
-
 
 // metodo delete
 const deleteNews = async (id, data) => {
@@ -65,6 +63,7 @@ const patchNews = async (id, data) => {
 	}
 };
 
+
 export {
 	getNews,
 	postNews,
@@ -73,4 +72,3 @@ export {
 	deleteNews,
 	patchNews
 }
-
