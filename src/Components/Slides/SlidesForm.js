@@ -5,8 +5,8 @@ import * as yup from 'yup';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import PropTypes from 'prop-types';
 import '../FormStyles.css';
-import { createSlide, updateSlide } from '../../Services/slidesService';
-
+// import { createSlide, updateSlide } from '../../Services/slidesService';
+import axios from 'axios';
 const SlidesForm = props => {
 	const { patchData } = props;
 	const [previewImage, setPreviewImage] = useState('');
@@ -21,24 +21,20 @@ const SlidesForm = props => {
 		description: yup.string().required('Se requiere una descripción'),
 	});
 
-	const handleSubmit = async (values, setSubmitting) => {
+	const handleSubmit = (values, setSubmitting) => {
 		const now = new Date().toISOString();
-
-		const urlForUpdate = `https://ongapi.alkemy.org/api/slides${patchData?.id}`;
-		const data = patchData?.id
+		const method = patchData ? 'patch' : 'post';
+		const id = patchData && patchData.id;
+		const url = patchData
+			? `${process.env.REACT_APP_SLIDES_ENDPOINT}/${id}`
+			: process.env.REACT_APP_SLIDES_ENDPOINT;
+		const data = patchData
 			? { ...values, updated_at: now }
 			: { ...values, created_at: now };
-		const method = patchData?.id
-			? updateSlide(urlForUpdate, data)
-			: createSlide(data);
-		try {
-			const result = await method;
-			console.log(result);
-		} catch (error) {
-			console.error(error);
-		} finally {
-			setSubmitting(false);
-		}
+		axios({ method, url, data })
+			.then(res => console.log(res))
+			.catch(err => console.log(err));
+		setSubmitting(false);
 	};
 
 	return (
