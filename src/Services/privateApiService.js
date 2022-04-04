@@ -5,6 +5,13 @@ const headers = {
 	Autorizacion: tokenFromLocalStorage(),
 };
 
+/**
+ * Function to generate a POST request
+ * @param {string} route  Endpoint's route. Example: "/testimonials"
+ * @param {Object} postData Object with the post data
+ * @returns {Promise}
+ */
+
 export const privatePostRequest = async (route, postData) => {
 	try {
 		const { data } = await axios.post(
@@ -18,6 +25,13 @@ export const privatePostRequest = async (route, postData) => {
 	}
 };
 
+/**
+ * Function to generate a PUT request
+ * @param {string} url  Endpoint's url. Example: "/testimonials"
+ * @param {Object} putData Object with the post data
+ * @returns {Promise}
+ */
+
 export const privatePutRequest = async ({ url, putData }) => {
 	try {
 		const res = await axios.put(
@@ -30,6 +44,13 @@ export const privatePutRequest = async ({ url, putData }) => {
 		console.log(err);
 	}
 };
+
+/**
+ * Function to generate a DELETE request
+ * @param {string} url  Endpoint's url. Example: "/testimonials"
+ * @param {Object} deleteData Object with the post data
+ * @returns {Promise}
+ */
 
 export const privateDeleteRequest = async ({ url }) => {
 	try {
@@ -64,6 +85,13 @@ export async function privatePatchRequest(route, patchData) {
 	}
 }
 
+/**
+ * Function to generate a GET request
+ * @param {string} sector  Endpoint's sector. Example: "/testimonials". Si el valor de "sector" es auth va a realizar una peticion distinta relacionada a la utentificacion
+ * @param {number} id  El id seria un dato en especifico que se quiera devolver. Puede ir null
+ * @returns {Promise}
+ */
+
 const getDataMethodPrivate = async (sector, id = null) => {
 	if (sector !== 'auth') {
 		try {
@@ -82,9 +110,7 @@ const getDataMethodPrivate = async (sector, id = null) => {
 		try {
 			const result = await axios.get(
 				`${process.env.REACT_APP_BASE_URL}/auth/me`,
-				{
-					headers,
-				}
+				headers
 			);
 			console.log(result);
 			return result;
