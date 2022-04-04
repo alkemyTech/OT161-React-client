@@ -1,7 +1,11 @@
 import axios from 'axios';
 
+const headers = {
+	Group: 161,
+	Autorizacion: tokenFromLocalStorage(),
+};
+
 export const privatePostRequest = async (route, postData) => {
-	const headers = { ...tokenFromLocalStorage() };
 	try {
 		const { data } = await axios.post(
 			`${process.env.REACT_APP_BASE_URL}/${route}`,
@@ -15,7 +19,6 @@ export const privatePostRequest = async (route, postData) => {
 };
 
 export const privatePutRequest = async ({ url, putData }) => {
-	const headers = { ...tokenFromLocalStorage() };
 	try {
 		const res = await axios.put(
 			`${process.env.REACT_APP_BASE_URL}/${url}`,
@@ -29,7 +32,6 @@ export const privatePutRequest = async ({ url, putData }) => {
 };
 
 export const privateDeleteRequest = async ({ url }) => {
-	const headers = { ...tokenFromLocalStorage() };
 	try {
 		const res = await axios.delete(
 			`${process.env.REACT_APP_BASE_URL}/${url}`,
@@ -63,7 +65,6 @@ export async function privatePatchRequest(route, patchData) {
 }
 
 const getDataMethodPrivate = async (sector, id = null) => {
-	const headers = { ...tokenFromLocalStorage() };
 	if (sector !== 'auth') {
 		try {
 			const result = await axios.get(
@@ -96,16 +97,10 @@ const getDataMethodPrivate = async (sector, id = null) => {
 export default getDataMethodPrivate;
 
 function tokenFromLocalStorage() {
-	const noTokenValue = {
-		undefined: undefined,
-		null: null,
-	};
 	const token = window.localStorage.getItem('token');
-	if (!token || !noTokenValue[token]) {
+	if (!token || token === 'undefined') {
 		console.log('No token in local storage');
 		return null;
 	}
-	return {
-		Authorization: `Bearer ${token}`,
-	};
+	return `Bearer ${token}`;
 }
