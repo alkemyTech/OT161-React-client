@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import ShowTitle from './../../../shared/ShowTitle.js';
 import './activitiesDetail.css';
-// import PropTypes from 'prop-types';
 import { useParams } from 'react-router-dom';
 import Spinner from '../../../shared/Spinner.js';
-import { getDataMethod } from '../../../Services/publicApiService.js';
 import showAlert from '../../../shared/showAlert.js';
+import getDataMethodPrivate from '../../../Services/privateApiService.js';
 
 const ActivitiesDetail = () => {
 	const [showDetail, setShowDetail] = useState('');
@@ -23,7 +22,7 @@ const ActivitiesDetail = () => {
 
 	const getActivityDetail = async () => {
 		try {
-			const data = await getDataMethod(`activities/:${id}`);
+			const data = await getDataMethodPrivate(`activities/${id}`);
 			console.log('datos', data.data.data);
 			setShowDetail(data.data.data);
 		} catch (error) {
@@ -44,9 +43,7 @@ const ActivitiesDetail = () => {
 	return (
 		<section className='activitiesDetail'>
 			{loading && <Spinner />}
-			<ShowTitle
-				patchData={{ title: showDetail.name, background: showDetail.image }}
-			/>
+			<ShowTitle patchData={{ title: showDetail.name }} />
 			<p className='activitiesDetail-content'>{showDetail.description}</p>
 		</section>
 	);
