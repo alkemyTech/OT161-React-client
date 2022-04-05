@@ -1,3 +1,5 @@
+import showAlert from '../shared/showAlert';
+
 // todos son metodos privados
 
 import getDataMethodPrivate, {
@@ -21,6 +23,7 @@ const showActivity = async id => {
 		);
 		return response;
 	} catch (error) {
+		showAlert({type: 'error', title: 'Error', message: error.message});
 		console.log(error);
 	}
 };
@@ -39,6 +42,7 @@ const createActivity = async data => {
 		);
 		return response;
 	} catch (error) {
+		showAlert({type: 'error', title: 'Error', message: error.message});
 		console.log(error);
 	}
 };
@@ -55,6 +59,7 @@ const updateActivity = async (url, data) => {
 		const response = await privatePatchRequest(url, data);
 		return response;
 	} catch (error) {
+		showAlert({type: 'error', title: 'Error', message: error.message});
 		console.log(error);
 	}
 };
@@ -70,6 +75,7 @@ const deleteActivity = async url => {
 		const response = await privateDeleteRequest(url);
 		return response;
 	} catch (error) {
+		showAlert({type: 'error', title: 'Error', message: error.message});
 		console.log(error);
 	}
 };
@@ -86,6 +92,7 @@ const updateAllActivity = async (url, data) => {
 		const response = await privatePutRequest(url, data);
 		return response;
 	} catch (error) {
+		showAlert({type: 'error', title: 'Error', message: error.message});
 		console.log(error);
 	}
 };
