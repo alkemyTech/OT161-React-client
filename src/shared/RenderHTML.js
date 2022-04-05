@@ -2,7 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 const RenderHTML = ({ textHTML }) => {
-	return <div dangerouslySetInnerHTML={{ __html: { textHTML } }} />;
+	function createMarkup() {
+		return { __html: textHTML };
+	}
+	return <div dangerouslySetInnerHTML={createMarkup()} />;
 };
 
 export default RenderHTML;
