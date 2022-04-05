@@ -1,7 +1,18 @@
 import axios from 'axios';
 
+const headers = {
+	Group: 161,
+	Autorizacion: tokenFromLocalStorage(),
+};
+
+/**
+ * Function to generate a POST request
+ * @param {string} route  Endpoint's route. Example: "/testimonials"
+ * @param {Object} postData Object with the post data
+ * @returns {Promise}
+ */
+
 export const privatePostRequest = async (route, postData) => {
-	const headers = { ...tokenFromLocalStorage() };
 	try {
 		const { data } = await axios.post(
 			`${process.env.REACT_APP_BASE_URL}/${route}`,
@@ -14,8 +25,14 @@ export const privatePostRequest = async (route, postData) => {
 	}
 };
 
+/**
+ * Function to generate a PUT request
+ * @param {string} url  Endpoint's url. Example: "/testimonials"
+ * @param {Object} putData Object with the post data
+ * @returns {Promise}
+ */
+
 export const privatePutRequest = async ({ url, putData }) => {
-	const headers = { ...tokenFromLocalStorage() };
 	try {
 		const res = await axios.put(
 			`${process.env.REACT_APP_BASE_URL}/${url}`,
@@ -28,8 +45,14 @@ export const privatePutRequest = async ({ url, putData }) => {
 	}
 };
 
+/**
+ * Function to generate a DELETE request
+ * @param {string} url  Endpoint's url. Example: "/testimonials"
+ * @param {Object} deleteData Object with the post data
+ * @returns {Promise}
+ */
+
 export const privateDeleteRequest = async ({ url }) => {
-	const headers = { ...tokenFromLocalStorage() };
 	try {
 		const res = await axios.delete(
 			`${process.env.REACT_APP_BASE_URL}/${url}`,
@@ -62,8 +85,14 @@ export async function privatePatchRequest(route, patchData) {
 	}
 }
 
+/**
+ * Function to generate a GET request
+ * @param {string} sector  Endpoint's sector. Example: "/testimonials". Si el valor de "sector" es auth va a realizar una peticion distinta relacionada a la utentificacion
+ * @param {number} id  El id seria un dato en especifico que se quiera devolver. Puede ir null
+ * @returns {Promise}
+ */
+
 const getDataMethodPrivate = async (sector, id = null) => {
-	const headers = { ...tokenFromLocalStorage() };
 	if (sector !== 'auth') {
 		try {
 			const result = await axios.get(
@@ -81,9 +110,7 @@ const getDataMethodPrivate = async (sector, id = null) => {
 		try {
 			const result = await axios.get(
 				`${process.env.REACT_APP_BASE_URL}/auth/me`,
-				{
-					headers,
-				}
+				headers
 			);
 			console.log(result);
 			return result;
@@ -96,16 +123,10 @@ const getDataMethodPrivate = async (sector, id = null) => {
 export default getDataMethodPrivate;
 
 function tokenFromLocalStorage() {
-	const noTokenValue = {
-		undefined: undefined,
-		null: null,
-	};
 	const token = window.localStorage.getItem('token');
-	if (!token || !noTokenValue[token]) {
+	if (!token || token === 'undefined') {
 		console.log('No token in local storage');
 		return null;
 	}
-	return {
-		Authorization: `Bearer ${token}`,
-	};
+	return `Bearer ${token}`;
 }

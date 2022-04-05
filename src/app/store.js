@@ -1,6 +1,7 @@
 import { configureStore } from '@reduxjs/toolkit';
 import counterReducer from '../features/counter/counterSlice';
 import usReducer from '../features/us/usSlice';
+import usersReducer from '../features/users/usersSlice';
 import slidesReducer from '../features/Slides/slideSlice';
 
 export default configureStore({
@@ -8,5 +9,7 @@ export default configureStore({
 		counter: counterReducer,
 		slides: slidesReducer,
     us: usReducer,
+    users: usersReducer,
+
 	},
 });
