@@ -42,4 +42,8 @@
 	--primary: #e0d7a3;
 	--secondary: #214763;
 	--tertiary: #a43750;
+	--fontTitle: 'Englebert', sans-serif;
+	--fontSubTitle: 'Raleway', sans-serif;
+	--fontShortText: 'Raleway', sans-serif; /* font-weigth: 500; */
+	--fontLongText: 'Oxygen', sans-serif;
 }
