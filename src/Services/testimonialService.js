@@ -11,7 +11,7 @@ export async function getAllTestimonials() {
 			process.env.REACT_APP_TESTIMONIAL_END_POINT
 		);
 		// Maneja el error y la alerta. La funcion se encuentra abajo de todo
-		handlError(data, 'No se pudieron mostrar los testimonios');
+		handleError(data, 'No se pudieron mostrar los testimonios');
 
 		return data;
 	} catch (error) {
@@ -26,7 +26,7 @@ export async function createTestimonial(contactData) {
 			contactData
 		);
 
-		handlError(data, 'Lo sentimos, no fue posible cargar los testimonios');
+		handleError(data, 'Lo sentimos, no fue posible cargar los testimonios');
 
 		return data;
 	} catch (err) {
@@ -41,7 +41,7 @@ export async function getTestimonialById(id) {
 			id
 		);
 
-		handlError(data, 'Lo sentimos, no fue posible mostrar los resultados');
+		handleError(data, 'Lo sentimos, no fue posible mostrar los resultados');
 
 		return data;
 	} catch (error) {
@@ -55,7 +55,7 @@ export async function updateTestimonial(id, contactData) {
 			contactData
 		);
 
-		handlError(data, 'Lo sentimos, no fue posible actualizar los testimonios');
+		handleError(data, 'Lo sentimos, no fue posible actualizar los testimonios');
 
 		return data;
 	} catch (error) {
@@ -69,7 +69,7 @@ export async function deleteTestimonial(id) {
 			url: `${process.env.REACT_APP_TESTIMONIAL_END_POINT}/${id}`,
 		});
 
-		handlError(data, 'Lo sentimos, no fue posible eliminar el testimonio');
+		handleError(data, 'Lo sentimos, no fue posible eliminar el testimonio');
 
 		return data;
 	} catch (error) {
@@ -84,7 +84,7 @@ export async function updateAllTestimonial(id, data) {
 			data
 		);
 
-		handlError(data, 'Lo sentimos, no fue posible actualizar los testimonios');
+		handleError(data, 'Lo sentimos, no fue posible actualizar los testimonios');
 
 		return response;
 	} catch (error) {
@@ -95,7 +95,7 @@ export async function updateAllTestimonial(id, data) {
 // esta funcion maneja y muestra el error por si la peticion falla
 // Solo se ejecuta si la condicion interna es verdadera
 
-const handlError = (data, message) => {
+const handleError = (data, message) => {
 	// se utiliza la propiedad "success" que devuelve el back par comprar si la peticion falla
 	if (data.success !== true) {
 		console.log('el Error se muestra Exitosamente');
