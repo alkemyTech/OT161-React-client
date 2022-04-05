@@ -1,4 +1,3 @@
-// import showAlert from '../shared/showAlert';
 import showAlert from '../shared/showAlert';
 import getDataMethodPrivate, {
 	privatePatchRequest,
