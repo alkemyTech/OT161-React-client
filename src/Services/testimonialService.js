@@ -4,6 +4,7 @@ import getDataMethodPrivate, {
 	privatePatchRequest,
 	privateDeleteRequest,
 	privatePostRequest,
+	privatePutRequest,
 } from './privateApiService';
 export async function getAllTestimonials() {
 	try {
@@ -74,6 +75,21 @@ export async function deleteTestimonial(id) {
 		return data;
 	} catch (error) {
 		return error;
+	}
+}
+
+export async function updateAllTestimonial(id, data) {
+	try {
+		const response = await privatePutRequest(
+			`${process.env.REACT_APP_TESTIMONIAL_END_POINT}/${id}`,
+			data
+		);
+
+		handlError(data, 'Lo sentimos, no fue posible actualizar los testimonios');
+
+		return response;
+	} catch (error) {
+		console.log(error);
 	}
 }
 
