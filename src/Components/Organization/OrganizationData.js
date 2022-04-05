@@ -13,6 +13,7 @@ function OrganizationData() {
 			const { data } = await getDataMethod(
 				process.env.REACT_APP_ORGANIZATION_ENDPOINT
 			);
+			console.log(data);
 			if (!data.success) return setStatusData('error');
 			setOrganization(data.data);
 			setStatusData('success');
