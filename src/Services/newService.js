@@ -1,4 +1,6 @@
+import showAlert from '../shared/showAlert';
 import getDataMethodPrivate, {privateDeleteRequest, privatePutRequest, privatePostRequest, privatePatchRequest
+
 
 } from './privateApiService';
 
@@ -8,6 +10,7 @@ const getNews = async () => {
 		const response = await getDataMethodPrivate(process.env.REACT_APP_NEWS_END_POINT);
 		return response;
 	} catch (error) {
+		showAlert({type: error, title:'Error', message:'Ha fallado: conseguir las novedades'})
 		console.log(error);
 	}
 };
@@ -18,6 +21,7 @@ const postNews = async (data) => {
 		const response = await privatePostRequest(process.env.REACT_APP_NEWS_END_POINT, data);
 		return response;
 	} catch (error) {
+		showAlert({type: error, title:'Error', message:'Ha fallado: subir la novedad'})
 		console.log(error);
 	}
 };
@@ -28,6 +32,7 @@ const getNewsId = async (id, data) => {
 		const response = await getDataMethodPrivate(`${process.env.REACT_APP_NEWS_END_POINT}/${id}`, data);
 		return response;
 	} catch (error) {
+		showAlert({type: error, title:'Error', message:`Ha fallado: conseguir la novedad ${id}`})
 		console.log(error);
 	}
 };
@@ -38,6 +43,7 @@ const putNews = async (id, data) => {
 		const response = await privatePutRequest(`${process.env.REACT_APP_NEWS_END_POINT}/${id}`, data);
 		return response;
 	} catch (error) {
+		showAlert({type: error, title:'Error', message:`Ha fallado: actualizar la novedad ${id}`})
 		console.log(error);
 	}
 }
@@ -48,9 +54,11 @@ const deleteNews = async (id, data) => {
 		const response = await privateDeleteRequest(`${process.env.REACT_APP_NEWS_END_POINT}/${id}`, data);
 		return response;
 	} catch (error) {
+		showAlert({type: error, title:'Error', message:`Ha fallado: actualizar la novedad ${id}`})
 		console.log(error);
 	}
 };
+
 
 
 // metodo patch
@@ -59,6 +67,7 @@ const patchNews = async (id, data) => {
 		const response = await privatePatchRequest(`${process.env.REACT_APP_NEWS_END_POINT}/${id}`, data);
 		return response;
 	} catch (error) {
+		showAlert({type: error, title:'Error', message:`Ha fallado: eliminar la novedad ${id}`})
 		console.log(error);
 	}
 };
