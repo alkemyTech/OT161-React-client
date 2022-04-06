@@ -12,6 +12,7 @@ import ToysCampaign from './Campaigns/Toys/ToysCampaign';
 import MembersForm from './Components/Members/MembersForm';
 import ProjectsForm from './Components/Projects/ProjectsForm';
 import RegisterForm from './Components/Auth/RegisterForm';
+import LoginForm from './Components/Auth/LoginForm';
 import OrganizationData from './Components/Organization/OrganizationData';
 import Dashboard from './Components/Dashboard/Dashboard';
 import NewsDetail from './Components/News/Detail/NewsDetail';
@@ -26,43 +27,57 @@ import UsersList from './Components/Users/UsersList';
 import ActivitiesList from './Components/Activities/ActivitiesList';
 import SliderList from './Components/Slides/SliderList';
 import ActivitiesDetail from './Components/Activities/Detail/ActivitiesDetail';
+import PrivateRoutes from './routes/private.routes';
 
 function App() {
 	return (
 		<BrowserRouter>
 			<Switch>
-				<Route path='/' exact component={Home} />
-				<Route path='/actividades/:id' component={ActivitiesDetail} />
-				<Route path='/actividades' component={Activities} />
-				<Route path='/auth/register' component={RegisterForm} />
-				<Route
+				<PrivateRoutes
 					path='/backoffice/activities/create'
 					component={ActivitiesForm}
 				/>
-				<Route path='/backoffice/create-category' component={CategoriesForm} />
-				<Route path='/backoffice/activities' component={ActivitiesList} />
-				<Route path='/backoffice/organization/edit' component={HomeForms} />
-				<Route path='/backoffice/news' component={NewsList} />
-				<Route path='/backoffice/create-news' component={NewsForm} />
-				<Route path='/backoffice/create-slide' component={SlidesForm} />
-				<Route path='/backoffice/slides' component={SliderList} />
-				<Route
+				<PrivateRoutes
+					path='/backoffice/create-category'
+					component={CategoriesForm}
+				/>
+				<PrivateRoutes path='/backoffice/create-news' component={NewsForm} />
+				<PrivateRoutes path='/backoffice/create-slide' component={SlidesForm} />
+				<PrivateRoutes
 					path='/backoffice/create-testimonials'
 					component={TestimonialForm}
 				/>
-				<Route path='/backoffice/organization' component={OrganizationData} />
-				<Route path='/backoffice/users' component={UsersList} />
-				<Route path='/backoffice/create-users' component={UserForm} />
-				<Route path='/contact' component={Contact} />
-				<Route path='/backoffice/create-member' component={MembersForm} />
-				<Route path='/backoffice' component={Dashboard} />
+				<PrivateRoutes
+					path='/backoffice/organization/edit'
+					component={HomeForms}
+				/>
+				<PrivateRoutes path='/backoffice/create-users' component={UserForm} />
+				<PrivateRoutes
+					path='/backoffice/create-member'
+					component={MembersForm}
+				/>
 				{/* <Route path='/backoffice/members/edit' component={MembersForm} /> */}
-				<Route path='/backoffice/create-project' component={ProjectsForm} />
+				<PrivateRoutes
+					path='/backoffice/create-project'
+					component={ProjectsForm}
+				/>
+				<Route path='/backoffice/organization' component={OrganizationData} />
+				<Route path='/backoffice/news' component={NewsList} />
+				<Route path='/backoffice/activities' component={ActivitiesList} />
+				<Route path='/backoffice/slides' component={SliderList} />
+				<Route path='/backoffice/users' component={UsersList} />
+				<Route path='/backoffice' component={Dashboard} />
+				<Route path='/auth/register' component={RegisterForm} />
+				<Route path='/auth/login' component={LoginForm} />
+				<Route path='/actividades/:id' component={ActivitiesDetail} />
+				<Route path='/novedades/:id' component={NewsDetail} />
+				<Route path='/actividades' component={Activities} />
 				<Route path='/school-campaign' component={SchoolCampaign} />
 				<Route path='/toys-campaign' component={ToysCampaign} />
-				<Route path='/novedades/:id' component={NewsDetail} />
 				<Route path='/novedades' component={NewsPage} />
 				<Route path='/nosotros' component={About} />
+				<Route path='/contact' component={Contact} />
+				<Route path='/' exact component={Home} />
 			</Switch>
 		</BrowserRouter>
 	);
