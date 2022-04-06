@@ -1,7 +1,5 @@
-
-import getDataMethodPrivate, {privateDeleteRequest, privatePutRequest, privatePostRequest, privatePatchRequest
-
-} from './privateApiService';
+import showAlert from '../shared/showAlert';
+import getDataMethodPrivate, {privateDeleteRequest, privatePutRequest, privatePostRequest, privatePatchRequest } from './privateApiService';
 
 // metodo get
 const getNews = async () => {
@@ -11,6 +9,7 @@ const getNews = async () => {
 		);
 		return response;
 	} catch (error) {
+		showAlert({type: error, title:'Error', message:'Ha fallado: conseguir las novedades'})
 		console.log(error);
 	}
 };
@@ -24,6 +23,7 @@ const postNews = async data => {
 		);
 		return response;
 	} catch (error) {
+		showAlert({type: error, title:'Error', message:'Ha fallado: subir la novedad'})
 		console.log(error);
 	}
 };
@@ -37,6 +37,7 @@ const getNewsId = async (id, data) => {
 		);
 		return response;
 	} catch (error) {
+		showAlert({type: error, title:'Error', message:`Ha fallado: conseguir la novedad ${id}`})
 		console.log(error);
 	}
 };
@@ -50,6 +51,7 @@ const putNews = async (id, data) => {
 		);
 		return response;
 	} catch (error) {
+		showAlert({type: error, title:'Error', message:`Ha fallado: actualizar la novedad ${id}`})
 		console.log(error);
 	}
 }
@@ -64,6 +66,7 @@ const deleteNews = async (id, data) => {
 		);
 		return response;
 	} catch (error) {
+		showAlert({type: error, title:'Error', message:`Ha fallado: actualizar la novedad ${id}`})
 		console.log(error);
 	}
 };
@@ -77,6 +80,7 @@ const patchNews = async (id, data) => {
 		);
 		return response;
 	} catch (error) {
+		showAlert({type: error, title:'Error', message:`Ha fallado: eliminar la novedad ${id}`})
 		console.log(error);
 	}
 };
