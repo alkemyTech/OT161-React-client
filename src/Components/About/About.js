@@ -2,8 +2,12 @@ import React, { useEffect, useState } from 'react';
 import ShowTitle from '../../shared/ShowTitle';
 import Members from './Members';
 import { getDataMethod } from '../../Services/publicApiService';
+import showAlert from '../../shared/showAlert';
+import Spinner from '../../shared/Spinner';
+
 const About = () => {
 	const [showDescription, setShowDescription] = useState('');
+	const [loading, setLoading] = useState(true);
 	const [error, setError] = useState({ text: '', valid: null });
 	const errorText = 'El texto no se pudo renderizar';
 
@@ -14,7 +18,10 @@ const About = () => {
 			setShowDescription(data.data.data.long_description);
 		} catch (error) {
 			console.log(error);
+			showAlert({ type: 'error', title: 'Error', message: errorText });
 			setError({ text: errorText, valid: true });
+		} finally {
+			setLoading(false);
 		}
 	};
 
@@ -31,6 +38,7 @@ const About = () => {
 				<div
 					dangerouslySetInnerHTML={{ __html: `<p>${showDescription}</p>` }}
 				></div>
+				{loading && <Spinner />}
 			</div>
 
 			<div>
