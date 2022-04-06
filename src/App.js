@@ -1,6 +1,6 @@
 import React from 'react';
 import './App.css';
-import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import { BrowserRouter, Route } from 'react-router-dom';
 import ActivitiesForm from './Components/Activities/ActivitiesForm';
 import CategoriesForm from './Components/Categories/CategoriesForm';
 import NewsForm from './Components/News/NewsForm';
@@ -26,11 +26,16 @@ import UsersList from './Components/Users/UsersList';
 import ActivitiesList from './Components/Activities/ActivitiesList';
 import SliderList from './Components/Slides/SliderList';
 import ActivitiesDetail from './Components/Activities/Detail/ActivitiesDetail';
-
+import { AnimatedSwitch } from 'react-router-transition';
 function App() {
 	return (
 		<BrowserRouter>
-			<Switch>
+			<AnimatedSwitch
+				atEnter={{ opacity: 0 }}
+				atLeave={{ opacity: 0 }}
+				atActive={{ opacity: 1 }}
+				className='switch-wrapper'
+			>
 				<Route path='/' exact component={Home} />
 				<Route path='/actividades/:id' component={ActivitiesDetail} />
 				<Route path='/actividades' component={Activities} />
@@ -63,7 +68,7 @@ function App() {
 				<Route path='/novedades/:id' component={NewsDetail} />
 				<Route path='/novedades' component={NewsPage} />
 				<Route path='/nosotros' component={About} />
-			</Switch>
+			</AnimatedSwitch>
 		</BrowserRouter>
 	);
 }
