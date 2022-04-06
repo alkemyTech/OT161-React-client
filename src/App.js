@@ -25,12 +25,14 @@ import NewsList from './Components/News/NewsList';
 import UsersList from './Components/Users/UsersList';
 import ActivitiesList from './Components/Activities/ActivitiesList';
 import SliderList from './Components/Slides/SliderList';
+import ActivitiesDetail from './Components/Activities/Detail/ActivitiesDetail';
 
 function App() {
 	return (
 		<BrowserRouter>
 			<Switch>
 				<Route path='/' exact component={Home} />
+				<Route path='/actividades/:id' component={ActivitiesDetail} />
 				<Route path='/actividades' component={Activities} />
 				<Route path='/auth/register' component={RegisterForm} />
 				<Route path='/create-activity' component={ActivitiesForm} />
