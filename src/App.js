@@ -28,6 +28,7 @@ import ActivitiesList from './Components/Activities/ActivitiesList';
 import SliderList from './Components/Slides/SliderList';
 import ActivitiesDetail from './Components/Activities/Detail/ActivitiesDetail';
 import PrivateRoutes from './routes/private.routes';
+import ProtectedRoutes from './routes/protected.routes';
 
 function App() {
 	return (
@@ -61,12 +62,18 @@ function App() {
 					path='/backoffice/create-project'
 					component={ProjectsForm}
 				/>
-				<Route path='/backoffice/organization' component={OrganizationData} />
-				<Route path='/backoffice/news' component={NewsList} />
-				<Route path='/backoffice/activities' component={ActivitiesList} />
-				<Route path='/backoffice/slides' component={SliderList} />
-				<Route path='/backoffice/users' component={UsersList} />
-				<Route path='/backoffice' component={Dashboard} />
+				<ProtectedRoutes
+					path='/backoffice/organization'
+					component={OrganizationData}
+				/>
+				<ProtectedRoutes path='/backoffice/news' component={NewsList} />
+				<ProtectedRoutes
+					path='/backoffice/activities'
+					component={ActivitiesList}
+				/>
+				<ProtectedRoutes path='/backoffice/slides' component={SliderList} />
+				<ProtectedRoutes path='/backoffice/users' component={UsersList} />
+				<ProtectedRoutes path='/backoffice' component={Dashboard} />
 				<Route path='/auth/register' component={RegisterForm} />
 				<Route path='/auth/login' component={LoginForm} />
 				<Route path='/actividades/:id' component={ActivitiesDetail} />
