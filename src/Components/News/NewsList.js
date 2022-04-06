@@ -1,30 +1,31 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import '../CardListStyles.css';
 import { Link } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { getNewsData, newsSelector } from '../../features/news/newSlice';
+import Spinner from '../../shared/Spinner';
+import showAlert from '../../shared/showAlert';
 const NewsList = () => {
-	const newsMock = [
-		{
-			id: 2,
-			image:
-				'https://e.rpp-noticias.io/normal/2022/01/25/1207263fjxxrjnwqaewpn-jpg.jpg',
-			name: 'Titulo de prueba and my favorite title of my history worldly',
-			createdAt: '2022-18-03',
-		},
-		{
-			id: 1,
-			image:
-				'https://e.rpp-noticias.io/normal/2022/01/25/1207263fjxxrjnwqaewpn-jpg.jpg',
-			name: 'Titulo de prueba',
-			createdAt: '2022-18-03',
-		},
-		{
-			id: 3,
-			image:
-				'https://e.rpp-noticias.io/normal/2022/01/25/1207263fjxxrjnwqaewpn-jpg.jpg',
-			name: 'Titulo de prueba',
-			createdAt: '2022-18-03',
-		},
-	];
+	const dispatch = useDispatch();
+	const news = useSelector(newsSelector);
+
+	const newsStatus = useSelector(states => states.news);
+
+	console.log(news);
+
+	useEffect(() => {
+		if (newsStatus.status === 'idle') {
+			dispatch(getNewsData());
+		}
+	}, [newsStatus, dispatch]);
+
+	if (newsStatus.status === 'failed') {
+		showAlert({
+			type: 'error',
+			title: 'Ups, hubo un error',
+			message: 'No fue posible mostrar las novedades, intentelo mas tarde',
+		});
+	}
 
 	return (
 		<section>
@@ -45,15 +46,16 @@ const NewsList = () => {
 					<th>Creado el</th>
 					<th>Opciones</th>
 				</tr>
-				{newsMock.length > 0 ? (
-					newsMock.map(element => {
+				{newsStatus.status === 'loading' && <Spinner />}
+				{newsStatus.status === 'succeeded' &&
+					news.news.data.map(element => {
 						return (
 							<tr key={element.id}>
 								<td>
 									<img src={element.image} alt={element.name} />
 								</td>
 								<td className='title'>{element.name}</td>
-								<td>{element.createdAt}</td>
+								<td>{element.created_at}</td>
 								<td className='options'>
 									<button>
 										<i className='fa-solid fa-pencil'></i>
@@ -64,10 +66,7 @@ const NewsList = () => {
 								</td>
 							</tr>
 						);
-					})
-				) : (
-					<p>No hay novedades</p>
-				)}
+					})}
 			</table>
 		</section>
 	);

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import ShowTitle from '../../shared/ShowTitle';
-// import Members from './Members';
+import Members from './Members';
 import { getDataMethod } from '../../Services/publicApiService';
 const About = () => {
 	const [showDescription, setShowDescription] = useState('');
@@ -36,7 +36,7 @@ const About = () => {
 			<div>
 				<h1>Miembros</h1>
 				<p>Conoce a los valiosos miembros de nuestra ONG</p>
-				{/* <Members /> */}
+				<Members />
 			</div>
 		</section>
 	);

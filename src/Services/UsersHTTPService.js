@@ -26,7 +26,7 @@ const createUser = async (data) => {
 const getUser = async (id, data = null) => {
     try {
         const response = await getDataMethodPrivate(`/users/${id}`, data)
-        return response
+        return response.data
     } catch (error) {
         console.error(error);
     }
