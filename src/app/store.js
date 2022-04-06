@@ -1,7 +1,7 @@
 import { configureStore } from '@reduxjs/toolkit';
 import counterReducer from '../features/counter/counterSlice';
+import usReducer from '../features/us/usReducer';
 import newsReducer from '../features/news/newSlice';
-import usReducer from '../features/us/usSlice';
 import usersReducer from '../features/users/usersSlice';
 import slidesReducer from '../features/Slides/slideSlice';
 import activitiesReducer from '../features/activities/activitiesSlice';
