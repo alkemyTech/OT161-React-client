@@ -26,6 +26,7 @@ import UsersList from './Components/Users/UsersList';
 import ActivitiesList from './Components/Activities/ActivitiesList';
 import SliderList from './Components/Slides/SliderList';
 import ActivitiesDetail from './Components/Activities/Detail/ActivitiesDetail';
+import PageNotFound from './Components/Shared/PageNotFound';
 
 function App() {
 	return (
@@ -63,6 +64,7 @@ function App() {
 				<Route path='/novedades/:id' component={NewsDetail} />
 				<Route path='/novedades' component={NewsPage} />
 				<Route path='/nosotros' component={About} />
+				<Route path='*' component={PageNotFound} />
 			</Switch>
 		</BrowserRouter>
 	);
