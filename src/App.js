@@ -26,6 +26,7 @@ import UsersList from './Components/Users/UsersList';
 import ActivitiesList from './Components/Activities/ActivitiesList';
 import SliderList from './Components/Slides/SliderList';
 import ActivitiesDetail from './Components/Activities/Detail/ActivitiesDetail';
+import PublicRoute from './routes/PublicRoute';
 
 function App() {
 	return (
@@ -34,7 +35,7 @@ function App() {
 				<Route path='/' exact component={Home} />
 				<Route path='/actividades/:id' component={ActivitiesDetail} />
 				<Route path='/actividades' component={Activities} />
-				<Route path='/auth/register' component={RegisterForm} />
+				<PublicRoute path='/auth/register' component={RegisterForm} />
 				<Route
 					path='/backoffice/activities/create'
 					component={ActivitiesForm}
