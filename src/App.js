@@ -12,6 +12,7 @@ import ToysCampaign from './Campaigns/Toys/ToysCampaign';
 import MembersForm from './Components/Members/MembersForm';
 import ProjectsForm from './Components/Projects/ProjectsForm';
 import RegisterForm from './Components/Auth/RegisterForm';
+import LoginForm from './Components/Auth/LoginForm';
 import OrganizationData from './Components/Organization/OrganizationData';
 import Dashboard from './Components/Dashboard/Dashboard';
 import NewsDetail from './Components/News/Detail/NewsDetail';
@@ -26,6 +27,7 @@ import UsersList from './Components/Users/UsersList';
 import ActivitiesList from './Components/Activities/ActivitiesList';
 import SliderList from './Components/Slides/SliderList';
 import ActivitiesDetail from './Components/Activities/Detail/ActivitiesDetail';
+import PublicRoute from './routes/PublicRoute';
 
 function App() {
 	return (
@@ -35,6 +37,7 @@ function App() {
 				<Route path='/actividades/:id' component={ActivitiesDetail} />
 				<Route path='/actividades' component={Activities} />
 				<Route path='/auth/register' component={RegisterForm} />
+				<PublicRoute path='/auth/login' component={LoginForm} />
 				<Route
 					path='/backoffice/activities/create'
 					component={ActivitiesForm}
