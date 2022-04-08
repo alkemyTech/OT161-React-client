@@ -27,6 +27,7 @@ import UsersList from './Components/Users/UsersList';
 import ActivitiesList from './Components/Activities/ActivitiesList';
 import SliderList from './Components/Slides/SliderList';
 import ActivitiesDetail from './Components/Activities/Detail/ActivitiesDetail';
+import PageNotFound from './Components/Shared/PageNotFound';
 import PublicRoute from './routes/PublicRoute';
 import { AnimatedSwitch } from 'react-router-transition';
 import PrivateRoutes from './routes/private.routes';
@@ -95,6 +96,7 @@ function App() {
 				<Route path='/nosotros' component={About} />
         <Route path='/contact' component={Contact} />
 				<Route path='/' exact component={Home} />
+        <Route path='*' component={PageNotFound} />
 			</AnimatedSwitch>
 		</BrowserRouter>
 	);
