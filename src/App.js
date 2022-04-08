@@ -27,6 +27,7 @@ import UsersList from './Components/Users/UsersList';
 import ActivitiesList from './Components/Activities/ActivitiesList';
 import SliderList from './Components/Slides/SliderList';
 import ActivitiesDetail from './Components/Activities/Detail/ActivitiesDetail';
+import PublicRoute from './routes/PublicRoute';
 import { AnimatedSwitch } from 'react-router-transition';
 import PrivateRoutes from './routes/private.routes';
 import ProtectedRoutes from './routes/protected.routes';
@@ -44,6 +45,7 @@ function App() {
 				<Route path='/actividades/:id' component={ActivitiesDetail} />
 				<Route path='/actividades' component={Activities} />
 				<Route path='/auth/register' component={RegisterForm} />
+				<PublicRoute path='/auth/login' component={LoginForm} />
 				<Route
 					path='/backoffice/activities/create'
 					component={ActivitiesForm}
