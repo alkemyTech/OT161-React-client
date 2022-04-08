@@ -37,7 +37,14 @@
 		transform: translateY(0px);
 	}
 }
+.switch-wrapper {
+	position: relative;
+}
 
+.switch-wrapper > div {
+	position: absolute;
+	width: 100%;
+}
 :root {
 	--primary: #e0d7a3;
 	--secondary: #214763;
