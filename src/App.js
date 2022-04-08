@@ -44,7 +44,6 @@ function App() {
 				<Route path='/' exact component={Home} />
 				<Route path='/actividades/:id' component={ActivitiesDetail} />
 				<Route path='/actividades' component={Activities} />
-				<Route path='/auth/register' component={RegisterForm} />
 				<PublicRoute path='/auth/login' component={LoginForm} />
 				<Route
 					path='/backoffice/activities/create'
@@ -87,7 +86,6 @@ function App() {
 				<ProtectedRoutes path='/backoffice/users' component={UsersList} />
 				<ProtectedRoutes path='/backoffice' component={Dashboard} />
 				<Route path='/auth/register' component={RegisterForm} />
-				<Route path='/auth/login' component={LoginForm} />
 				<Route path='/actividades/:id' component={ActivitiesDetail} />
 				<Route path='/novedades/:id' component={NewsDetail} />
 				<Route path='/actividades' component={Activities} />
