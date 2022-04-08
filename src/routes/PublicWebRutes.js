@@ -17,7 +17,7 @@ const PublicWebRutes = () => {
 	return (
 		<Switch>
 			<PublicRoute path='/auth/login' component={LoginForm} />
-			<Route path='/auth/register' component={RegisterForm} />
+			<PublicRoute path='/auth/register' component={RegisterForm} />
 			<Route path='/actividades/:id' component={ActivitiesDetail} />
 			<Route path='/novedades/:id' component={NewsDetail} />
 			<Route path='/actividades' component={Activities} />
