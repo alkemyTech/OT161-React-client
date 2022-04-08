@@ -1,6 +1,6 @@
 import React from 'react';
 import './App.css';
-import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import { BrowserRouter, Route } from 'react-router-dom';
 import ActivitiesForm from './Components/Activities/ActivitiesForm';
 import CategoriesForm from './Components/Categories/CategoriesForm';
 import NewsForm from './Components/News/NewsForm';
@@ -27,13 +27,26 @@ import UsersList from './Components/Users/UsersList';
 import ActivitiesList from './Components/Activities/ActivitiesList';
 import SliderList from './Components/Slides/SliderList';
 import ActivitiesDetail from './Components/Activities/Detail/ActivitiesDetail';
+import PageNotFound from './Components/Shared/PageNotFound';
+import PublicRoute from './routes/PublicRoute';
+import { AnimatedSwitch } from 'react-router-transition';
 import PrivateRoutes from './routes/private.routes';
+import ProtectedRoutes from './routes/protected.routes';
 
 function App() {
 	return (
 		<BrowserRouter>
-			<Switch>
-				<PrivateRoutes
+			<AnimatedSwitch
+				atEnter={{ opacity: 0 }}
+				atLeave={{ opacity: 0 }}
+				atActive={{ opacity: 1 }}
+				className='switch-wrapper'
+			>
+				<Route path='/' exact component={Home} />
+				<Route path='/actividades/:id' component={ActivitiesDetail} />
+				<Route path='/actividades' component={Activities} />
+				<PublicRoute path='/auth/login' component={LoginForm} />
+				<Route
 					path='/backoffice/activities/create'
 					component={ActivitiesForm}
 				/>
@@ -61,14 +74,19 @@ function App() {
 					path='/backoffice/create-project'
 					component={ProjectsForm}
 				/>
-				<Route path='/backoffice/organization' component={OrganizationData} />
-				<Route path='/backoffice/news' component={NewsList} />
-				<Route path='/backoffice/activities' component={ActivitiesList} />
-				<Route path='/backoffice/slides' component={SliderList} />
-				<Route path='/backoffice/users' component={UsersList} />
-				<Route path='/backoffice' component={Dashboard} />
+				<ProtectedRoutes
+					path='/backoffice/organization'
+					component={OrganizationData}
+				/>
+				<ProtectedRoutes path='/backoffice/news' component={NewsList} />
+				<ProtectedRoutes
+					path='/backoffice/activities'
+					component={ActivitiesList}
+				/>
+				<ProtectedRoutes path='/backoffice/slides' component={SliderList} />
+				<ProtectedRoutes path='/backoffice/users' component={UsersList} />
+				<ProtectedRoutes path='/backoffice' component={Dashboard} />
 				<Route path='/auth/register' component={RegisterForm} />
-				<Route path='/auth/login' component={LoginForm} />
 				<Route path='/actividades/:id' component={ActivitiesDetail} />
 				<Route path='/novedades/:id' component={NewsDetail} />
 				<Route path='/actividades' component={Activities} />
@@ -76,9 +94,10 @@ function App() {
 				<Route path='/toys-campaign' component={ToysCampaign} />
 				<Route path='/novedades' component={NewsPage} />
 				<Route path='/nosotros' component={About} />
-				<Route path='/contact' component={Contact} />
+        <Route path='/contact' component={Contact} />
 				<Route path='/' exact component={Home} />
-			</Switch>
+        <Route path='*' component={PageNotFound} />
+			</AnimatedSwitch>
 		</BrowserRouter>
 	);
 }
