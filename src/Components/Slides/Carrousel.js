@@ -20,27 +20,16 @@ const Carrousel = () => {
     getData()
   }, [])
 
-
   const [current, setCurrent] = useState(0);
   const length = slides.length;
 
-
-  // const nextSlide = () => {
-  //   setCurrent(current === length - 1 ? 0 : current + 1);
-  // };
-  // const prevSlide = () => {
-  //   setCurrent(current === 0 ? length - 1 : current - 1);
-  // };
   function changeSlide(x) {
+    const next = current === length - 1 ? 0 : current + 1
+    const previous = current === 0 ? length - 1 : current - 1
+    
     setCurrent(
-      x < 0 ?
-        current === length - 1 ?
-          0 : current + 1
-        :
-        current === 0 ?
-          length - 1 : current - 1
+      x < 0 ? next : previous
     )
-
   }
   
   useEffect(() => {
@@ -68,7 +57,7 @@ const Carrousel = () => {
           <div key={index}>
             {index === current && (
               <div className="mySlides fade">
-                <h2 className="carrousel-title">{parser(slide.title)}</h2>
+                <h2 className="carrousel-title">{parser(slide.name)}</h2>
                 <div className="carrousel-image-container">
                   <img src={slide.image} alt="img" className="carrousel-image" />
                 </div>
