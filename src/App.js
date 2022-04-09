@@ -29,7 +29,7 @@ import ActivitiesDetail from './Components/Activities/Detail/ActivitiesDetail';
 
 function App() {
 	return (
-		<BrowserRouter>
+		<BrowserRouter className='brows'>
 			<Switch>
 				<Route path='/' exact component={Home} />
 				<Route path='/actividades/:id' component={ActivitiesDetail} />
