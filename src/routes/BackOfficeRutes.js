@@ -1,5 +1,4 @@
 import React from 'react';
-import { Switch } from 'react-router-dom';
 import ActivitiesForm from '../Components/Activities/ActivitiesForm';
 import CategoriesForm from '../Components/Categories/CategoriesForm';
 import NewsForm from '../Components/News/NewsForm';
@@ -17,10 +16,16 @@ import ActivitiesList from '../Components/Activities/ActivitiesList';
 import SliderList from '../Components/Slides/SliderList';
 import PrivateRoutes from './private.routes';
 import ProtectedRoutes from './protected.routes';
+import { AnimatedSwitch } from 'react-router-transition';
 
 const BackOfficeRutes = () => {
 	return (
-		<Switch>
+		<AnimatedSwitch
+			atEnter={{ opacity: 0 }}
+			atLeave={{ opacity: 0 }}
+			atActive={{ opacity: 1 }}
+			className='switch-wrapper'
+		>
 			<PrivateRoutes
 				path='/backoffice/activities/create'
 				component={ActivitiesForm}
@@ -58,7 +63,7 @@ const BackOfficeRutes = () => {
 			<ProtectedRoutes path='/backoffice/slides' component={SliderList} />
 			<ProtectedRoutes path='/backoffice/users' component={UsersList} />
 			<ProtectedRoutes path='/backoffice' component={Dashboard} />
-		</Switch>
+		</AnimatedSwitch>
 	);
 };
 

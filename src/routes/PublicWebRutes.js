@@ -1,5 +1,6 @@
 import React from 'react';
-import { Route, Switch } from 'react-router-dom';
+import { Route } from 'react-router-dom';
+import { AnimatedSwitch } from 'react-router-transition';
 import SchoolCampaign from '../Campaigns/School/SchoolCampaign';
 import ToysCampaign from '../Campaigns/Toys/ToysCampaign';
 import About from '../Components/About/About';
@@ -15,7 +16,12 @@ import PageNotFound from '../Components/Shared/PageNotFound';
 import PublicRoute from './PublicRoute';
 const PublicWebRutes = () => {
 	return (
-		<Switch>
+		<AnimatedSwitch
+			atEnter={{ opacity: 0 }}
+			atLeave={{ opacity: 0 }}
+			atActive={{ opacity: 1 }}
+			className='switch-wrapper'
+		>
 			<PublicRoute path='/auth/login' component={LoginForm} />
 			<PublicRoute path='/auth/register' component={RegisterForm} />
 			<Route path='/actividades/:id' component={ActivitiesDetail} />
@@ -28,7 +34,7 @@ const PublicWebRutes = () => {
 			<Route path='/contact' component={Contact} />
 			<Route path='/' exact component={Home} />
 			<Route path='*' component={PageNotFound} />
-		</Switch>
+		</AnimatedSwitch>
 	);
 };
 
