@@ -3,22 +3,17 @@ import './App.css';
 import { BrowserRouter, Route } from 'react-router-dom';
 import PublicWebRutes from './routes/PublicWebRutes';
 import BackOfficeRutes from './routes/BackOfficeRutes';
-import { AnimatedSwitch } from 'react-router-transition';
+import TransitionSwitch from './shared/TransitionSwitch';
 
 function App() {
 	return (
 		<BrowserRouter>
-			<AnimatedSwitch
-				atEnter={{ opacity: 0 }}
-				atLeave={{ opacity: 0 }}
-				atActive={{ opacity: 1 }}
-				className='switch-wrapper'
-			>
+			<TransitionSwitch>
 				<Route>
 					<PublicWebRutes />
 					<BackOfficeRutes />
 				</Route>
-			</AnimatedSwitch>
+			</TransitionSwitch>
 		</BrowserRouter>
 	);
 }

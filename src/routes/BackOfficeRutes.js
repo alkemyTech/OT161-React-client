@@ -16,16 +16,11 @@ import ActivitiesList from '../Components/Activities/ActivitiesList';
 import SliderList from '../Components/Slides/SliderList';
 import PrivateRoutes from './private.routes';
 import ProtectedRoutes from './protected.routes';
-import { AnimatedSwitch } from 'react-router-transition';
+import TransitionSwitch from '../shared/TransitionSwitch';
 
 const BackOfficeRutes = () => {
 	return (
-		<AnimatedSwitch
-			atEnter={{ opacity: 0 }}
-			atLeave={{ opacity: 0 }}
-			atActive={{ opacity: 1 }}
-			className='switch-wrapper'
-		>
+		<TransitionSwitch>
 			<PrivateRoutes
 				path='/backoffice/activities/create'
 				component={ActivitiesForm}
@@ -63,7 +58,7 @@ const BackOfficeRutes = () => {
 			<ProtectedRoutes path='/backoffice/slides' component={SliderList} />
 			<ProtectedRoutes path='/backoffice/users' component={UsersList} />
 			<ProtectedRoutes path='/backoffice' component={Dashboard} />
-		</AnimatedSwitch>
+		</TransitionSwitch>
 	);
 };
 
