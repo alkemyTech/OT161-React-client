@@ -1,6 +1,6 @@
 import React from 'react'
 import Novedades from './Novedades'
-import Slider from './Slider'
+import Carrousel from '../../Components/Slides/Carrousel'
 
 const Home = () => {
   return (
@@ -8,7 +8,7 @@ const Home = () => {
         {/* Este texto viene del endpoint de datos públicos */}
        <h1>Texto de Bienvenida</h1>
        <div>
-           <Slider />
+           <Carrousel />
        </div>
        <div>
            <Novedades />

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "./carrousel.css";
-import getDataMethod from '../../Services/publicApiService'
+import { getDataMethod } from '../../Services/publicApiService'
 import parser from "html-react-parser";
 
 const Carrousel = () => {

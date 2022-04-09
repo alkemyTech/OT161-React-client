@@ -26,7 +26,7 @@ const authSlice = createSlice({
 		[getUserAuthenticated.pending]: (state, action) => {
 			state.isLoading = true;
 		},
-		[getUserAuthenticated.data]: (state, action) => {
+		[getUserAuthenticated.login]: (state, action) => {
 			state.user = action.payload;
 			state.isAuthenticated = true;
 			state.token = action.payload.token;
