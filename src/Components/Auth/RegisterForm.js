@@ -1,10 +1,15 @@
 import { Formik, Form, Field, ErrorMessage } from 'formik';
-import React from 'react';
+import React, { useState } from 'react';
 import Popup from 'reactjs-popup';
 import 'reactjs-popup/dist/index.css';
 import '../FormStyles.css';
+import './RegisterForm.css';
+import { Document, Page } from 'react-pdf/dist/esm/entry.webpack';
+import pdf from './terminosycondiciones.pdf';
 
 const RegisterForm = () => {
+	const [acceptedTerms, setAcceptedTerms] = useState(false);
+
 	return (
 		<>
 			<Formik
@@ -14,8 +19,12 @@ const RegisterForm = () => {
 					confirmPassword: '',
 				}}
 				onSubmit={(values, { resetForm }) => {
-					resetForm();
-					console.log(values);
+					if (acceptedTerms !== true) {
+						console.log('noo');
+					} else {
+						resetForm();
+						console.log(values);
+					}
 				}}
 				validate={values => {
 					const errors = {};
@@ -47,6 +56,7 @@ const RegisterForm = () => {
 					} else if (!(values.confirmPassword === values.password)) {
 						errors.confirmPassword = 'Ambas contraseñas deben coincidir';
 					}
+
 					return errors;
 				}}
 			>
@@ -90,7 +100,41 @@ const RegisterForm = () => {
 								</div>
 							)}
 						/>
-						<PopupExample />
+						<Popup
+							trigger={<p>Leer terminos y condiciones</p>}
+							modal
+							position='right center'
+						>
+							{close => (
+								<div className='modal'>
+									<div className='content'>
+										<Document file={pdf}>
+											<Page pageNumber={1} />
+										</Document>
+									</div>
+									<div className='actions'>
+										<button
+											onClick={() => {
+												setAcceptedTerms(true);
+												close();
+											}}
+										>
+											Aceptar
+										</button>
+										<button
+											className='button'
+											onClick={() => {
+												setAcceptedTerms(false);
+												console.log('modal closed ');
+												close();
+											}}
+										>
+											Cancelar
+										</button>
+									</div>
+								</div>
+							)}
+						</Popup>
 						<button className='submit-btn' type='submit'>
 							Log In
 						</button>
@@ -102,33 +146,3 @@ const RegisterForm = () => {
 };
 
 export default RegisterForm;
-
-const PopupExample = () => (
-	<Popup
-		trigger={<p>Leer terminos y condiciones</p>}
-		modal
-		position='right center'
-	>
-		{close => (
-			<div className='modal'>
-				<button className='close' onClick={close}>
-					&times;
-				</button>
-				<div className='header'> Modal Title </div>
-				<div className='content'></div>
-				<div className='actions'>
-					<button>Aceptar</button>
-					<button
-						className='button'
-						onClick={() => {
-							console.log('modal closed ');
-							close();
-						}}
-					>
-						Cancelar
-					</button>
-				</div>
-			</div>
-		)}
-	</Popup>
-);
