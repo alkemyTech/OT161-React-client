@@ -4,13 +4,13 @@ import FooterPublic from './FooterPublic/FooterPublic';
 import PropTypes from 'prop-types';
 const LayoutPublic = ({ children }) => {
 	return (
-		<main>
+		<>
 			<HeaderPublic />
-			<section>
+			<main>
                 {children}
-            </section>
+            </main>
 			<FooterPublic />
-		</main>
+		</>
 	);
 };
 

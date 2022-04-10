@@ -9,17 +9,20 @@ import {
   TiSocialTwitter,
   TiSocialLinkedin
 } from "react-icons/ti";
-import { getDataMethod } from "../../Services/publicApiService";
+import { getDataMethod } from "../../../Services/publicApiService";
+
 const FooterPublic = () => {
 
    
   const[data, setData] =useState([])
 
   const getData = async () => {
-    const info = await getDataMethod('organization')
-  
+    try{
+    const info = await getDataMethod(process.env.REACT_APP_ORGANIZATION_ENDPOINT) 
     setData(info.data.data)
-   
+    } catch(error){
+      console.error(error)
+    }
   }
   useEffect(()=>{
       getData()
