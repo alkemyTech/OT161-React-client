@@ -3,12 +3,14 @@ import React, { useState } from 'react';
 import Popup from 'reactjs-popup';
 import 'reactjs-popup/dist/index.css';
 import '../FormStyles.css';
-import './RegisterForm.css';
 import { Document, Page } from 'react-pdf/dist/esm/entry.webpack';
 import pdf from './terminosycondiciones.pdf';
 
 const RegisterForm = () => {
-	const [acceptedTerms, setAcceptedTerms] = useState(false);
+	const [acceptedTerms, setAcceptedTerms] = useState({
+		errorMsg: '',
+		validate: false,
+	});
 
 	return (
 		<>
@@ -19,7 +21,7 @@ const RegisterForm = () => {
 					confirmPassword: '',
 				}}
 				onSubmit={(values, { resetForm }) => {
-					if (acceptedTerms !== true) {
+					if (acceptedTerms.validate === false) {
 						console.log('noo');
 					} else {
 						resetForm();
@@ -115,7 +117,7 @@ const RegisterForm = () => {
 									<div className='actions'>
 										<button
 											onClick={() => {
-												setAcceptedTerms(true);
+												setAcceptedTerms({ validate: true });
 												close();
 											}}
 										>
@@ -124,7 +126,7 @@ const RegisterForm = () => {
 										<button
 											className='button'
 											onClick={() => {
-												setAcceptedTerms(false);
+												setAcceptedTerms({ validate: false });
 												console.log('modal closed ');
 												close();
 											}}
