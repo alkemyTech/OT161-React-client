@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { getDataMethod } from '../../Services/publicApiService';
+import LayoutPublic from '../LayoutPublic/LayoutPublic';
 import DataContact from './DataContact';
 
 const Contact = () => {
@@ -15,7 +16,8 @@ const Contact = () => {
 	}, []);
 
 	return (
-		<div>
+		<>
+		<LayoutPublic>
 			{dataContact && (
 				<DataContact
 					titleContact='Contacto'
@@ -28,7 +30,8 @@ const Contact = () => {
 					twitter={dataContact.twitter_url}
 				/>
 			)}
-		</div>
+		</LayoutPublic>
+		</>
 	);
 };
 
