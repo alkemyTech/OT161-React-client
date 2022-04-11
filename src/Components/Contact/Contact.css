@@ -36,3 +36,8 @@
 	font-size: 1.3em;
 	color: var(--tertiary);
 }
+
+.contact_showtitle img {
+	width: 100vw;
+	height: 250px;
+}

@@ -3,12 +3,12 @@ import { getDataMethod } from '../../Services/publicApiService';
 import ContactForm from './ContactForm';
 import DataContact from './DataContact';
 import ShowTitle from '../../shared/ShowTitle';
+import contactImage from '../../assets/image-contact.png';
 
 const Contact = () => {
 	const [dataContact, setDataContact] = useState([]);
 	const contactONG = async () => {
 		const data = await getDataMethod('organization');
-		console.log('data:', data.data.data);
 		setDataContact(data.data.data);
 	};
 
@@ -18,8 +18,10 @@ const Contact = () => {
 
 	return (
 		<div className='contact_container'>
-			<div>
-				<ShowTitle patchData={{ title: 'Contacte con nosotros' }} />
+			<div className='contact_showtitle'>
+				<ShowTitle
+					patchData={{ title: 'Contacte con nosotros', image: contactImage }}
+				/>
 			</div>
 			<ContactForm />
 			{dataContact && (
