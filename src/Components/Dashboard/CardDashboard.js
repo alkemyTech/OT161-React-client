@@ -8,7 +8,7 @@ const CardDashboard = ({ title, icon, link }) => {
 
 	CardDashboard.propTypes = {
 		title: PropTypes.string,
-		icon: PropTypes.string,
+		icon: PropTypes.object,
 		link: PropTypes.string,
 	};
 
@@ -19,14 +19,7 @@ const CardDashboard = ({ title, icon, link }) => {
 	return (
 		<div className={styles.containerCard}>
 			<h3 className={styles.title}>{title}</h3>
-			<i
-				className={icon}
-				style={{
-					width: '100px',
-					height: 'auto',
-					padding: '10px',
-				}}
-			></i>
+			<span className={styles.icon}>{icon}</span>
 			<button onClick={linked} className={styles.btn}>
 				Ir
 			</button>

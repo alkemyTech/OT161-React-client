@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { NavLink, Link } from 'react-router-dom';
 import './headerPublic.css';
-import logo from '../../assets/LOGO-SOMOS MAS.png';
+import logo from '../../../assets/LOGO-SOMOS MAS.png';
 const HeaderPublic = () => {
 	window.onload = () => {
 		const hamburger = document.querySelector('.hamburger');

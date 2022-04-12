@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import * as yup from 'yup';
 import { ErrorMessage, Formik, Field } from 'formik';
 import { createContact } from '../../Services/contactService';
+import './Contact.css';
 
 const ContactForm = () => {
 	const [contactStatus, setContactStatus] = useState('idle');
@@ -21,7 +22,7 @@ const ContactForm = () => {
 		message: yup.string().required('Se requiere un mensaje'),
 	});
 	return (
-		<div>
+		<div className='contactform_container'>
 			<Formik
 				initialValues={{
 					name: '',
@@ -59,7 +60,7 @@ const ContactForm = () => {
 							name='name'
 							id='name'
 							type='text'
-							placeholder='Name'
+							placeholder='Nombre'
 							value={values.name}
 							onChange={handleChange}
 							onBlur={handleBlur}
@@ -84,7 +85,7 @@ const ContactForm = () => {
 							name='phone'
 							id='phone'
 							type='number'
-							placeholder='Phone'
+							placeholder='Teléfono'
 							value={values.phone}
 							onChange={handleChange}
 							onBlur={handleBlur}
@@ -96,7 +97,7 @@ const ContactForm = () => {
 							name='message'
 							id='message'
 							type='text'
-							placeholder='Message'
+							placeholder='Escriba su consulta'
 							value={values.message}
 							onChange={handleChange}
 							onBlur={handleBlur}

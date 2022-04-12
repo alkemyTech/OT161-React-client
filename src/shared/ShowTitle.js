@@ -1,11 +1,15 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 
 const ShowTitle = ({ patchData }) => {
 	const [previewImage, setPreviewImage] = useState(patchData?.image || null);
-	if (patchData?.image) {
-		setPreviewImage(patchData?.image);
-	}
+
+	useEffect(() => {
+		if (patchData?.image) {
+			setPreviewImage(patchData?.image);
+		}
+	}, [previewImage]);
+
 	return (
 		<>
 			<h1>{patchData.title}</h1>
