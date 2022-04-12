@@ -29,7 +29,7 @@ export default function NewsPage() {
 
 	return (
 		<LayoutPublic>
-			<section className='news__detail'>
+			<section className='news'>
 				<ShowTitle patchData={{ title: 'Novedades' }} />
 				<section className='news__container'>
 					{newsStatus === 'loading' && <Spinner />}
@@ -46,7 +46,8 @@ export default function NewsPage() {
 						))}
 				</section>
 
-				<section className='news__detail--video'>
+				<section className='news__video'>
+					<header>Ultimo evento</header>
 					<CustomReactPlayer url='https://www.youtube.com/watch?v=4YnSk1gI_Oo' />
 				</section>
 			</section>

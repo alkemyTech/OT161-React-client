@@ -1,4 +1,4 @@
-.news__detail {
+.news {
 	position: relative;
 	display: flex;
 	flex-direction: column;
@@ -7,15 +7,18 @@
 	width: 100%;
 	color: #214763;
 }
-.news__detail h1 {
+.news h1 {
 	margin: 0px;
 }
-.news__detail p {
+.news p {
 	margin: 5px 0;
 	font-size: 12px;
 }
-
-.news__detail svg {
+.news header {
+	font-size: x-large;
+	font-weight: 600;
+}
+.news svg {
 	padding: 0;
 }
 
@@ -75,9 +78,9 @@
 	text-transform: capitalize;
 }
 
-.news__detail--video {
-	width: 80%;
-	max-width: 700px;
-	max-height: 400px;
-	height: 50vw;
+.news__video {
+	display: grid;
+	place-items: center;
+	row-gap: 25px;
+	width: 100%;
 }
