@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import './NewsPage.css';
-import { Link, useHistory } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import ShowTitle from '../../shared/ShowTitle';
 import { getNews } from '../../Services/newService';
 import Spinner from '../../shared/Spinner';
@@ -10,10 +10,7 @@ import CustomReactPlayer from '../../shared/VideoPlayer/CustomVideoPlayer';
 export default function NewsPage() {
 	const [news, setNews] = useState([]);
 	const [newsStatus, setNewsStatus] = useState('idle');
-	const history = useHistory();
-	function handlePrevNavigtation() {
-		history.goBack();
-	}
+
 	useEffect(() => {
 		async function fetchNews() {
 			setNewsStatus('loading');
@@ -33,12 +30,7 @@ export default function NewsPage() {
 	return (
 		<LayoutPublic>
 			<section className='news__detail'>
-				<header>
-					<span onClick={handlePrevNavigtation}>
-						<i className='fa-solid fa-angle-left' />
-					</span>
-					<ShowTitle patchData={{ title: 'Novedades' }} />
-				</header>
+				<ShowTitle patchData={{ title: 'Novedades' }} />
 				<section className='news__container'>
 					{newsStatus === 'loading' && <Spinner />}
 					{newsStatus === 'error' && (

@@ -2,7 +2,7 @@ import ReactPlayer from 'react-player';
 import React, { createRef, useState } from 'react';
 import ControlsReactPlayer from './ControlsReactPlayer';
 import PropTypes from 'prop-types';
-import './index.css';
+import './CustomVideoPlayer.css';
 export default function CustomReactPlayer({ url }) {
 	const [playing, setPlaying] = useState(false);
 	const [muted, setMuted] = useState(false);
