@@ -16,16 +16,16 @@
 	min-width: fit-content;
 	height: fit-content;
 	font-weight: 600;
-	color: #3498db;
+	color: var(--secondary);
 	background: white;
 	padding: 5px 8px;
-	border: 2px solid #3498db;
+	border: 2px solid var(--secondary);
 	border-radius: 4px;
 	transition: 0.2s ease-in-out;
 	text-decoration: none;
 }
 .primary-button:hover {
-	background: #3498db;
+	background: #387099;
 	color: white;
 }
 
