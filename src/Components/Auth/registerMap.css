@@ -1,0 +1,17 @@
+.circle{
+    background-color: yellow;
+    width: 45px;
+    height: 45px;
+    border-radius: 45px;
+    border: solid 3px red;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    
+}
+.circle p{
+    color: blue;
+    font-weight: 600;
+    font-size: 10px;
+}

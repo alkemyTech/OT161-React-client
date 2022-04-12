@@ -1,8 +1,19 @@
 import { Formik, Form, Field, ErrorMessage } from 'formik';
-import React from 'react';
+import React, { useState } from 'react';
 import '../FormStyles.css';
-
+import RegisterMap from './RegisterMap';
+import './registerMap.css';
 const RegisterForm = () => {
+	const [stateLat, setStateLat] = useState(0);
+	const [stateLng, setStateLng] = useState(0);
+
+	function getLocation() {
+		navigator.geolocation.getCurrentPosition(function (position) {
+			setStateLat(position.coords.latitude);
+			setStateLng(position.coords.longitude);
+		});
+	}
+
 	return (
 		<>
 			<Formik
@@ -10,37 +21,45 @@ const RegisterForm = () => {
 					email: '',
 					password: '',
 					confirmPassword: '',
+					Lat: 0,
 				}}
 				onSubmit={(values, { resetForm }) => {
 					resetForm();
-					console.log(values)
+					console.log(values);
 				}}
 				validate={values => {
-					const errors = {}
-                    // validate email
+					const errors = {};
+					// validate email
 					if (!values.email) {
 						errors.email = 'El email es obligatorio';
 					} else if (
 						!/^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/.test(
 							values.email
 						)
-					){
-						errors.email =
-							'Escriba un correo válido';
+					) {
+						errors.email = 'Escriba un correo válido';
 					}
 
-                    // validate password
-                    if(!values.password){
-                        errors.password = 'La contraseña es obligatoria'
-                    } else if (!/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?&#.$($)$-$_])[A-Za-z\d$@$!%*?&#.$($)$-$_]{6,15}$/.test(values.password)){
-                        errors.password = 'La contraseña debe terner mínimo 6 caracteres, contener una mayúscula, un número y un carácter especial'
-                    } 
+					// validate password
+					if (!values.password) {
+						errors.password = 'La contraseña es obligatoria';
+					} else if (
+						!/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?&#.$($)$-$_])[A-Za-z\d$@$!%*?&#.$($)$-$_]{6,15}$/.test(
+							values.password
+						)
+					) {
+						errors.password =
+							'La contraseña debe terner mínimo 6 caracteres, contener una mayúscula, un número y un carácter especial';
+					}
 
-                    if(!values.confirmPassword){
-                        errors.confirmPassword = 'Escriba nuevamente la contraseña'
-                    } else if (!(values.confirmPassword === values.password)){
-                        errors.confirmPassword = 'Ambas contraseñas deben coincidir'
-                    }
+					if (!values.confirmPassword) {
+						errors.confirmPassword = 'Escriba nuevamente la contraseña';
+					} else if (!(values.confirmPassword === values.password)) {
+						errors.confirmPassword = 'Ambas contraseñas deben coincidir';
+					}
+					if (values.Lat === 0) {
+						errors.Lat = 'Pulse el boton para obtener su locación';
+					}
 					return errors;
 				}}
 			>
@@ -52,27 +71,52 @@ const RegisterForm = () => {
 							name='email'
 							placeholder='Enter email'
 						/>
-                        <ErrorMessage name='email' component={() => (
-                            <div className='error-message-form'>{errors.email}</div>
-                        )} />
+						<ErrorMessage
+							name='email'
+							component={() => (
+								<div className='error-message-form'>{errors.email}</div>
+							)}
+						/>
 						<Field
 							className='input-field'
 							type='password'
 							name='password'
 							placeholder='Enter password'
 						/>
-                        <ErrorMessage name='password' component={() => (
-                            <div className='error-message-form'>{errors.password}</div>
-                        )} />
+						<ErrorMessage
+							name='password'
+							component={() => (
+								<div className='error-message-form'>{errors.password}</div>
+							)}
+						/>
 						<Field
 							className='input-field'
 							type='password'
 							name='confirmPassword'
 							placeholder='Confirm password'
 						/>
-                        <ErrorMessage name='confirmPassword' component={() => (
-                            <div className='error-message-form'>{errors.confirmPassword}</div>
-                        )} />
+						<ErrorMessage
+							name='confirmPassword'
+							component={() => (
+								<div className='error-message-form'>
+									{errors.confirmPassword}
+								</div>
+							)}
+						/>
+
+						<button type='button' name='Lat' onClick={getLocation}>
+							Get Location
+						</button>
+						{stateLat !== 0 && (
+							<RegisterMap stateLat={stateLat} stateLng={stateLng} />
+						)}
+
+						<ErrorMessage
+							name='Lat'
+							component={() => (
+								<div className='error-message-form'>{errors.Lat}</div>
+							)}
+						/>
 						<button className='submit-btn' type='submit'>
 							Log In
 						</button>
