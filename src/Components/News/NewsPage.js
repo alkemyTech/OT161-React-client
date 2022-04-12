@@ -5,6 +5,7 @@ import { Link, useHistory } from 'react-router-dom';
 import ShowTitle from '../../shared/ShowTitle';
 import { getNews } from '../../Services/newService';
 import Spinner from '../../shared/Spinner';
+import LayoutPublic from '../LayoutPublic/LayoutPublic';
 export default function NewsPage() {
 	const [news, setNews] = useState([]);
 	const [newsStatus, setNewsStatus] = useState('idle');
@@ -29,6 +30,7 @@ export default function NewsPage() {
 	}, []);
 
 	return (
+		<LayoutPublic>
 		<section className='news__detail'>
 			<header>
 				<span onClick={handlePrevNavigtation}>
@@ -51,6 +53,7 @@ export default function NewsPage() {
 					))}
 			</section>
 		</section>
+		</LayoutPublic>
 	);
 }
 

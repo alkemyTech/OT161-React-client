@@ -2,18 +2,19 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { DataSidebarBackoffice } from './DataSidebarBackoffice';
 import './SidebarBackoffice.css';
+import { GiHamburgerMenu } from 'react-icons/gi';
+import { AiOutlineClose } from 'react-icons/ai';
 
 const SidebarBackoffice = () => {
 	const [sidebar, setSidebar] = useState(false);
 
 	const showSidebar = () => setSidebar(!sidebar);
-	console.log(sidebar);
 
 	return (
 		<div>
 			<div className='backoffice_sidebar'>
 				<div className='backoffice_menu-bars' onClick={showSidebar}>
-					<i className='fa-solid fa-bars' />
+					<GiHamburgerMenu />
 				</div>
 			</div>
 			<nav
@@ -24,7 +25,7 @@ const SidebarBackoffice = () => {
 				<ul onClick={showSidebar} className='backoffice_nav-menu--items'>
 					<li className='backoffice_sidebar-toggle'>
 						<div className='backoffice_menu-bars'>
-							<i className='fa-solid fa-xmark'></i>
+							<AiOutlineClose />
 						</div>
 					</li>
 					<li className='backoffice_sidebar--title'>Somos más</li>
@@ -32,7 +33,7 @@ const SidebarBackoffice = () => {
 						return (
 							<li key={i} className='backoffice_data--items'>
 								<Link to={e.link}>
-									<i className={e.icon} />
+									<span>{e.icon}</span>
 									<span>{e.title}</span>
 								</Link>
 							</li>
