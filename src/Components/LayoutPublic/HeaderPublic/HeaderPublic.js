@@ -2,7 +2,10 @@ import React, { useState } from 'react';
 import { NavLink, Link } from 'react-router-dom';
 import './headerPublic.css';
 import logo from '../../../assets/LOGO-SOMOS MAS.png';
+import { useSelector } from 'react-redux';
+import { authSelector } from '../../../features/auth/authSlice';
 const HeaderPublic = () => {
+	const { isAuthenticated } = useSelector(authSelector);
 	window.onload = () => {
 		const hamburger = document.querySelector('.hamburger');
 		const navBarLinks = document.querySelector('.nav-bar-links');
@@ -42,6 +45,7 @@ const HeaderPublic = () => {
 				</Link>
 				<ul className='nav-bar-links'>
 					{links.map((li, index) => {
+						if (isAuthenticated & (li.link === '/contact')) return null;
 						return (
 							<li key={`${li.text}${index}`} className='nav-link'>
 								<NavLink
