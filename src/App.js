@@ -94,9 +94,9 @@ function App() {
 				<Route path='/toys-campaign' component={ToysCampaign} />
 				<Route path='/novedades' component={NewsPage} />
 				<Route path='/nosotros' component={About} />
-        <Route path='/contact' component={Contact} />
+        		<Route path='/contact' component={Contact} />
 				<Route path='/' exact component={Home} />
-        <Route path='*' component={PageNotFound} />
+				<Route path='*' component={PageNotFound} />
 			</AnimatedSwitch>
 		</BrowserRouter>
 	);

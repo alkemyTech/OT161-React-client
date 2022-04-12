@@ -4,6 +4,7 @@ import Members from './Members';
 import { getDataMethod } from '../../Services/publicApiService';
 import showAlert from '../../shared/showAlert';
 import Spinner from '../../shared/Spinner';
+import SocialNetworks from './SocialNetworks';
 
 const About = () => {
 	const [showDescription, setShowDescription] = useState('');
@@ -45,6 +46,9 @@ const About = () => {
 				<h1>Miembros</h1>
 				<p>Conoce a los valiosos miembros de nuestra ONG</p>
 				<Members />
+			</div>
+			<div>
+				<SocialNetworks />
 			</div>
 		</section>
 	);
