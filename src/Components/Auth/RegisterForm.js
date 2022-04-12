@@ -7,10 +7,7 @@ import { Document, Page } from 'react-pdf/dist/esm/entry.webpack';
 import pdf from './terminosycondiciones.pdf';
 
 const RegisterForm = () => {
-	const [acceptedTerms, setAcceptedTerms] = useState({
-		errorMsg: '',
-		validate: false,
-	});
+	const [acceptedTerms, setAcceptedTerms] = useState(false);
 
 	return (
 		<>
@@ -19,13 +16,14 @@ const RegisterForm = () => {
 					email: '',
 					password: '',
 					confirmPassword: '',
+					termsErrorMsg: '',
 				}}
 				onSubmit={(values, { resetForm }) => {
-					if (acceptedTerms.validate === false) {
-						console.log('noo');
-					} else {
+					if (acceptedTerms === true) {
 						resetForm();
 						console.log(values);
+					} else {
+						setAcceptedTerms(false);
 					}
 				}}
 				validate={values => {
@@ -59,10 +57,15 @@ const RegisterForm = () => {
 						errors.confirmPassword = 'Ambas contraseñas deben coincidir';
 					}
 
+					if (acceptedTerms === false) {
+						errors.termsErrorMsg =
+							'Los terminos y condiciones no estan aceptados';
+					}
+
 					return errors;
 				}}
 			>
-				{({ errors, touched, handleChange, handleBlur, values }) => (
+				{({ errors }) => (
 					<Form className='form-container'>
 						<Field
 							className='input-field'
@@ -103,7 +106,11 @@ const RegisterForm = () => {
 							)}
 						/>
 						<Popup
-							trigger={<p>Leer terminos y condiciones</p>}
+							trigger={
+								<p className='terms-condicion-button'>
+									Leer terminos y condiciones
+								</p>
+							}
 							modal
 							position='right center'
 						>
@@ -117,7 +124,7 @@ const RegisterForm = () => {
 									<div className='actions'>
 										<button
 											onClick={() => {
-												setAcceptedTerms({ validate: true });
+												setAcceptedTerms(true);
 												close();
 											}}
 										>
@@ -126,7 +133,7 @@ const RegisterForm = () => {
 										<button
 											className='button'
 											onClick={() => {
-												setAcceptedTerms({ validate: false });
+												setAcceptedTerms(false);
 												console.log('modal closed ');
 												close();
 											}}
@@ -137,8 +144,9 @@ const RegisterForm = () => {
 								</div>
 							)}
 						</Popup>
+						<div className='error-message-form'>{errors.termsErrorMsg}</div>
 						<button className='submit-btn' type='submit'>
-							Log In
+							Registrarse
 						</button>
 					</Form>
 				)}
