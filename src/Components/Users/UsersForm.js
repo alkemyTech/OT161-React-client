@@ -3,17 +3,16 @@ import React, { useState } from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import PropTypes from 'prop-types';
+import HeaderBackoffice from '../HeaderBackoffice/HeaderBackoffice';
 
 function UserForm({ patchData }) {
 	const [previewImage, setPreviewImage] = useState(
 		patchData?.profilePhoto || null
 	);
-    const [previewRole, setPreviewRole] = useState(
-        patchData?.role || null
-    )
+	const [previewRole, setPreviewRole] = useState(patchData?.role || null);
 	const [statusForm, setStatusForm] = useState(false);
 	const SUPPORTED_FORMATS = /(jpg|png)/;
-    const ROLE_ACCESS_FORMATS = /(USER|ADMIN)/
+	const ROLE_ACCESS_FORMATS = /(USER|ADMIN)/;
 	const {
 		handleSubmit,
 		handleChange,
@@ -26,7 +25,7 @@ function UserForm({ patchData }) {
 	} = useFormik({
 		initialValues: {
 			name: patchData?.name || '',
-            email: patchData?.email || '',
+			email: patchData?.email || '',
 			role: patchData?.role || '',
 			profilePhoto: patchData?.profilePhoto || '',
 		},
@@ -35,12 +34,12 @@ function UserForm({ patchData }) {
 			name: Yup.string()
 				.required('El nombre es un campo requerido')
 				.min(4, 'El nombre deberia contenter mas de 4 caracteres'),
-            email: Yup.string()
-                .required('El email es un campo requerido')
-                .email('El email no es válido'),
+			email: Yup.string()
+				.required('El email es un campo requerido')
+				.email('El email no es válido'),
 			role: Yup.string()
 				.required('El role es un campo requerido')
-                .test('role', 'El rol no está autorizado', role => {
+				.test('role', 'El rol no está autorizado', role => {
 					if (!ROLE_ACCESS_FORMATS.test(role)) return false;
 					setPreviewRole(role);
 					return true;
@@ -84,61 +83,73 @@ function UserForm({ patchData }) {
 	}
 
 	return (
-		<form className='form-container' onSubmit={handleSubmit}>
-			<input
-				className='input-field'
-				type='text'
-				name='name'
-				onChange={handleChange}
-				value={values.name}
-				onBlur={handleBlur}
-				placeholder='Nombre'
-			/>
-			<span className='input-error'>{touched.name && errors.name}</span>
-            <input
-				className='input-field'
-				type='text'
-				name='email'
-				onChange={handleChange}
-				value={values.email}
-				onBlur={handleBlur}
-				placeholder='Email'
-			/>
-			<span className='input-error'>{touched.email && errors.email}</span>
-            <select className="input-field" value={values.role} 
-                onChange={e => setPreviewRole({...previewRole, role: e.target.value})}
-            >
-                <option value="" disabled >Select the role</option>
-                <option value="1">USER</option>
-                <option value="2">ADMIN</option>
-            </select>
-            <span className='input-error'>{touched.role && errors.role}</span>
-			<label className='input-file'>
-				Imagen de Perfil
-				<input
-					type='file'
-					accept='image/png, image/jpeg'
-					onChange={async event => {
-						setFieldTouched('image', true);
-						const imageBase64 = await getBase64(event.target.files[0]);
-						setFieldValue('image', imageBase64);
-					}}
-				/>
-			</label>
-			<span className='input-error'>{touched.profilePhoto && errors.profilePhoto}</span>
-			{previewImage && (
-				<img
-					src={previewImage}
-					alt='preview'
-					width={100}
-					height={100}
-					style={{ objectFit: 'cover' }}
-				/>
-			)}
-			<button className='submit-btn' type='submit' disabled={statusForm}>
-				{patchData?.id ? 'Update' : 'Send'}
-			</button>
-		</form>
+		<div>
+			<HeaderBackoffice>
+				<form className='form-container' onSubmit={handleSubmit}>
+					<input
+						className='input-field'
+						type='text'
+						name='name'
+						onChange={handleChange}
+						value={values.name}
+						onBlur={handleBlur}
+						placeholder='Nombre'
+					/>
+					<span className='input-error'>{touched.name && errors.name}</span>
+					<input
+						className='input-field'
+						type='text'
+						name='email'
+						onChange={handleChange}
+						value={values.email}
+						onBlur={handleBlur}
+						placeholder='Email'
+					/>
+					<span className='input-error'>{touched.email && errors.email}</span>
+					<select
+						className='input-field'
+						value={values.role}
+						onChange={e =>
+							setPreviewRole({ ...previewRole, role: e.target.value })
+						}
+					>
+						<option value='' disabled>
+							Select the role
+						</option>
+						<option value='1'>USER</option>
+						<option value='2'>ADMIN</option>
+					</select>
+					<span className='input-error'>{touched.role && errors.role}</span>
+					<label className='input-file'>
+						Imagen de Perfil
+						<input
+							type='file'
+							accept='image/png, image/jpeg'
+							onChange={async event => {
+								setFieldTouched('image', true);
+								const imageBase64 = await getBase64(event.target.files[0]);
+								setFieldValue('image', imageBase64);
+							}}
+						/>
+					</label>
+					<span className='input-error'>
+						{touched.profilePhoto && errors.profilePhoto}
+					</span>
+					{previewImage && (
+						<img
+							src={previewImage}
+							alt='preview'
+							width={100}
+							height={100}
+							style={{ objectFit: 'cover' }}
+						/>
+					)}
+					<button className='submit-btn' type='submit' disabled={statusForm}>
+						{patchData?.id ? 'Update' : 'Send'}
+					</button>
+				</form>
+			</HeaderBackoffice>
+		</div>
 	);
 }
 

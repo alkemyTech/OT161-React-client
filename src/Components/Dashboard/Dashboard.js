@@ -1,64 +1,72 @@
 import React from 'react';
 import CardDashboard from './CardDashboard';
 import styles from './Dashboard.module.css';
+import { MdComputer } from 'react-icons/md';
+import { BsListOl, BsListUl, BsImages } from 'react-icons/bs';
+import { GiConversation } from 'react-icons/gi';
+import { FaUserFriends, FaUsers } from 'react-icons/fa';
+import { RiOrganizationChart } from 'react-icons/ri';
+import HeaderBackoffice from '../HeaderBackoffice/HeaderBackoffice';
 
 const Dashboard = () => {
 	const cards = [
 		{
-			icon: 'fa-solid fa-laptop',
+			icon: <MdComputer />,
 			title: 'Novedades',
 			link: '/backoffice/news',
 		},
 		{
-			icon: 'fa-solid fa-list-check',
+			icon: <BsListOl />,
 			title: 'Actividades',
 			link: '/backoffice/activities',
 		},
 		{
-			icon: 'fa-solid fa-list-ul',
+			icon: <BsListUl />,
 			title: 'Categorias',
 			link: '/backoffice/create-category',
 		},
 		{
-			icon: 'fa-solid fa-comments',
+			icon: <GiConversation />,
 			title: 'Testimonios',
 			link: '/backoffice/create-testimonials',
 		},
 		{
-			icon: 'fa-solid fa-sitemap',
+			icon: <RiOrganizationChart />,
 			title: 'Organización',
 			link: '/backoffice/organization',
 		},
 		{
-			icon: 'fa-solid fa-photo-film',
+			icon: <BsImages />,
 			title: 'Slides',
 			link: '/backoffice/slides',
 		},
 		{
-			icon: 'fa-solid fa-users',
+			icon: <FaUserFriends />,
 			title: 'Usuarios',
 			link: '/backoffice/users',
 		},
 		{
-			icon: 'fa-solid fa-people-group',
+			icon: <FaUsers />,
 			title: 'Miembros',
 			link: '/backoffice/create-member',
 		},
 	];
 
 	return (
-		<div className={styles.containerDashboard}>
-			{cards.map(e => {
-				return (
-					<CardDashboard
-						key={e.title}
-						icon={e.icon}
-						title={e.title}
-						link={e.link}
-					/>
-				);
-			})}
-		</div>
+		<HeaderBackoffice>
+			<div className={styles.containerDashboard}>
+				{cards.map(e => {
+					return (
+						<CardDashboard
+							key={e.title}
+							icon={e.icon}
+							title={e.title}
+							link={e.link}
+						/>
+					);
+				})}
+			</div>
+		</HeaderBackoffice>
 	);
 };
 

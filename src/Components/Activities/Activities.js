@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { getDataMethod } from '../../Services/publicApiService';
 import ShowTitle from '../../shared/ShowTitle';
 import Spinner from '../../shared/Spinner';
+import LayoutPublic from '../LayoutPublic/LayoutPublic';
 
 const Activities = () => {
 	const [activitiesData, setActivitiesData] = useState([]);
@@ -27,7 +28,8 @@ const Activities = () => {
 	}, []);
 
 	return (
-		<section>
+		<>
+		<LayoutPublic>
 			<div>
 				<ShowTitle patchData={{ title: 'Actividades' }}></ShowTitle>
 			</div>
@@ -49,7 +51,9 @@ const Activities = () => {
 					</div>
 				</div>
 			))}
-		</section>
+			</LayoutPublic>
+		</>
+
 	);
 };
 

@@ -1,5 +1,4 @@
-import {
-	getDataMethodPrivate,
+import getDataMethodPrivate, {
 	privatePatchRequest,
 	privateDeleteRequest,
 	privatePostRequest,

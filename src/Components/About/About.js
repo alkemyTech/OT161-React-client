@@ -5,6 +5,7 @@ import { getDataMethod } from '../../Services/publicApiService';
 import showAlert from '../../shared/showAlert';
 import Spinner from '../../shared/Spinner';
 import SocialNetworks from './SocialNetworks';
+import LayoutPublic from '../LayoutPublic/LayoutPublic';
 
 const About = () => {
 	const [showDescription, setShowDescription] = useState('');
@@ -31,7 +32,8 @@ const About = () => {
 	}, []);
 
 	return (
-		<section>
+		<>
+		<LayoutPublic>
 			<ShowTitle patchData={{ title: 'Nosotros' }}></ShowTitle>
 			<div>
 				<h3>Sobre Nosotros</h3>
@@ -50,7 +52,8 @@ const About = () => {
 			<div>
 				<SocialNetworks />
 			</div>
-		</section>
+			</LayoutPublic>
+		</>
 	);
 };
 
