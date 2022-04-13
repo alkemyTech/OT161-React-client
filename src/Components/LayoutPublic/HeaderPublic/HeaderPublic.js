@@ -3,69 +3,57 @@ import { NavLink, Link } from 'react-router-dom';
 import './headerPublic.css';
 import logo from '../../../assets/LOGO-SOMOS MAS.png';
 const HeaderPublic = () => {
-	window.onload = () => {
-		const hamburger = document.querySelector('.hamburger');
-		const navBarLinks = document.querySelector('.nav-bar-links');
+	const [hambar, setHambar] = useState(false);
+	const showHambar = () => setHambar(!hambar);
 
-		hamburger.addEventListener('click', () => {
-			hamburger.classList.toggle('active');
-			navBarLinks.classList.toggle('active');
-		});
 
-		document.querySelectorAll('.nav-link').forEach(n =>
-			n.addEventListener('click', () => {
-				hamburger.classList.remove('active');
-				navBarLinks.classList.remove('active');
-			})
-		);
-	};
+ 	const [login, setLogin] = useState(false);
 
-	const [login, setLogin] = useState(false);
+ 	if (localStorage.getItem('login') === true) {
+ 		setLogin(true);
+ 	}
 
-	if (localStorage.getItem('login') === true) {
-		setLogin(true);
-	}
+ 	const links = [
+ 		{ text: 'INICIO', link: '/' },
+ 		{ text: 'NOSOTROS', link: '/nosotros' },
+ 		{ text: 'CONTACTO', link: '/contact' },
+ 		{ text: 'Campaña en Escuela', link: '/school-campaign' },
+ 		{ text: 'Campaña de Juguetes', link: '/toys-campaign' },
+ 	];
 
-	const links = [
-		{ text: 'INICIO', link: '/' },
-		{ text: 'NOSOTROS', link: '/nosotros' },
-		{ text: 'CONTACTO', link: '/contact' },
-		{ text: 'Campaña en Escuela', link: '/school-campaign' },
-		{ text: 'Campaña de Juguetes', link: '/toys-campaign' },
-	];
+return(
+	<>
+ 	<nav className='nav-bar'>
+ 				<Link className='nav-bar-logo' to='/'>
+ 					<img src={logo} alt='Somos Mas'></img>
+ 				</Link>
+ 				<ul className={hambar? 'nav-bar-links active':'nav-bar-links'}>
+ 					{links.map((li, index) => {
+ 						return (
+ 							<li key={`${li.text}${index}`} className='nav-link'>
+ 								<NavLink
+ 									className={({ isActive }) =>
+ 										isActive ? 'nav-link__active' : ''
+ 									}
+ 									to={li.link}
+ 								>
+ 									{li.text}
+ 								</NavLink>
+ 							</li>
+ 						);
+ 					})}
+ 				</ul>
 
-	return (
-		<>
-			<nav className='nav-bar'>
-				<Link className='nav-bar-logo' to='/'>
-					<img src={logo} alt='Somos Mas'></img>
-				</Link>
-				<ul className='nav-bar-links'>
-					{links.map((li, index) => {
-						return (
-							<li key={`${li.text}${index}`} className='nav-link'>
-								<NavLink
-									className={({ isActive }) =>
-										isActive ? 'nav-link__active' : ''
-									}
-									to={li.link}
-								>
-									{li.text}
-								</NavLink>
-							</li>
-						);
-					})}
-				</ul>
+ 				{login ? <></> : <></>}
+ 				<div className='hamburger' onClick={showHambar}>
+ 					<span className='hamburger-bar'></span>
+ 					<span className='hamburger-bar'></span>
+ 					<span className='hamburger-bar'></span>
+ 				</div>
+ 			</nav>
+ 		</>
+)
 
-				{login ? <></> : <></>}
-				<div className='hamburger'>
-					<span className='hamburger-bar'></span>
-					<span className='hamburger-bar'></span>
-					<span className='hamburger-bar'></span>
-				</div>
-			</nav>
-		</>
-	);
 };
 
 export default HeaderPublic;
