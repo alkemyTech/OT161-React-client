@@ -23,23 +23,25 @@ const RegisterForm = () => {
 				}}
 				onSubmit={(values, { resetForm }) => {
 
-					resetForm();
 					try {
-						createUser(values);
-					} catch (err) {
-						showAlert({
-							type: err,
-							title: 'Ups, hubo un error',
-							message: 'No has podido registrarte, intentelo mas tarde',
-						});
+	if (acceptedTerms === true) {
+	   resetForm();
+	   console.log(values); // este lo podemos dejar o no
+	  createUser(values);
+     } else {
+	setAcceptedTerms(false);
 
-					if (acceptedTerms === true) {
-						resetForm();
-						console.log(values);
-					} else {
-						setAcceptedTerms(false);
+}
 
-					}
+} catch (err) {
+	showAlert({
+		type: err,
+		title: 'Ups, hubo un error',
+		message: 'No has podido registrarte, intentelo mas tarde',
+	});
+
+}
+
 				}}
 				validate={values => {
 					const errors = {};
