@@ -17,32 +17,34 @@ const SocialNetworks = () => {
 		<div className='socialnet_container'>
 			<h2 className='socialnet_title'>Síguenos en nuestras redes sociales</h2>
 			<div className='socialnet_container-icons'>
-				<Link href='https://www.linkedin.com/in/somos-mas-0b1436237/'>
-					<TiSocialLinkedin />
-				</Link>
-				<Link href='https://www.instagram.com/somosmas161/'>
-					<TiSocialInstagram />
-				</Link>
-				<Link href='https://www.facebook.com/somos.mas.9'>
-					<TiSocialFacebook />
-				</Link>
+				<div>
+					<TwitterTweet
+						coversation='none'
+						tweetId='1512964350386094087'
+						theme='light'
+						width={325}
+					/>
+					<TwitterTweet
+						coversation='none'
+						tweetId='1512964456392929289'
+						theme='light'
+						width={325}
+					/>
+				</div>
+				<div className='socialnet_iconslist'>
+					<Link href='https://www.linkedin.com/in/somos-mas-0b1436237/'>
+						<TiSocialLinkedin />
+					</Link>
+					<Link href='https://www.instagram.com/somosmas161/'>
+						<TiSocialInstagram />
+					</Link>
+					<Link href='https://www.facebook.com/somos.mas.9'>
+						<TiSocialFacebook />
+					</Link>
+				</div>
 			</div>
 
 			<TwitterButton target='somosmas161' type='Mention' size='large' />
-			<TwitterTweet
-				align='left'
-				coversation='none'
-				tweetId='1512964350386094087'
-				theme='light'
-				width={325}
-			/>
-			<TwitterTweet
-				align='left'
-				coversation='none'
-				tweetId='1512964456392929289'
-				theme='light'
-				width={325}
-			/>
 			<LinkedinProfile
 				lang='en_US'
 				profileUrl='https://www.linkedin.com/in/somos-mas-0b1436237/'

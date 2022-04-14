@@ -22,3 +22,8 @@
 .socialnet_container-icons a:hover {
 	color: #387199;
 }
+.socialnet_iconslist {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+}

@@ -1,18 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import './NewsPage.css';
-import { Link, useHistory } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import ShowTitle from '../../shared/ShowTitle';
 import { getNews } from '../../Services/newService';
 import Spinner from '../../shared/Spinner';
 import LayoutPublic from '../LayoutPublic/LayoutPublic';
+import CustomReactPlayer from '../../shared/VideoPlayer/CustomVideoPlayer';
 export default function NewsPage() {
 	const [news, setNews] = useState([]);
 	const [newsStatus, setNewsStatus] = useState('idle');
-	const history = useHistory();
-	function handlePrevNavigtation() {
-		history.goBack();
-	}
+
 	useEffect(() => {
 		async function fetchNews() {
 			setNewsStatus('loading');
@@ -31,28 +29,28 @@ export default function NewsPage() {
 
 	return (
 		<LayoutPublic>
-		<section className='news__detail'>
-			<header>
-				<span onClick={handlePrevNavigtation}>
-					<i className='fa-solid fa-angle-left' />
-				</span>
+			<section className='news'>
 				<ShowTitle patchData={{ title: 'Novedades' }} />
-			</header>
-			<section className='news__container'>
-				{newsStatus === 'loading' && <Spinner />}
-				{newsStatus === 'error' && (
-					<p>Ups! Algo salio mal, estamos trabajando en ello 👨‍💻</p>
-				)}
-				{newsStatus === 'success' &&
-					news.map(({ image, created_at: createdAt, name, id }) => (
-						<Link to={`/novedades/${id}`} className='news__card' key={id}>
-							<img src={image} alt='' />
-							<span>{new Date(createdAt).toLocaleDateString()}</span>
-							<div className='news__card--title'>{name}</div>
-						</Link>
-					))}
+				<section className='news__container'>
+					{newsStatus === 'loading' && <Spinner />}
+					{newsStatus === 'error' && (
+						<p>Ups! Algo salio mal, estamos trabajando en ello 👨‍💻</p>
+					)}
+					{newsStatus === 'success' &&
+						news.map(({ image, created_at: createdAt, name, id }) => (
+							<Link to={`/novedades/${id}`} className='news__card' key={id}>
+								<img src={image} alt='' />
+								<span>{new Date(createdAt).toLocaleDateString()}</span>
+								<div className='news__card--title'>{name}</div>
+							</Link>
+						))}
+				</section>
+
+				<section className='news__video'>
+					<header>Ultimo evento</header>
+					<CustomReactPlayer url='https://www.youtube.com/watch?v=4YnSk1gI_Oo' />
+				</section>
 			</section>
-		</section>
 		</LayoutPublic>
 	);
 }

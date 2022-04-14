@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getNewsData, newsSelector } from '../../features/news/newSlice';
 import Spinner from '../../shared/Spinner';
 import showAlert from '../../shared/showAlert';
+import HeaderBackoffice from '../HeaderBackoffice/HeaderBackoffice';
 const NewsList = () => {
 	const dispatch = useDispatch();
 	const news = useSelector(newsSelector);
@@ -29,45 +30,47 @@ const NewsList = () => {
 
 	return (
 		<section>
-			<header className='news-header'>
-				<h1>Listado de Novedades</h1>
-				<Link
-					to='/backoffice/create-news'
-					className='primary-button'
-					role='button'
-				>
-					Crear novedad
-				</Link>
-			</header>
-			<table className='table-container'>
-				<tr>
-					<th>Imagen</th>
-					<th>Titulo</th>
-					<th>Creado el</th>
-					<th>Opciones</th>
-				</tr>
-				{newsStatus.status === 'loading' && <Spinner />}
-				{newsStatus.status === 'succeeded' &&
-					news.news.data.map(element => {
-						return (
-							<tr key={element.id}>
-								<td>
-									<img src={element.image} alt={element.name} />
-								</td>
-								<td className='title'>{element.name}</td>
-								<td>{element.created_at}</td>
-								<td className='options'>
-									<button>
-										<i className='fa-solid fa-pencil'></i>
-									</button>
-									<button>
-										<i className='fa-solid fa-trash'></i>
-									</button>
-								</td>
-							</tr>
-						);
-					})}
-			</table>
+			<HeaderBackoffice>
+				<header className='news-header'>
+					<h1>Listado de Novedades</h1>
+					<Link
+						to='/backoffice/create-news'
+						className='primary-button'
+						role='button'
+					>
+						Crear novedad
+					</Link>
+				</header>
+				<table className='table-container'>
+					<tr>
+						<th>Imagen</th>
+						<th>Titulo</th>
+						<th>Creado el</th>
+						<th>Opciones</th>
+					</tr>
+					{newsStatus.status === 'loading' && <Spinner />}
+					{newsStatus.status === 'succeeded' &&
+						news.news.data.map(element => {
+							return (
+								<tr key={element.id}>
+									<td>
+										<img src={element.image} alt={element.name} />
+									</td>
+									<td className='title'>{element.name}</td>
+									<td>{element.created_at}</td>
+									<td className='options'>
+										<button>
+											<i className='fa-solid fa-pencil'></i>
+										</button>
+										<button>
+											<i className='fa-solid fa-trash'></i>
+										</button>
+									</td>
+								</tr>
+							);
+						})}
+				</table>
+			</HeaderBackoffice>
 		</section>
 	);
 };

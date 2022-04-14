@@ -8,6 +8,7 @@ import {
 	createActivity,
 	updateActivity,
 } from '../../Services/activitiesService';
+import HeaderBackoffice from '../HeaderBackoffice/HeaderBackoffice';
 
 function ActivitiesForm({ patchData }) {
 	const [previewImage, setPreviewImage] = useState(patchData?.image || null);
@@ -73,54 +74,58 @@ function ActivitiesForm({ patchData }) {
 	}
 
 	return (
-		<form className='form-container' onSubmit={handleSubmit}>
-			<input
-				className='input-field'
-				type='text'
-				name='name'
-				onChange={handleChange}
-				value={values.name}
-				onBlur={handleBlur}
-				placeholder='Activities Title'
-			/>
-			<span className='input-error'>{touched.name && errors.name}</span>
+		<div>
+			<HeaderBackoffice>
+				<form className='form-container' onSubmit={handleSubmit}>
+					<input
+						className='input-field'
+						type='text'
+						name='name'
+						onChange={handleChange}
+						value={values.name}
+						onBlur={handleBlur}
+						placeholder='Activities Title'
+					/>
+					<span className='input-error'>{touched.name && errors.name}</span>
 
-			<CKEditor
-				data={values.description}
-				editor={ClassicEditor}
-				onBlur={() => setFieldTouched('description', true)}
-				onChange={(_, editor) => {
-					const data = editor.getData();
-					setFieldValue('description', data);
-				}}
-			/>
+					<CKEditor
+						data={values.description}
+						editor={ClassicEditor}
+						onBlur={() => setFieldTouched('description', true)}
+						onChange={(_, editor) => {
+							const data = editor.getData();
+							setFieldValue('description', data);
+						}}
+					/>
 
-			<label className='input-file'>
-				Subir imagen
-				<input
-					type='file'
-					accept='image/png, image/jpeg'
-					onChange={async event => {
-						setFieldTouched('image', true);
-						const imageBase64 = await getBase64(event.target.files[0]);
-						setFieldValue('image', imageBase64);
-					}}
-				/>
-			</label>
-			<span className='input-error'>{touched.image && errors.image}</span>
-			{previewImage && (
-				<img
-					src={previewImage}
-					alt='preview'
-					width={100}
-					height={100}
-					style={{ objectFit: 'cover' }}
-				/>
-			)}
-			<button className='submit-btn' type='submit' disabled={statusForm}>
-				{patchData?.id ? 'Update' : 'Send'}
-			</button>
-		</form>
+					<label className='input-file'>
+						Subir imagen
+						<input
+							type='file'
+							accept='image/png, image/jpeg'
+							onChange={async event => {
+								setFieldTouched('image', true);
+								const imageBase64 = await getBase64(event.target.files[0]);
+								setFieldValue('image', imageBase64);
+							}}
+						/>
+					</label>
+					<span className='input-error'>{touched.image && errors.image}</span>
+					{previewImage && (
+						<img
+							src={previewImage}
+							alt='preview'
+							width={100}
+							height={100}
+							style={{ objectFit: 'cover' }}
+						/>
+					)}
+					<button className='submit-btn' type='submit' disabled={statusForm}>
+						{patchData?.id ? 'Update' : 'Send'}
+					</button>
+				</form>
+			</HeaderBackoffice>
+		</div>
 	);
 }
 

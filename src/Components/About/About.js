@@ -6,6 +6,8 @@ import showAlert from '../../shared/showAlert';
 import Spinner from '../../shared/Spinner';
 import SocialNetworks from './SocialNetworks';
 import LayoutPublic from '../LayoutPublic/LayoutPublic';
+import nosotros from '../../assets/nosotros.jpg';
+import './About.css';
 
 const About = () => {
 	const [showDescription, setShowDescription] = useState('');
@@ -33,25 +35,29 @@ const About = () => {
 
 	return (
 		<>
-		<LayoutPublic>
-			<ShowTitle patchData={{ title: 'Nosotros' }}></ShowTitle>
-			<div>
-				<h3>Sobre Nosotros</h3>
-				{error.valid && <p>{error.text}</p>}
-				<div
-					dangerouslySetInnerHTML={{ __html: `<p>${showDescription}</p>` }}
-				></div>
-				{loading && <Spinner />}
-			</div>
+			<LayoutPublic>
+				<div className='nosotros_showtitle'>
+					<ShowTitle
+						patchData={{ title: 'Nosotros', image: nosotros }}
+					></ShowTitle>
+				</div>
+				<div className='nosotros_description'>
+					<h3>Sobre Nosotros</h3>
+					{error.valid && <p>{error.text}</p>}
+					<div
+						dangerouslySetInnerHTML={{ __html: `<p>${showDescription}</p>` }}
+					></div>
+					{loading && <Spinner />}
+				</div>
 
-			<div>
-				<h1>Miembros</h1>
-				<p>Conoce a los valiosos miembros de nuestra ONG</p>
-				<Members />
-			</div>
-			<div>
-				<SocialNetworks />
-			</div>
+				<div>
+					<h1>Miembros</h1>
+					<p>Conoce a los valiosos miembros de nuestra ONG</p>
+					<Members />
+				</div>
+				<div>
+					<SocialNetworks />
+				</div>
 			</LayoutPublic>
 		</>
 	);

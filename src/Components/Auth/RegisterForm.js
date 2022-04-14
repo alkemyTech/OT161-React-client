@@ -1,10 +1,16 @@
 import { Formik, Form, Field, ErrorMessage } from 'formik';
-import React from 'react';
+import React, { useState } from 'react';
+import Popup from 'reactjs-popup';
+import 'reactjs-popup/dist/index.css';
 import '../FormStyles.css';
 import { createUser } from '../../Services/UsersHTTPService';
 import showAlert from '../../shared/showAlert';
+import { Document, Page } from 'react-pdf/dist/esm/entry.webpack';
+import pdf from './terminosycondiciones.pdf';
 
 const RegisterForm = () => {
+	const [acceptedTerms, setAcceptedTerms] = useState(false);
+
 	return (
 		<>
 			<Formik
@@ -13,8 +19,10 @@ const RegisterForm = () => {
 					email: '',
 					password: '',
 					confirmPassword: '',
+					termsErrorMsg: '',
 				}}
 				onSubmit={(values, { resetForm }) => {
+
 					resetForm();
 					try {
 						createUser(values);
@@ -24,6 +32,13 @@ const RegisterForm = () => {
 							title: 'Ups, hubo un error',
 							message: 'No has podido registrarte, intentelo mas tarde',
 						});
+
+					if (acceptedTerms === true) {
+						resetForm();
+						console.log(values);
+					} else {
+						setAcceptedTerms(false);
+
 					}
 				}}
 				validate={values => {
@@ -32,6 +47,7 @@ const RegisterForm = () => {
 					if (!values.name) {
 						errors.name = 'El nombre es obligatorio';
 					}
+
 					// validate email
 					if (!values.email) {
 						errors.email = 'El email es obligatorio';
@@ -41,6 +57,7 @@ const RegisterForm = () => {
 						)
 					) {
 						errors.email = 'Escriba un correo válido';
+
 					}
 
 					// validate password
@@ -60,10 +77,16 @@ const RegisterForm = () => {
 					} else if (!(values.confirmPassword === values.password)) {
 						errors.confirmPassword = 'Ambas contraseñas deben coincidir';
 					}
+
+if (acceptedTerms === false) {
+						errors.termsErrorMsg =
+							'Los terminos y condiciones no estan aceptados';
+					}
 					return errors;
 				}}
 			>
 				{({ errors, handleChange, handleBlur, values }) => (
+
 					<Form className='form-container'>
 						<Field
 							className='input-field'
@@ -127,8 +150,50 @@ const RegisterForm = () => {
 								</div>
 							)}
 						/>
+
+						<Popup
+							trigger={
+								<p className='terms-condicion-button'>
+									Leer terminos y condiciones
+								</p>
+							}
+							modal
+							position='right center'
+						>
+							{close => (
+								<div className='modal'>
+									<div className='content'>
+										<Document file={pdf}>
+											<Page pageNumber={1} />
+										</Document>
+									</div>
+									<div className='actions'>
+										<button
+											onClick={() => {
+												setAcceptedTerms(true);
+												close();
+											}}
+										>
+											Aceptar
+										</button>
+										<button
+											className='button'
+											onClick={() => {
+												setAcceptedTerms(false);
+												console.log('modal closed ');
+												close();
+											}}
+										>
+											Cancelar
+										</button>
+									</div>
+								</div>
+							)}
+						</Popup>
+						<div className='error-message-form'>{errors.termsErrorMsg}</div>
+
 						<button className='submit-btn' type='submit'>
-							Log In
+							Registrarse
 						</button>
 					</Form>
 				)}
