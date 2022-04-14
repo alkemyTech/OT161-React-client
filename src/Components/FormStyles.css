@@ -55,7 +55,12 @@
 	background-color: #387099;
 }
 
-.preview-img {
-	width: 30vh;
-	align-self: center;
+.preview-img{
+    width: 30vh;
+    align-self: center;
 }
+.terms-condicion-button:hover{
+  text-decoration: underline;
+  cursor: pointer;
+}
+
