@@ -3,6 +3,7 @@ import { NavLink, Link } from 'react-router-dom';
 import './headerPublic.css';
 import logo from '../../../assets/LOGO-SOMOS MAS.png';
 import handleHamburgerBar from './handleHamburgerBar';
+
 const HeaderPublic = () => {
 	const [loginIn, setLoginIn] = useState(false);
 
@@ -35,6 +36,7 @@ const HeaderPublic = () => {
 				</Link>
 				<ul className='nav-bar-links'>
 					{links.map((li, index) => {
+						if (isAuthenticated & (li.link === '/contact')) return null;
 						return (
 							<li key={`${li.text}${index}`} className='nav-link'>
 								<NavLink
