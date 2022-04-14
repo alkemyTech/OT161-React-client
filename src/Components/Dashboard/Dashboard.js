@@ -6,6 +6,7 @@ import { BsListOl, BsListUl, BsImages } from 'react-icons/bs';
 import { GiConversation } from 'react-icons/gi';
 import { FaUserFriends, FaUsers } from 'react-icons/fa';
 import { RiOrganizationChart } from 'react-icons/ri';
+import HeaderBackoffice from '../HeaderBackoffice/HeaderBackoffice';
 
 const Dashboard = () => {
 	const cards = [
@@ -52,18 +53,20 @@ const Dashboard = () => {
 	];
 
 	return (
-		<div className={styles.containerDashboard}>
-			{cards.map(e => {
-				return (
-					<CardDashboard
-						key={e.title}
-						icon={e.icon}
-						title={e.title}
-						link={e.link}
-					/>
-				);
-			})}
-		</div>
+		<HeaderBackoffice>
+			<div className={styles.containerDashboard}>
+				{cards.map(e => {
+					return (
+						<CardDashboard
+							key={e.title}
+							icon={e.icon}
+							title={e.title}
+							link={e.link}
+						/>
+					);
+				})}
+			</div>
+		</HeaderBackoffice>
 	);
 };
 

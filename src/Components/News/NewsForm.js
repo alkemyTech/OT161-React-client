@@ -7,6 +7,7 @@ import axios from 'axios';
 import * as Yup from 'yup';
 import PropTypes from 'prop-types';
 import './NewsForm.css';
+import HeaderBackoffice from '../HeaderBackoffice/HeaderBackoffice';
 
 /**
  *  news Form
@@ -62,104 +63,108 @@ const NewsForm = ({ news }) => {
 	});
 
 	return (
-		<Formik
-			initialValues={{
-				name: news?.name || '',
-				content: news?.content || '',
-				image: news?.image || '',
-				category_id: news?.category_id || '',
-			}}
-			validationSchema={validacionShema}
-			onSubmit={async news => {
-				const date = new Date().toISOString();
-				const method = news?.id ? 'PATCH' : 'POST';
-				const id = news?.id ? `/${news.id}` : '';
-				const url = `https://ongapi.alkemy.org/api/news${id}`;
+		<div>
+			<HeaderBackoffice>
+				<Formik
+					initialValues={{
+						name: news?.name || '',
+						content: news?.content || '',
+						image: news?.image || '',
+						category_id: news?.category_id || '',
+					}}
+					validationSchema={validacionShema}
+					onSubmit={async news => {
+						const date = new Date().toISOString();
+						const method = news?.id ? 'PATCH' : 'POST';
+						const id = news?.id ? `/${news.id}` : '';
+						const url = `https://ongapi.alkemy.org/api/news${id}`;
 
-				const data = news?.id
-					? { ...news, updated_at: date }
-					: { ...news, created_at: date };
-				try {
-					const res = await axios(
-						{ method, url, data },
-						{
-							headers: { 'Content-Type': 'application/json' },
+						const data = news?.id
+							? { ...news, updated_at: date }
+							: { ...news, created_at: date };
+						try {
+							const res = await axios(
+								{ method, url, data },
+								{
+									headers: { 'Content-Type': 'application/json' },
+								}
+							);
+							console.log(res);
+						} catch (err) {
+							console.log('Error', err);
 						}
-					);
-					console.log(res);
-				} catch (err) {
-					console.log('Error', err);
-				}
-			}}
-		>
-			{({
-				values,
-				errors,
-				touched,
-				handleChange,
-				handleBlur,
-				handleSubmit,
-				setFieldValue,
-			}) => (
-				<section className='new-section'>
-					<form className='new-form' onSubmit={handleSubmit}>
-						<label htmlFor='name'>Titulo</label>
-						<input
-							type='text'
-							name='name'
-							onChange={handleChange}
-							onBlur={handleBlur}
-							value={values.name}
-							placeholder='Titulo'
-						/>
-						<span>{touched.name && errors.name}</span>
-						<label htmlFor='content'>Contenido</label>
-						<CKEditor
-							editor={ClassicEditor}
-							data={values.content}
-							onReady={editor => {
-								console.log('El editor esta listo', editor);
-							}}
-							onChange={(event, editor) => {
-								const data = editor.getData();
-								setFieldValue('content', data);
-							}}
-						/>
-						<span>{touched.content && errors.content}</span>
-						<label htmlFor='image'>Imagen</label>
-						<input
-							type='file'
-							name='image'
-							accept='image/*'
-							onChange={async e => {
-								const imageBase64 = await getBase64(e.target.files[0]);
-								setFieldValue('image', imageBase64);
-							}}
-						/>
-						<span>{touched.image && errors.image}</span>
-						<label htmlFor='category_id'>Categoria</label>
-						<select
-							className='select-field'
-							name='category_id'
-							value={values.category_id || ''}
-							onChange={handleChange}
-						>
-							<option value='' disabled>
-								Selecciona categoria
-							</option>
-							{categories.map((el, index) => (
-								<option key={index} value={el.id}>
-									{el.name}
-								</option>
-							))}
-						</select>
-						<span>{touched.category_id && errors.category_id}</span>
+					}}
+				>
+					{({
+						values,
+						errors,
+						touched,
+						handleChange,
+						handleBlur,
+						handleSubmit,
+						setFieldValue,
+					}) => (
+						<section className='new-section'>
+							<form className='new-form' onSubmit={handleSubmit}>
+								<label htmlFor='name'>Titulo</label>
+								<input
+									type='text'
+									name='name'
+									onChange={handleChange}
+									onBlur={handleBlur}
+									value={values.name}
+									placeholder='Titulo'
+								/>
+								<span>{touched.name && errors.name}</span>
+								<label htmlFor='content'>Contenido</label>
+								<CKEditor
+									editor={ClassicEditor}
+									data={values.content}
+									onReady={editor => {
+										console.log('El editor esta listo', editor);
+									}}
+									onChange={(event, editor) => {
+										const data = editor.getData();
+										setFieldValue('content', data);
+									}}
+								/>
+								<span>{touched.content && errors.content}</span>
+								<label htmlFor='image'>Imagen</label>
+								<input
+									type='file'
+									name='image'
+									accept='image/*'
+									onChange={async e => {
+										const imageBase64 = await getBase64(e.target.files[0]);
+										setFieldValue('image', imageBase64);
+									}}
+								/>
+								<span>{touched.image && errors.image}</span>
+								<label htmlFor='category_id'>Categoria</label>
+								<select
+									className='select-field'
+									name='category_id'
+									value={values.category_id || ''}
+									onChange={handleChange}
+								>
+									<option value='' disabled>
+										Selecciona categoria
+									</option>
+									{categories.map((el, index) => (
+										<option key={index} value={el.id}>
+											{el.name}
+										</option>
+									))}
+								</select>
+								<span>{touched.category_id && errors.category_id}</span>
 
-						<button type='submit'>Submit</button>
-					</form>
-				</section>
-			)}
-		</Formik>
+								<button type='submit'>Submit</button>
+							</form>
+						</section>
+					)}
+				</Formik>
+			</HeaderBackoffice>
+		</div>
 	);
 };
 

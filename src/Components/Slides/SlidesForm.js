@@ -7,6 +7,7 @@ import PropTypes from 'prop-types';
 import '../FormStyles.css';
 // import { createSlide, updateSlide } from '../../Services/slidesService';
 import axios from 'axios';
+import HeaderBackoffice from '../HeaderBackoffice/HeaderBackoffice';
 const SlidesForm = props => {
 	const { patchData } = props;
 	const [previewImage, setPreviewImage] = useState('');
@@ -38,73 +39,93 @@ const SlidesForm = props => {
 	};
 
 	return (
-		<Formik
-			initialValues={{
-				image: patchData ? patchData.image : '',
-				name: patchData ? patchData.name : '',
-				order: patchData ? patchData.order : 0,
-				description: patchData ? patchData.description : '',
-			}}
-			onSubmit={(values, { setSubmitting }) =>
-				handleSubmit(values, setSubmitting)
-			}
-			validationSchema={slideSchema}
-		>
-			{({ isSubmitting, setFieldValue }) => (
-				<Form className='form-container'>
-					{previewImage && (
-						<img className='preview-img' src={previewImage} alt='Slide' />
+		<div>
+			<HeaderBackoffice>
+				<Formik
+					initialValues={{
+						image: patchData ? patchData.image : '',
+						name: patchData ? patchData.name : '',
+						order: patchData ? patchData.order : 0,
+						description: patchData ? patchData.description : '',
+					}}
+					onSubmit={(values, { setSubmitting }) =>
+						handleSubmit(values, setSubmitting)
+					}
+					validationSchema={slideSchema}
+				>
+					{({ isSubmitting, setFieldValue }) => (
+						<Form className='form-container'>
+							{previewImage && (
+								<img className='preview-img' src={previewImage} alt='Slide' />
+							)}
+							<input
+								className='input-field'
+								type='file'
+								name='image'
+								onChange={e => {
+									const reader = new FileReader();
+									const file = e.target.files[0];
+									reader.onload = () => {
+										setFieldValue('image', reader.result);
+										setPreviewImage(reader.result);
+									};
+									reader.readAsDataURL(file);
+								}}
+								accept='image/png, image/jpeg'
+								required
+							></input>
+							<ErrorMessage
+								className='input-error'
+								name='image'
+								component='div'
+							/>
+							<Field
+								className='input-field'
+								type='text'
+								name='name'
+								placeholder='Slide Title'
+								required
+							/>
+							<ErrorMessage
+								className='input-error'
+								name='name'
+								component='div'
+							/>
+							<Field
+								className='input-field'
+								type='number'
+								name='order'
+								placeholder='Slide Order'
+								required
+							/>
+							<ErrorMessage
+								className='input-error'
+								name='order'
+								component='div'
+							/>
+							<CKEditor
+								editor={ClassicEditor}
+								onChange={(event, editor) => {
+									setFieldValue('description', editor.getData());
+								}}
+							/>
+							<ErrorMessage
+								className='input-error'
+								name='description'
+								component='div'
+							/>
+							<button
+								className='submit-btn'
+								type='submit'
+								disabled={isSubmitting}
+							>
+								Send
+							</button>
+						</Form>
 					)}
-					<input
-						className='input-field'
-						type='file'
-						name='image'
-						onChange={e => {
-							const reader = new FileReader();
-							const file = e.target.files[0];
-							reader.onload = () => {
-								setFieldValue('image', reader.result);
-								setPreviewImage(reader.result);
-							};
-							reader.readAsDataURL(file);
-						}}
-						accept='image/png, image/jpeg'
-						required
-					></input>
-					<ErrorMessage className='input-error' name='image' component='div' />
-					<Field
-						className='input-field'
-						type='text'
-						name='name'
-						placeholder='Slide Title'
-						required
-					/>
-					<ErrorMessage className='input-error' name='name' component='div' />
-					<Field
-						className='input-field'
-						type='number'
-						name='order'
-						placeholder='Slide Order'
-						required
-					/>
-					<ErrorMessage className='input-error' name='order' component='div' />
-					<CKEditor
-						editor={ClassicEditor}
-						onChange={(event, editor) => {
-							setFieldValue('description', editor.getData());
-						}}
-					/>
-					<ErrorMessage
-						className='input-error'
-						name='description'
-						component='div'
-					/>
-					<button className='submit-btn' type='submit' disabled={isSubmitting}>
-						Send
-					</button>
-				</Form>
-			)}
-		</Formik>
+				</Formik>
+			</HeaderBackoffice>
+		</div>
 	);
 };
 

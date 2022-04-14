@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import '../CardListStyles.css';
+import HeaderBackoffice from '../HeaderBackoffice/HeaderBackoffice';
 
 const UsersList = () => {
 	const usersMock = [
@@ -11,42 +12,44 @@ const UsersList = () => {
 
 	return (
 		<section>
-			<header className='news-header'>
-				<h1>Listado Usuarios</h1>
-				<Link
-					to='/backoffice/create-users'
-					className='primary-button'
-					role='button'
-				>
-					Crear Usuario
-				</Link>
-			</header>
-			<table className='table-container'>
-				<tr>
-					<th>Name</th>
-					<th>Email</th>
-				</tr>
-				{usersMock.length > 0 ? (
-					usersMock.map(element => {
-						return (
-							<tr key={element.id}>
-								<td className='title'>{element.name}</td>
-								<td className='title'>{element.email}</td>
-								<td className='options'>
-									<button>
-										<i className='fa-solid fa-pencil'></i>
-									</button>
-									<button>
-										<i className='fa-solid fa-trash'></i>
-									</button>
-								</td>
-							</tr>
-						);
-					})
-				) : (
-					<p>No hay Usuarios</p>
-				)}
-			</table>
+			<HeaderBackoffice>
+				<header className='news-header'>
+					<h1>Listado Usuarios</h1>
+					<Link
+						to='/backoffice/create-users'
+						className='primary-button'
+						role='button'
+					>
+						Crear Usuario
+					</Link>
+				</header>
+				<table className='table-container'>
+					<tr>
+						<th>Name</th>
+						<th>Email</th>
+					</tr>
+					{usersMock.length > 0 ? (
+						usersMock.map(element => {
+							return (
+								<tr key={element.id}>
+									<td className='title'>{element.name}</td>
+									<td className='title'>{element.email}</td>
+									<td className='options'>
+										<button>
+											<i className='fa-solid fa-pencil'></i>
+										</button>
+										<button>
+											<i className='fa-solid fa-trash'></i>
+										</button>
+									</td>
+								</tr>
+							);
+						})
+					) : (
+						<p>No hay Usuarios</p>
+					)}
+				</table>
+			</HeaderBackoffice>
 		</section>
 	);
 };
