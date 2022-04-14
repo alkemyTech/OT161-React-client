@@ -9,7 +9,10 @@ import getDataMethodPrivate, {
 
 const getSlide = async id => {
 	try {
-		const response = await getDataMethodPrivate('slides', id);
+		const response = await getDataMethodPrivate(
+			process.env.REACT_APP_SLIDES_ENDPOINT,
+			id
+		);
 		return response;
 	} catch (error) {
 		console.log(error);
@@ -20,7 +23,10 @@ const getSlide = async id => {
 
 const createSlide = async data => {
 	try {
-		const response = await privatePostRequest('/slides', data);
+		const response = await privatePostRequest(
+			process.env.REACT_APP_SLIDES_ENDPOINT,
+			data
+		);
 		return response;
 	} catch (error) {
 		console.log(error);
