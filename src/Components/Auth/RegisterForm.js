@@ -26,7 +26,7 @@ const RegisterForm = () => {
 					try {
 	if (acceptedTerms === true) {
 	   resetForm();
-	   console.log(values); // este lo podemos dejar o no
+	   console.log(values);
 	  createUser(values);
      } else {
 	setAcceptedTerms(false);
