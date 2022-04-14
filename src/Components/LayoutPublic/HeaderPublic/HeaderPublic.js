@@ -1,33 +1,24 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { NavLink, Link } from 'react-router-dom';
 import './headerPublic.css';
 import logo from '../../../assets/LOGO-SOMOS MAS.png';
-import { useSelector } from 'react-redux';
-import { authSelector } from '../../../features/auth/authSlice';
+import handleHamburgerBar from './handleHamburgerBar';
+
 const HeaderPublic = () => {
-	const { isAuthenticated } = useSelector(authSelector);
-	window.onload = () => {
-		const hamburger = document.querySelector('.hamburger');
-		const navBarLinks = document.querySelector('.nav-bar-links');
+	const [loginIn, setLoginIn] = useState(false);
 
-		hamburger.addEventListener('click', () => {
-			hamburger.classList.toggle('active');
-			navBarLinks.classList.toggle('active');
-		});
+	useEffect(() => {
+		if (localStorage.getItem('token')) {
+			setLoginIn(true);
+		}
+	}, [loginIn]);
 
-		document.querySelectorAll('.nav-link').forEach(n =>
-			n.addEventListener('click', () => {
-				hamburger.classList.remove('active');
-				navBarLinks.classList.remove('active');
-			})
-		);
+	handleHamburgerBar();
+
+	const handleSessionClose = () => {
+		localStorage.removeItem('token');
+		setLoginIn(false);
 	};
-
-	const [login, setLogin] = useState(false);
-
-	if (localStorage.getItem('login') === true) {
-		setLogin(true);
-	}
 
 	const links = [
 		{ text: 'INICIO', link: '/' },
@@ -61,7 +52,25 @@ const HeaderPublic = () => {
 					})}
 				</ul>
 
-				{login ? <></> : <></>}
+				{loginIn ? (
+					<>
+						<button
+							className='cerrar-Seccion-button'
+							onClick={handleSessionClose}
+						>
+							Cerrar Session
+						</button>
+					</>
+				) : (
+					<div className='login-register-box'>
+						<Link to={'/auth/login'}>
+							<button className='login-button'>Login</button>
+						</Link>
+						<Link to={'/auth/register'}>
+							<button className='register-button'>Registrarse</button>
+						</Link>
+					</div>
+				)}
 				<div className='hamburger'>
 					<span className='hamburger-bar'></span>
 					<span className='hamburger-bar'></span>
