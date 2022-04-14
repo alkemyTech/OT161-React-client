@@ -2,18 +2,20 @@ import React, { useEffect, useState } from 'react';
 import { NavLink, Link } from 'react-router-dom';
 import './headerPublic.css';
 import logo from '../../../assets/LOGO-SOMOS MAS.png';
-import handleHamburgerBar from './handleHamburgerBar';
+import { useSelector } from 'react-redux';
+import { authSelector } from '../../../features/auth/authSlice';
 
 const HeaderPublic = () => {
+	const { isAuthenticated } = useSelector(authSelector);
 	const [loginIn, setLoginIn] = useState(false);
+	const [hambar, setHambar] = useState(false);
+	const showHambar = () => setHambar(!hambar);
 
 	useEffect(() => {
 		if (localStorage.getItem('token')) {
 			setLoginIn(true);
 		}
 	}, [loginIn]);
-
-	handleHamburgerBar();
 
 	const handleSessionClose = () => {
 		localStorage.removeItem('token');
@@ -34,7 +36,7 @@ const HeaderPublic = () => {
 				<Link className='nav-bar-logo' to='/'>
 					<img src={logo} alt='Somos Mas'></img>
 				</Link>
-				<ul className='nav-bar-links'>
+				<ul className={hambar ? 'nav-bar-links active' : 'nav-bar-links'}>
 					{links.map((li, index) => {
 						if (isAuthenticated & (li.link === '/contact')) return null;
 						return (
@@ -71,7 +73,7 @@ const HeaderPublic = () => {
 						</Link>
 					</div>
 				)}
-				<div className='hamburger'>
+				<div className='hamburger' onClick={showHambar}>
 					<span className='hamburger-bar'></span>
 					<span className='hamburger-bar'></span>
 					<span className='hamburger-bar'></span>
