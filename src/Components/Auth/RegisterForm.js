@@ -7,9 +7,62 @@ import { createUser } from '../../Services/UsersHTTPService';
 import showAlert from '../../shared/showAlert';
 import { Document, Page } from 'react-pdf/dist/esm/entry.webpack';
 import pdf from './terminosycondiciones.pdf';
+import * as Yup from 'yup';
+import { useHistory } from 'react-router-dom';
 
 const RegisterForm = () => {
 	const [acceptedTerms, setAcceptedTerms] = useState(false);
+	const history = useHistory();
+	const validationSchema = Yup.object({
+		name: Yup.string().required('El nombre es obligatorio'),
+		email: Yup.string()
+			.required('El email es obligatorio')
+			.email('Escriba un correo válido'),
+		password: Yup.string()
+			.required('La contraseña es obligatoria')
+			.matches(
+				/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?&#.$($)$-$_])[A-Za-z\d$@$!%*?&#.$($)$-$_]{6,15}$/,
+				'La contraseña debe terner mínimo 6 caracteres, contener una mayúscula, un número y un carácter especial'
+			),
+		confirmPassword: Yup.string()
+			.required('Escriba nuevamente la contraseña')
+			.oneOf([Yup.ref('password')], 'Ambas contraseñas deben coincidir'),
+		termsErrorMsg: Yup.boolean().test(
+			'accepted-terms',
+			'Los terminos y condiciones no estan aceptados',
+			value => acceptedTerms
+		),
+	});
+
+	async function handleSubmit({ name, email, password }, { resetForm }) {
+		resetForm();
+		try {
+			const res = await createUser({ name, email, password });
+			if (res?.request?.status === 422) {
+				return showAlert({
+					type: 'error',
+					title: `El correo: ${email}`,
+					message: 'Ya tiene una cuenta con el mismo email',
+				});
+			}
+			showAlert({
+				type: 'success',
+				title: `Usuario creado correctamente`,
+				message: 'Pronto seras redirigido',
+			});
+			setTimeout(() => {
+				history.push('/auth/login');
+			}, 3000);
+			return;
+		} catch (err) {
+			console.error(err);
+			showAlert({
+				type: 'error',
+				title: 'Ups, hubo un error',
+				message: 'No has podido registrarte, intentelo mas tarde',
+			});
+		}
+	}
 
 	return (
 		<>
@@ -19,76 +72,12 @@ const RegisterForm = () => {
 					email: '',
 					password: '',
 					confirmPassword: '',
-					termsErrorMsg: '',
+					termsErrorMsg: false,
 				}}
-				onSubmit={(values, { resetForm }) => {
-
-					try {
-	if (acceptedTerms === true) {
-	   resetForm();
-	   console.log(values);
-	  createUser(values);
-     } else {
-	setAcceptedTerms(false);
-
-}
-
-} catch (err) {
-	showAlert({
-		type: err,
-		title: 'Ups, hubo un error',
-		message: 'No has podido registrarte, intentelo mas tarde',
-	});
-
-}
-
-				}}
-				validate={values => {
-					const errors = {};
-
-					if (!values.name) {
-						errors.name = 'El nombre es obligatorio';
-					}
-
-					// validate email
-					if (!values.email) {
-						errors.email = 'El email es obligatorio';
-					} else if (
-						!/^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/.test(
-							values.email
-						)
-					) {
-						errors.email = 'Escriba un correo válido';
-
-					}
-
-					// validate password
-					if (!values.password) {
-						errors.password = 'La contraseña es obligatoria';
-					} else if (
-						!/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?&#.$($)$-$_])[A-Za-z\d$@$!%*?&#.$($)$-$_]{6,15}$/.test(
-							values.password
-						)
-					) {
-						errors.password =
-							'La contraseña debe terner mínimo 6 caracteres, contener una mayúscula, un número y un carácter especial';
-					}
-
-					if (!values.confirmPassword) {
-						errors.confirmPassword = 'Escriba nuevamente la contraseña';
-					} else if (!(values.confirmPassword === values.password)) {
-						errors.confirmPassword = 'Ambas contraseñas deben coincidir';
-					}
-
-if (acceptedTerms === false) {
-						errors.termsErrorMsg =
-							'Los terminos y condiciones no estan aceptados';
-					}
-					return errors;
-				}}
+				onSubmit={handleSubmit}
+				validationSchema={validationSchema}
 			>
 				{({ errors, handleChange, handleBlur, values }) => (
-
 					<Form className='form-container'>
 						<Field
 							className='input-field'
@@ -182,7 +171,6 @@ if (acceptedTerms === false) {
 											className='button'
 											onClick={() => {
 												setAcceptedTerms(false);
-												console.log('modal closed ');
 												close();
 											}}
 										>
@@ -192,7 +180,9 @@ if (acceptedTerms === false) {
 								</div>
 							)}
 						</Popup>
-						<div className='error-message-form'>{errors.termsErrorMsg}</div>
+						<div className='error-message-form'>
+							{!acceptedTerms && errors.termsErrorMsg}
+						</div>
 
 						<button className='submit-btn' type='submit'>
 							Registrarse
