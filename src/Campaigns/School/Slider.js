@@ -1,16 +1,18 @@
-import React, { useRef } from 'react';
-import img1 from '../../assets/schoolImages/1.jpg';
-import img2 from '../../assets/schoolImages/2.jpg';
-import img3 from '../../assets/schoolImages/3.jpg';
+import React, { useEffect, useRef } from 'react';
+import backToSchool from '../../assets/schoolImages/backToSchool.png';
+import kidsStydying from '../../assets/schoolImages/kidsStydying.jpg';
+import kidPlaying from '../../assets/schoolImages/kidPlaying.jpg';
+import { FaArrowLeft, FaArrowRight } from 'react-icons/fa';
 const Slider = () => {
 	const sliderShow = useRef(null);
+	const intervalSlider = useRef(null);
 	const next = () => {
 		if (sliderShow.current.children.length > 0) {
 			// Obtenemos el primer elemento del sliderShow.
 			const primerElemento = sliderShow.current.children[0];
 
 			// Establecemos la transicion para el sliderShow.
-			sliderShow.current.style.transition = `5000ms ease-out all`;
+			sliderShow.current.style.transition = `2000ms ease-out all`;
 
 			const tamañoSlide = sliderShow.current.children[0].offsetWidth;
 
@@ -48,11 +50,27 @@ const Slider = () => {
 			sliderShow.current.style.transform = `translateX(-${tamañoSlide}px)`;
 
 			setTimeout(() => {
-				sliderShow.current.style.transition = `5000ms ease-out all`;
+				sliderShow.current.style.transition = `2000ms ease-out all`;
 				sliderShow.current.style.transform = `translateX(0)`;
 			}, 30);
 		}
 	};
+
+	useEffect(() => {
+		intervalSlider.current = setInterval(() => {
+			next();
+		}, 5000);
+
+		sliderShow.current.addEventListener('mouseenter', () => {
+			clearInterval(intervalSlider.current);
+		});
+
+		sliderShow.current.addEventListener('mouseleave', () => {
+			intervalSlider.current = setInterval(() => {
+				next();
+			}, 5000);
+		});
+	});
 
 	return (
 		<section className='mainContainer'>
@@ -61,32 +79,36 @@ const Slider = () => {
 				<div className='contenedorSlider' ref={sliderShow}>
 					{/*  slide 1 */}
 					<div className='slide'>
-						<img className='sliderImage' src={img1} alt='' />
+						<img className='sliderImage' src={backToSchool} alt='' />
 						<div className='textSlider'>
-							<p>Texto imagen</p>
+							<p>Volviendo a la escuela!</p>
 						</div>
 					</div>
 
 					{/*  slide 2 */}
 					<div className='slide'>
-						<img className='sliderImage' src={img2} alt='' />
+						<img className='sliderImage' src={kidsStydying} alt='' />
 						<div className='textSlider'>
-							<p>Texto imagen</p>
+							<p>Estudiando programacion!</p>
 						</div>
 					</div>
 
 					{/*  slide 3 */}
 					<div className='slide'>
-						<img className='sliderImage' src={img3} alt='' />
+						<img className='sliderImage' src={kidPlaying} alt='' />
 						<div className='textSlider'>
-							<p>Texto imagen</p>
+							<p>Recreo!</p>
 						</div>
 					</div>
 				</div>
 
-				<div>
-					<button onClick={prev}>Izquierda</button>
-					<button onClick={next}>derecha</button>
+				<div className='sliderControls'>
+					<button className='sliderButton sliderLeftButton' onClick={prev}>
+						<FaArrowLeft className='arrow-icon-slider' />
+					</button>
+					<button className='sliderButton sliderRightButton' onClick={next}>
+						<FaArrowRight className='arrow-icon-slider' />
+					</button>
 				</div>
 			</div>
 		</section>
