@@ -7,9 +7,19 @@ import { createUser } from '../../Services/UsersHTTPService';
 import showAlert from '../../shared/showAlert';
 import { Document, Page } from 'react-pdf/dist/esm/entry.webpack';
 import pdf from './terminosycondiciones.pdf';
-
+import RegisterMap from './RegisterMap';
+import "./map.css";
 const RegisterForm = () => {
 	const [acceptedTerms, setAcceptedTerms] = useState(false);
+	const [stateLat, setStateLat] = useState(0);
+	const [stateLng, setStateLng] = useState(0);
+
+	function getLocation() {
+		navigator.geolocation.getCurrentPosition(function (position) {
+			setStateLat(position.coords.latitude);
+			setStateLng(position.coords.longitude);
+		});
+	}
 
 	return (
 		<>
@@ -20,6 +30,7 @@ const RegisterForm = () => {
 					password: '',
 					confirmPassword: '',
 					termsErrorMsg: '',
+					Lat: '',
 				}}
 				onSubmit={(values, { resetForm }) => {
 
@@ -78,6 +89,11 @@ const RegisterForm = () => {
 						errors.confirmPassword = 'Escriba nuevamente la contraseña';
 					} else if (!(values.confirmPassword === values.password)) {
 						errors.confirmPassword = 'Ambas contraseñas deben coincidir';
+					}
+
+					// Validate Map
+					if (values.Lat === 0) {
+						errors.Lat = 'Pulse el boton para obtener su locación';
 					}
 
 if (acceptedTerms === false) {
@@ -150,6 +166,20 @@ if (acceptedTerms === false) {
 								<div className='error-message-form'>
 									{errors.confirmPassword}
 								</div>
+							)}
+						/>
+						<button type='button' name='Lat' onClick={getLocation}>
+							Get Location
+						</button>
+						<div className='register-map'>
+						{stateLat !== 0 && (
+							<RegisterMap  stateLat={stateLat} stateLng={stateLng} />
+						)}
+						</div>
+						<ErrorMessage
+							name='Lat'
+							component={() => (
+								<div className='error-message-form'>{errors.Lat}</div>
 							)}
 						/>
 
