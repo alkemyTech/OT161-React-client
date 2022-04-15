@@ -65,6 +65,7 @@ const NewsForm = ({ news }) => {
 	return (
 		<div>
 			<HeaderBackoffice>
+				<h1>Formulario de novedades</h1>
 				<Formik
 					initialValues={{
 						name: news?.name || '',
