@@ -9,10 +9,21 @@ import { Document, Page } from 'react-pdf/dist/esm/entry.webpack';
 import pdf from './terminosycondiciones.pdf';
 import * as Yup from 'yup';
 import { useHistory } from 'react-router-dom';
-
+import RegisterMap from './RegisterMap';
+import './map.css';
 const RegisterForm = () => {
 	const [acceptedTerms, setAcceptedTerms] = useState(false);
+	const [stateLat, setStateLat] = useState(0);
+	const [stateLng, setStateLng] = useState(0);
 	const history = useHistory();
+
+	function getLocation() {
+		navigator.geolocation.getCurrentPosition(function (position) {
+			setStateLat(position.coords.latitude);
+			setStateLng(position.coords.longitude);
+		});
+	}
+
 	const validationSchema = Yup.object({
 		name: Yup.string().required('El nombre es obligatorio'),
 		email: Yup.string()
@@ -73,6 +84,7 @@ const RegisterForm = () => {
 					password: '',
 					confirmPassword: '',
 					termsErrorMsg: false,
+					Lat: '',
 				}}
 				onSubmit={handleSubmit}
 				validationSchema={validationSchema}
@@ -139,6 +151,20 @@ const RegisterForm = () => {
 								<div className='error-message-form'>
 									{errors.confirmPassword}
 								</div>
+							)}
+						/>
+						<button type='button' name='Lat' onClick={getLocation}>
+							Get Location
+						</button>
+						<div className='register-map'>
+							{stateLat !== 0 && (
+								<RegisterMap stateLat={stateLat} stateLng={stateLng} />
+							)}
+						</div>
+						<ErrorMessage
+							name='Lat'
+							component={() => (
+								<div className='error-message-form'>{errors.Lat}</div>
 							)}
 						/>
 
