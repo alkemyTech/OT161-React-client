@@ -3,31 +3,64 @@ import React, { useState } from 'react';
 import Popup from 'reactjs-popup';
 import 'reactjs-popup/dist/index.css';
 import '../FormStyles.css';
+import { createUser } from '../../Services/UsersHTTPService';
+import showAlert from '../../shared/showAlert';
 import { Document, Page } from 'react-pdf/dist/esm/entry.webpack';
 import pdf from './terminosycondiciones.pdf';
-
+import RegisterMap from './RegisterMap';
+import "./map.css";
 const RegisterForm = () => {
 	const [acceptedTerms, setAcceptedTerms] = useState(false);
+	const [stateLat, setStateLat] = useState(0);
+	const [stateLng, setStateLng] = useState(0);
+
+	function getLocation() {
+		navigator.geolocation.getCurrentPosition(function (position) {
+			setStateLat(position.coords.latitude);
+			setStateLng(position.coords.longitude);
+		});
+	}
 
 	return (
 		<>
 			<Formik
 				initialValues={{
+					name: '',
 					email: '',
 					password: '',
 					confirmPassword: '',
 					termsErrorMsg: '',
+					Lat: '',
 				}}
 				onSubmit={(values, { resetForm }) => {
-					if (acceptedTerms === true) {
-						resetForm();
-						console.log(values);
-					} else {
-						setAcceptedTerms(false);
-					}
+
+					try {
+	if (acceptedTerms === true) {
+	   resetForm();
+	   console.log(values);
+	  createUser(values);
+     } else {
+	setAcceptedTerms(false);
+
+}
+
+} catch (err) {
+	showAlert({
+		type: err,
+		title: 'Ups, hubo un error',
+		message: 'No has podido registrarte, intentelo mas tarde',
+	});
+
+}
+
 				}}
 				validate={values => {
 					const errors = {};
+
+					if (!values.name) {
+						errors.name = 'El nombre es obligatorio';
+					}
+
 					// validate email
 					if (!values.email) {
 						errors.email = 'El email es obligatorio';
@@ -37,6 +70,7 @@ const RegisterForm = () => {
 						)
 					) {
 						errors.email = 'Escriba un correo válido';
+
 					}
 
 					// validate password
@@ -57,21 +91,44 @@ const RegisterForm = () => {
 						errors.confirmPassword = 'Ambas contraseñas deben coincidir';
 					}
 
-					if (acceptedTerms === false) {
+					// Validate Map
+					if (values.Lat === 0) {
+						errors.Lat = 'Pulse el boton para obtener su locación';
+					}
+
+if (acceptedTerms === false) {
 						errors.termsErrorMsg =
 							'Los terminos y condiciones no estan aceptados';
 					}
-
 					return errors;
 				}}
 			>
-				{({ errors }) => (
+				{({ errors, handleChange, handleBlur, values }) => (
+
 					<Form className='form-container'>
 						<Field
 							className='input-field'
 							type='text'
+							name='name'
+							placeholder='Nombre'
+							value={values.name}
+							onChange={handleChange}
+							onBlur={handleBlur}
+						/>
+						<ErrorMessage
+							name='name'
+							component={() => (
+								<div className='error-message-form'>{errors.name}</div>
+							)}
+						/>
+						<Field
+							className='input-field'
+							type='text'
 							name='email'
-							placeholder='Enter email'
+							placeholder='Email'
+							value={values.email}
+							onChange={handleChange}
+							onBlur={handleBlur}
 						/>
 						<ErrorMessage
 							name='email'
@@ -83,7 +140,10 @@ const RegisterForm = () => {
 							className='input-field'
 							type='password'
 							name='password'
-							placeholder='Enter password'
+							placeholder='Contraseña'
+							value={values.password}
+							onChange={handleChange}
+							onBlur={handleBlur}
 						/>
 						<ErrorMessage
 							name='password'
@@ -95,7 +155,10 @@ const RegisterForm = () => {
 							className='input-field'
 							type='password'
 							name='confirmPassword'
-							placeholder='Confirm password'
+							placeholder='Confirme su contraseña'
+							value={values.confirmPassword}
+							onChange={handleChange}
+							onBlur={handleBlur}
 						/>
 						<ErrorMessage
 							name='confirmPassword'
@@ -105,6 +168,21 @@ const RegisterForm = () => {
 								</div>
 							)}
 						/>
+						<button type='button' name='Lat' onClick={getLocation}>
+							Get Location
+						</button>
+						<div className='register-map'>
+						{stateLat !== 0 && (
+							<RegisterMap  stateLat={stateLat} stateLng={stateLng} />
+						)}
+						</div>
+						<ErrorMessage
+							name='Lat'
+							component={() => (
+								<div className='error-message-form'>{errors.Lat}</div>
+							)}
+						/>
+
 						<Popup
 							trigger={
 								<p className='terms-condicion-button'>
@@ -145,6 +223,7 @@ const RegisterForm = () => {
 							)}
 						</Popup>
 						<div className='error-message-form'>{errors.termsErrorMsg}</div>
+
 						<button className='submit-btn' type='submit'>
 							Registrarse
 						</button>
