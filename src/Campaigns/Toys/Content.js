@@ -28,7 +28,7 @@ const Content = () => {
 		}
 	};
 
-	const finishDate = new Date('2022-04-28T14:15:00');
+	const finishDate = new Date('2022-05-10T14:12:00');
 
 	return (
 		<div className='content_container'>
