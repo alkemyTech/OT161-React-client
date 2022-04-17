@@ -18,6 +18,7 @@
     "html-react-parser": "^1.4.9",
     "prop-types": "^15.8.1",
     "react": "^17.0.2",
+    "react-countdown": "^2.3.2",
     "react-dom": "^17.0.2",
     "react-icons": "^4.3.1",
     "react-lazy-load-image-component": "^1.5.3",
