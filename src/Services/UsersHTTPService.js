@@ -18,7 +18,7 @@ const getAllUsers = async (data = null) => {
 // Post
 export const createUser = async data => {
 	try {
-		const response = await privatePostRequest('users', data);
+		const response = await privatePostRequest('register', data);
 		return response;
 	} catch (error) {
 		console.error(error);

@@ -3,8 +3,9 @@ import React from 'react';
 import '../FormStyles.css';
 import { loginUser } from '../../Services/UsersHTTPService';
 import showAlert from '../../shared/showAlert';
-
+import { useHistory } from 'react-router-dom';
 const LoginForm = () => {
+	const history = useHistory();
 	return (
 		<>
 			<Formik
@@ -12,10 +13,17 @@ const LoginForm = () => {
 					email: '',
 					password: '',
 				}}
-				onSubmit={({ email, password }, { resetForm }) => {
+				onSubmit={async ({ email, password }, { resetForm }) => {
 					resetForm();
 					try {
-						loginUser({ email, password });
+						const user = await loginUser({ email, password });
+						showAlert({
+							type: 'success',
+							title: 'Login exitoso',
+						});
+
+						window.localStorage.setItem('token', user.data.token);
+						user.data.user.role_id === 1 && history.push('/');
 					} catch (err) {
 						showAlert({
 							type: err,
