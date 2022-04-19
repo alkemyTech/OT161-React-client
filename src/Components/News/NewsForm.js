@@ -37,6 +37,7 @@ const NewsForm = ({ news }) => {
 
 		try {
 			const res = await axios.get(url);
+			console.log(res);
 			res.data.data.forEach(element => {
 				const category = {
 					id: element.id,
@@ -107,23 +108,23 @@ const NewsForm = ({ news }) => {
 					}) => (
 						<section className='new-section'>
 							<form className='new-form' onSubmit={handleSubmit}>
-								<label htmlFor='name'>Titulo</label>
+								<label htmlFor='titulo'>Titulo</label>
 								<input
+									data-testid='titulo'
 									type='text'
 									name='name'
+									id='titulo'
 									onChange={handleChange}
 									onBlur={handleBlur}
 									value={values.name}
 									placeholder='Titulo'
 								/>
+
 								<span>{touched.name && errors.name}</span>
-								<label htmlFor='content'>Contenido</label>
+								<label>Contenido</label>
 								<CKEditor
 									editor={ClassicEditor}
 									data={values.content}
-									onReady={editor => {
-										console.log('El editor esta listo', editor);
-									}}
 									onChange={(event, editor) => {
 										const data = editor.getData();
 										setFieldValue('content', data);
@@ -132,6 +133,7 @@ const NewsForm = ({ news }) => {
 								<span>{touched.content && errors.content}</span>
 								<label htmlFor='image'>Imagen</label>
 								<input
+									data-testid='image'
 									type='file'
 									name='image'
 									accept='image/*'
@@ -145,6 +147,7 @@ const NewsForm = ({ news }) => {
 								<select
 									className='select-field'
 									name='category_id'
+									data-testid='categoria'
 									value={values.category_id || ''}
 									onChange={handleChange}
 								>
