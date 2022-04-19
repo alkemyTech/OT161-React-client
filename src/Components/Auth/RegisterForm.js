@@ -1,5 +1,5 @@
 import { Formik, Form, Field, ErrorMessage } from 'formik';
-import React, { useState } from 'react';
+import React from 'react';
 import Popup from 'reactjs-popup';
 import 'reactjs-popup/dist/index.css';
 import '../FormStyles.css';
@@ -12,17 +12,7 @@ import { useHistory } from 'react-router-dom';
 import RegisterMap from './RegisterMap';
 import './map.css';
 const RegisterForm = () => {
-	const [acceptedTerms, setAcceptedTerms] = useState(false);
-	const [stateLat, setStateLat] = useState(0);
-	const [stateLng, setStateLng] = useState(0);
 	const history = useHistory();
-
-	function getLocation() {
-		navigator.geolocation.getCurrentPosition(function (position) {
-			setStateLat(position.coords.latitude);
-			setStateLng(position.coords.longitude);
-		});
-	}
 
 	const validationSchema = Yup.object({
 		name: Yup.string().required('El nombre es obligatorio'),
@@ -41,8 +31,15 @@ const RegisterForm = () => {
 		termsErrorMsg: Yup.boolean().test(
 			'accepted-terms',
 			'Los terminos y condiciones no estan aceptados',
-			value => acceptedTerms
+			value => value
 		),
+		lat: Yup.object()
+			.required('Generar la ubicación es obligatorio')
+			.test(
+				'latitude',
+				'Es necesario generar la ubicación',
+				value => value.x || value.y
+			),
 	});
 
 	async function handleSubmit({ name, email, password }, { resetForm }) {
@@ -84,12 +81,12 @@ const RegisterForm = () => {
 					password: '',
 					confirmPassword: '',
 					termsErrorMsg: false,
-					Lat: '',
+					lat: { x: 0, y: 0 },
 				}}
 				onSubmit={handleSubmit}
 				validationSchema={validationSchema}
 			>
-				{({ errors, handleChange, handleBlur, values }) => (
+				{({ errors, handleChange, handleBlur, values, setFieldValue }) => (
 					<Form className='form-container'>
 						<Field
 							className='input-field'
@@ -153,18 +150,32 @@ const RegisterForm = () => {
 								</div>
 							)}
 						/>
-						<button type='button' name='Lat' onClick={getLocation}>
+						<button
+							type='button'
+							name='lat'
+							onClick={() => {
+								navigator.geolocation.getCurrentPosition(function ({
+									coords: { latitude, longitude },
+								}) {
+									setFieldValue('lat', {
+										x: latitude,
+										y: longitude,
+									});
+								});
+							}}
+						>
 							Get Location
+							{console.log(values)}
 						</button>
 						<div className='register-map'>
-							{stateLat !== 0 && (
-								<RegisterMap stateLat={stateLat} stateLng={stateLng} />
+							{values.lat.x !== 0 && (
+								<RegisterMap stateLat={values.lat.x} stateLng={values.lat.y} />
 							)}
 						</div>
 						<ErrorMessage
-							name='Lat'
+							name='lat'
 							component={() => (
-								<div className='error-message-form'>{errors.Lat}</div>
+								<div className='error-message-form'>{errors.lat}</div>
 							)}
 						/>
 
@@ -187,7 +198,7 @@ const RegisterForm = () => {
 									<div className='actions'>
 										<button
 											onClick={() => {
-												setAcceptedTerms(true);
+												setFieldValue('termsErrorMsg', true);
 												close();
 											}}
 										>
@@ -196,7 +207,7 @@ const RegisterForm = () => {
 										<button
 											className='button'
 											onClick={() => {
-												setAcceptedTerms(false);
+												setFieldValue('termsErrorMsg', false);
 												close();
 											}}
 										>
@@ -207,7 +218,7 @@ const RegisterForm = () => {
 							)}
 						</Popup>
 						<div className='error-message-form'>
-							{!acceptedTerms && errors.termsErrorMsg}
+							{errors.termsErrorMsg && errors.termsErrorMsg}
 						</div>
 
 						<button className='submit-btn' type='submit'>
