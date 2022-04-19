@@ -1,8 +1,11 @@
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import React from 'react';
 import '../FormStyles.css';
-
+import { loginUser } from '../../Services/UsersHTTPService';
+import showAlert from '../../shared/showAlert';
+import { useHistory } from 'react-router-dom';
 const LoginForm = () => {
+	const history = useHistory();
 	return (
 		<>
 			<Formik
@@ -10,9 +13,25 @@ const LoginForm = () => {
 					email: '',
 					password: '',
 				}}
-				onSubmit={(values, { resetForm }) => {
+				onSubmit={async ({ email, password }, { resetForm }) => {
 					resetForm();
-					console.log(values);
+					try {
+						const user = await loginUser({ email, password });
+						showAlert({
+							type: 'success',
+							title: 'Login exitoso',
+						});
+
+						window.localStorage.setItem('token', user.data.token);
+						user.data.user.role_id === 1 && history.push('/');
+					} catch (err) {
+						showAlert({
+							type: err,
+							title: 'Ups, hubo un error',
+							message:
+								'No has podido ingresar a tu cuenta, intentelo mas tarde',
+						});
+					}
 				}}
 				validate={values => {
 					const errors = {};
@@ -41,13 +60,16 @@ const LoginForm = () => {
 					return errors;
 				}}
 			>
-				{({ errors, touched, handleChange, handleBlur, values }) => (
-					<Form className='form-container'>
+				{({ errors, handleChange, handleBlur, handleSubmit, values }) => (
+					<Form onSubmit={handleSubmit} className='form-container'>
 						<Field
 							className='input-field'
 							type='text'
 							name='email'
-							placeholder='Enter email'
+							placeholder='Email'
+							value={values.email}
+							onChange={handleChange}
+							onBlur={handleBlur}
 						/>
 						<ErrorMessage
 							name='email'
@@ -59,7 +81,10 @@ const LoginForm = () => {
 							className='input-field'
 							type='password'
 							name='password'
-							placeholder='Enter password'
+							placeholder='Contraseña'
+							value={values.password}
+							onChange={handleChange}
+							onBlur={handleBlur}
 						/>
 						<ErrorMessage
 							name='password'
