@@ -11,6 +11,13 @@ import { act } from 'react-dom/test-utils';
 import { jest, expect } from '@jest/globals';
 import { createUser } from '../../Services/UsersHTTPService';
 
+// Documentacion
+
+// Lo que hago: Ingreso los datos necesarios para el registro
+// Lo que espero que haga: Si los datos estan correctos, debe pasar el test
+// Contexto: Brave
+// Ultima vez que ejecute el test: 19/4/2022
+
 describe('register', () => {
 	describe('los inputs son validos', () => {
 		it('llama ala funcion de onSubmit', async () => {
