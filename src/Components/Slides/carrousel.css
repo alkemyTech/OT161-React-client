@@ -98,6 +98,9 @@
     .carrousel-description {
       font-size: 90%;
     }
+    .carrousel-responsive{
+      display: none;
+    }
   }
   @media only screen and (max-width: 400px) {
     .carrousel-title {
