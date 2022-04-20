@@ -11,10 +11,11 @@ import {
 	cleanup,
 } from '@testing-library/react';
 
-// El test verifica:
-// -Si se esta llamando a la funcion de submit
-// -Si los campos de email o telefono son incorrectos, enviando mensajes de error
-// -Si los datos de envio son correctos
+// -Debería verificar si el nombre contiene más de 4 letras,
+// si el telefono es un número y tiene al menos 8 dígitos,
+// si el email respeta la secuencia "caracter @ caracter . caracter",
+// y si los datos de envio son correctos en relación al endponit
+
 
 describe('ContactForm', () => {
 	cleanup();
