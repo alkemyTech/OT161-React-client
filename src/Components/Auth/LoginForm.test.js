@@ -5,6 +5,10 @@ import LoginForm from './LoginForm';
 import { act } from 'react-dom/test-utils';
 import loginUser from '../../Services/UsersHTTPService';
 
+// Doc LoginForm test
+// El test verifica en primera instancia que el componente haga el llamado de a función submit si los datos son correctos
+// El test verifica que los campos email y password muestren el mensaje de error si los datos son incorrectos y por ultimo que haga la peticion http
+
 describe('LoginForm', () => {
 	describe('valid inputs', () => {
 		it('should call the submit function', async () => {
