@@ -51,8 +51,10 @@ const About = () => {
 				</div>
 
 				<div>
-					<h1>Miembros</h1>
-					<p>Conoce a los valiosos miembros de nuestra ONG</p>
+					<div className='nosotros_container-members'>
+						<h1>Miembros</h1>
+						<p>Conoce a los valiosos miembros de nuestra ONG</p>
+					</div>
 					<Members />
 				</div>
 				<div>

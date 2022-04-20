@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { NavLink, Link } from 'react-router-dom';
+import { NavLink, Link, useHistory } from 'react-router-dom';
 import './headerPublic.css';
 import logo from '../../../assets/LOGO-SOMOS MAS.png';
 import { useSelector } from 'react-redux';
@@ -10,6 +10,11 @@ const HeaderPublic = () => {
 	const [loginIn, setLoginIn] = useState(false);
 	const [hambar, setHambar] = useState(false);
 	const showHambar = () => setHambar(!hambar);
+	const history = useHistory();
+
+	const navigateToHome = () => {
+		history.push('/');
+	};
 
 	useEffect(() => {
 		if (localStorage.getItem('token')) {
@@ -33,9 +38,13 @@ const HeaderPublic = () => {
 	return (
 		<>
 			<nav className='nav-bar'>
-				<Link className='nav-bar-logo' to='/'>
-					<img src={logo} alt='Somos Mas'></img>
-				</Link>
+				<img
+					className='nav-bar-logo'
+					onClick={navigateToHome}
+					src={logo}
+					alt='Somos Mas'
+				></img>
+
 				<ul className={hambar ? 'nav-bar-links active' : 'nav-bar-links'}>
 					{links.map((li, index) => {
 						if (isAuthenticated & (li.link === '/contact')) return null;
