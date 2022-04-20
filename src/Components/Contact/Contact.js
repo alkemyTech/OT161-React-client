@@ -3,6 +3,7 @@ import ContactForm from './ContactForm';
 import LayoutPublic from '../LayoutPublic/LayoutPublic';
 import ShowTitle from '../../shared/ShowTitle';
 import contactImage from '../../assets/image-contact.png';
+import Leaflet from '../Shared/Leaflet';
 
 const Contact = () => {
 	return (
@@ -18,6 +19,7 @@ const Contact = () => {
 						/>
 					</div>
 					<ContactForm />
+					<Leaflet />
 				</div>
 			</LayoutPublic>
 		</>
