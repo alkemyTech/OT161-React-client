@@ -11,16 +11,16 @@ import {
 	cleanup,
 } from '@testing-library/react';
 
-// -Debería verificar si el nombre contiene más de 4 letras,
-// si el telefono es un número y tiene al menos 8 dígitos,
-// si el email respeta la secuencia "caracter @ caracter . caracter",
-// y si los datos de envio son correctos en relación al endponit
+// El test verifica:
+// -Si se esta llamando a la funcion de submit
+// -Si los campos de email o telefono son incorrectos, enviando mensajes de error
+// -Si los datos de envio son correctos
 
 
 describe('ContactForm', () => {
 	cleanup();
 	describe('valid inputs', () => {
-		it('llamar a la funcion de submit', async () => {
+		it('debería verificar si se estan enviando los datos', async () => {
 			const handleSubmit = jest.fn();
 			const { getByPlaceholderText, getByRole } = render(
 				<ContactForm onSubmit={handleSubmit} />
@@ -50,7 +50,7 @@ describe('ContactForm', () => {
 		});
 	});
 
-	describe('email incorrecto', () => {
+	describe('debería verificar si el email respeta la secuencia "caracter @ caracter . caracter', () => {
 		it('mostrar validacion de errores de email', async () => {
 			const { getByPlaceholderText, container } = render(<ContactForm />);
 			await act(async () => {
@@ -67,7 +67,7 @@ describe('ContactForm', () => {
 		});
 	});
 
-	describe('telefono incorrecto', () => {
+	describe('debería verificar si el telefono tiene al menos 8 dígitos', () => {
 		it('mostrar validacion de errores de password', async () => {
 			const { getByPlaceholderText, container } = render(<ContactForm />);
 			await act(async () => {
@@ -87,7 +87,7 @@ describe('ContactForm', () => {
 	});
 });
 
-test('toMatchObject se llama para cada elemento, por lo que las propiedades adicionales del objeto están bien', async () => {
+test('debería verificar que las propiedades adicionales del objeto están bien', async () => {
 	const res = await createContact({
 		email: 'ejemplo@ejemplo.com',
 		name: 'Franco',
