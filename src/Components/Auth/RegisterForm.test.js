@@ -4,12 +4,11 @@ import {
 	render,
 	fireEvent,
 	waitFor,
-	screen,
-	getByRole,
+	screen
 } from '@testing-library/react';
 import { act } from 'react-dom/test-utils';
-import { jest, expect } from '@jest/globals';
 import { createUser } from '../../Services/UsersHTTPService';
+import '@testing-library/jest-dom/extend-expect';
 
 // Documentacion
 
@@ -22,7 +21,7 @@ describe('register', () => {
 	describe('los inputs son validos', () => {
 		it('llama ala funcion de onSubmit', async () => {
 			const mockOnSubmit = jest.fn();
-			const { getByPlaceholderText, getByText } = render(
+			const { getByText } = render(
 				<RegisterForm onSubmit={mockOnSubmit} />
 			);
 

@@ -5,12 +5,13 @@ import 'reactjs-popup/dist/index.css';
 import '../FormStyles.css';
 import { createUser } from '../../Services/UsersHTTPService';
 import showAlert from '../../shared/showAlert';
-import { Document, Page } from 'react-pdf/dist/esm/entry.webpack';
+import { Document, Page } from 'react-pdf'
 import pdf from './terminosycondiciones.pdf';
 import * as Yup from 'yup';
 import { useHistory } from 'react-router-dom';
 import RegisterMap from './RegisterMap';
 import './map.css';
+
 const RegisterForm = () => {
 	const history = useHistory();
 
