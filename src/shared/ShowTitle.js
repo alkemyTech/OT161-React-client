@@ -12,7 +12,7 @@ const ShowTitle = ({ patchData }) => {
 
 	return (
 		<>
-			<h1>{patchData.title}</h1>
+			<h1 style={{ fontFamily: 'Englebert' }}>{patchData.title}</h1>
 			<img
 				src={previewImage}
 				alt='preview'
