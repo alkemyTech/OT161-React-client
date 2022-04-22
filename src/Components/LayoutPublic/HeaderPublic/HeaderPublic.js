@@ -28,67 +28,65 @@ const HeaderPublic = () => {
 	};
 
 	const links = [
-		{ text: 'INICIO', link: '/' },
-		{ text: 'NOSOTROS', link: '/nosotros' },
-		{ text: 'CONTACTO', link: '/contact' },
+		{ text: 'Inicio', link: '/' },
+		{ text: 'Nosotros', link: '/nosotros' },
+		{ text: 'Contacto', link: '/contact' },
 		{ text: 'Campaña en Escuela', link: '/school-campaign' },
 		{ text: 'Campaña de Juguetes', link: '/toys-campaign' },
 	];
 
 	return (
-		<>
-			<nav className='nav-bar'>
-				<img
-					className='nav-bar-logo'
-					onClick={navigateToHome}
-					src={logo}
-					alt='Somos Mas'
-				></img>
+		<nav className='nav-bar'>
+			<img
+				className='nav-bar-logo'
+				onClick={navigateToHome}
+				src={logo}
+				alt='Somos Mas'
+			></img>
 
-				<ul className={hambar ? 'nav-bar-links active' : 'nav-bar-links'}>
-					{links.map((li, index) => {
-						if (isAuthenticated & (li.link === '/contact')) return null;
-						return (
-							<li key={`${li.text}${index}`} className='nav-link'>
-								<NavLink
-									className={({ isActive }) =>
-										isActive ? 'nav-link__active' : ''
-									}
-									to={li.link}
-								>
-									{li.text}
-								</NavLink>
-							</li>
-						);
-					})}
-				</ul>
+			<ul className={hambar ? 'nav-bar-links active' : 'nav-bar-links'}>
+				{links.map((li, index) => {
+					if (isAuthenticated & (li.link === '/contact')) return null;
+					return (
+						<li key={`${li.text}${index}`} className='nav-link'>
+							<NavLink
+								className={({ isActive }) =>
+									isActive ? 'nav-link__active' : ''
+								}
+								to={li.link}
+							>
+								{li.text}
+							</NavLink>
+						</li>
+					);
+				})}
+			</ul>
 
-				{loginIn ? (
-					<>
-						<button
-							className='cerrar-Seccion-button'
-							onClick={handleSessionClose}
-						>
-							Cerrar Session
-						</button>
-					</>
-				) : (
-					<div className='login-register-box'>
-						<Link to={'/auth/login'}>
-							<button className='login-button'>Login</button>
-						</Link>
-						<Link to={'/auth/register'}>
-							<button className='register-button'>Registrarse</button>
-						</Link>
-					</div>
-				)}
-				<div className='hamburger' onClick={showHambar}>
-					<span className='hamburger-bar'></span>
-					<span className='hamburger-bar'></span>
-					<span className='hamburger-bar'></span>
+			{loginIn ? (
+				<>
+					<button
+						className='cerrar-Seccion-button'
+						onClick={handleSessionClose}
+					>
+						Cerrar Session
+					</button>
+				</>
+			) : (
+				<div className='login-register-box'>
+					<Link to={'/auth/login'}>
+						<button className='login-button'>Login</button>
+					</Link>
+					<Link to={'/auth/register'}>
+						<button className='register-button'>Registrarse</button>
+					</Link>
 				</div>
-			</nav>
-		</>
+			)}
+			<div className='hamburger' onClick={showHambar}>
+				<span className='hamburger-bar'></span>
+				<span className='hamburger-bar'></span>
+				<span className='hamburger-bar'></span>
+			</div>
+		</nav>
 	);
 };
 
