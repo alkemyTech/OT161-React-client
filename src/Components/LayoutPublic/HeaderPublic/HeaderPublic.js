@@ -4,6 +4,7 @@ import './headerPublic.css';
 import logo from '../../../assets/LOGO-SOMOS MAS.png';
 import { useSelector } from 'react-redux';
 import { authSelector } from '../../../features/auth/authSlice';
+import showAlert from '../../../shared/showAlert';
 
 const HeaderPublic = () => {
 	const { isAuthenticated } = useSelector(authSelector);
@@ -24,6 +25,7 @@ const HeaderPublic = () => {
 
 	const handleSessionClose = () => {
 		localStorage.removeItem('token');
+		showAlert({type: 'success', title: 'Sesión cerrada', message: 'Sesión cerrada correctamente'});
 		setLoginIn(false);
 	};
 
