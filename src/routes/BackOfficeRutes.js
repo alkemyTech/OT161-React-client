@@ -29,7 +29,10 @@ const BackOfficeRutes = () => {
 				path='/backoffice/create-category'
 				component={CategoriesForm}
 			/>
-			<PrivateRoutes path='/backoffice/create-news' component={NewsForm} />
+			<PrivateRoutes
+				path='/backoffice/create-news'
+				render={data => <NewsForm news={data.location.state} />}
+			/>
 			<PrivateRoutes path='/backoffice/create-slide' component={SlidesForm} />
 			<PrivateRoutes
 				path='/backoffice/create-testimonials'

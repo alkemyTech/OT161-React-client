@@ -6,14 +6,26 @@ import { getNewsData, newsSelector } from '../../features/news/newSlice';
 import Spinner from '../../shared/Spinner';
 import showAlert from '../../shared/showAlert';
 import HeaderBackoffice from '../HeaderBackoffice/HeaderBackoffice';
+import { MdModeEdit } from 'react-icons/md';
+import { IoMdTrash } from 'react-icons/io';
+import { privateDeleteRequest } from '../../Services/privateApiService';
 const NewsList = () => {
 	const dispatch = useDispatch();
 	const news = useSelector(newsSelector);
 
 	const newsStatus = useSelector(states => states.news);
 
-	console.log(news);
-
+	async function handleRemove(id) {
+		try {
+			await privateDeleteRequest({ url: `news/${id}` });
+			showAlert({ type: 'success', title: 'Eliminado correctamente' });
+		} catch (error) {
+			showAlert({
+				type: 'error',
+				title: 'Ups! No se pudo eliminar la novedad',
+			});
+		}
+	}
 	useEffect(() => {
 		if (newsStatus.status === 'idle') {
 			dispatch(getNewsData());
@@ -57,13 +69,19 @@ const NewsList = () => {
 										<img src={element.image} alt={element.name} />
 									</td>
 									<td className='title'>{element.name}</td>
-									<td>{element.created_at}</td>
+									<td>{new Date(element.created_at).toLocaleDateString()}</td>
 									<td className='options'>
-										<button>
-											<i className='fa-solid fa-pencil'></i>
-										</button>
-										<button>
-											<i className='fa-solid fa-trash'></i>
+										<Link
+											className='options__edit'
+											to={{
+												pathname: '/backoffice/create-news',
+												state: element,
+											}}
+										>
+											<MdModeEdit />
+										</Link>
+										<button onClick={() => handleRemove(element.id)}>
+											<IoMdTrash />
 										</button>
 									</td>
 								</tr>
