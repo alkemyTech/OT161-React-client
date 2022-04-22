@@ -6,8 +6,12 @@ import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import axios from 'axios';
 import * as Yup from 'yup';
 import PropTypes from 'prop-types';
-import './NewsForm.css';
 import HeaderBackoffice from '../HeaderBackoffice/HeaderBackoffice';
+import {
+	privatePutRequest,
+	privatePostRequest,
+} from '../../Services/privateApiService';
+import showAlert from '../../shared/showAlert';
 
 /**
  *  news Form
@@ -23,6 +27,10 @@ import HeaderBackoffice from '../HeaderBackoffice/HeaderBackoffice';
 
 const NewsForm = ({ news }) => {
 	const [categories, setCategories] = useState([]);
+	const [previewImage, setPreviewImage] = useState(() => news?.image || null);
+	const [statusForm, setStatusForm] = useState(false);
+
+	const SUPPORTED_FORMATS = /(jpg|png|jpeg)/;
 	function getBase64(file) {
 		return new Promise((resolve, reject) => {
 			const reader = new FileReader();
@@ -37,12 +45,12 @@ const NewsForm = ({ news }) => {
 
 		try {
 			const res = await axios.get(url);
-			console.log(res);
 			res.data.data.forEach(element => {
 				const category = {
 					id: element.id,
 					name: element.name,
 				};
+
 				setCategories(categories => [...categories, category]);
 			});
 		} catch (err) {
@@ -59,7 +67,13 @@ const NewsForm = ({ news }) => {
 			.required('El titulo es requerido')
 			.min(4, 'El titulo debe tener minimo 4 caracteres'),
 		content: Yup.string().required('El contenido es requerido'),
-		image: Yup.mixed().required('La imagen es requerida'),
+		image: Yup.mixed()
+			.required('La imagen es requerida')
+			.test('fileType', 'El formato no es correcto', image => {
+				if (!SUPPORTED_FORMATS.test(image)) return false;
+				setPreviewImage(image);
+				return true;
+			}),
 		category_id: Yup.number().required('La categoria es requerida'),
 	});
 
@@ -75,25 +89,34 @@ const NewsForm = ({ news }) => {
 						category_id: news?.category_id || '',
 					}}
 					validationSchema={validacionShema}
-					onSubmit={async news => {
-						const date = new Date().toISOString();
-						const method = news?.id ? 'PATCH' : 'POST';
-						const id = news?.id ? `/${news.id}` : '';
-						const url = `https://ongapi.alkemy.org/api/news${id}`;
-
-						const data = news?.id
-							? { ...news, updated_at: date }
-							: { ...news, created_at: date };
+					onSubmit={async ({ image, ...newsFormData }) => {
+						setStatusForm(true);
+						const isUrlImage = image.includes('http' || 'https');
 						try {
-							const res = await axios(
-								{ method, url, data },
-								{
-									headers: { 'Content-Type': 'application/json' },
-								}
-							);
-							console.log(res);
+							if (news?.id) {
+								const putRes = await privatePutRequest({
+									url: `news/${news.id}`,
+									putData: isUrlImage
+										? { ...newsFormData }
+										: { ...newsFormData, image },
+								});
+								console.log(putRes);
+								if (!putRes.data.success)
+									throw new Error('error while editing');
+								showAlert({ type: 'success', title: 'Editado correctamente' });
+								return;
+							}
+							const postRes = await privatePostRequest('news', {
+								...newsFormData,
+								image,
+							});
+							if (!postRes.success) throw new Error('error while posting');
+							showAlert({ type: 'success', title: 'Creado correctamente' });
 						} catch (err) {
-							console.log('Error', err);
+							console.log(err);
+							showAlert({ type: 'error', message: 'Ocurrio un error' });
+						} finally {
+							setStatusForm(false);
 						}
 					}}
 				>
@@ -105,12 +128,14 @@ const NewsForm = ({ news }) => {
 						handleBlur,
 						handleSubmit,
 						setFieldValue,
+						setFieldTouched,
 					}) => (
 						<section className='new-section'>
-							<form className='new-form' onSubmit={handleSubmit}>
+							<form className='form-container' onSubmit={handleSubmit}>
 								<label htmlFor='titulo'>Titulo</label>
 								<input
 									data-testid='titulo'
+									className='input-field'
 									type='text'
 									name='name'
 									id='titulo'
@@ -120,29 +145,50 @@ const NewsForm = ({ news }) => {
 									placeholder='Titulo'
 								/>
 
-								<span>{touched.name && errors.name}</span>
+								<span className='input-error'>
+									{touched.name && errors.name}
+								</span>
 								<label>Contenido</label>
 								<CKEditor
+									data-testid='content'
 									editor={ClassicEditor}
 									data={values.content}
+									onBlur={() => setFieldTouched('content', true)}
 									onChange={(event, editor) => {
 										const data = editor.getData();
 										setFieldValue('content', data);
 									}}
 								/>
-								<span>{touched.content && errors.content}</span>
-								<label htmlFor='image'>Imagen</label>
-								<input
-									data-testid='image'
-									type='file'
-									name='image'
-									accept='image/*'
-									onChange={async e => {
-										const imageBase64 = await getBase64(e.target.files[0]);
-										setFieldValue('image', imageBase64);
-									}}
-								/>
-								<span>{touched.image && errors.image}</span>
+								<span className='input-error'>
+									{touched.content && errors.content}
+								</span>
+								<label className='input-file'>
+									Subir imagen
+									<input
+										data-testid='image'
+										type='file'
+										accept='image/png, image/jpeg'
+										onChange={async event => {
+											setFieldTouched('image', true);
+											const imageBase64 = await getBase64(
+												event.target.files[0]
+											);
+											setFieldValue('image', imageBase64);
+										}}
+									/>
+								</label>
+								<span className='input-error'>
+									{touched.image && errors.image}
+								</span>
+								{previewImage && (
+									<img
+										src={previewImage}
+										alt={news?.name || 'preview'}
+										width={100}
+										height={100}
+										style={{ objectFit: 'cover' }}
+									/>
+								)}
 								<label htmlFor='category_id'>Categoria</label>
 								<select
 									className='select-field'
@@ -160,9 +206,17 @@ const NewsForm = ({ news }) => {
 										</option>
 									))}
 								</select>
-								<span>{touched.category_id && errors.category_id}</span>
+								<span className='input-error'>
+									{touched.category_id && errors.category_id}
+								</span>
 
-								<button type='submit'>Submit</button>
+								<button
+									className='submit-btn'
+									type='submit'
+									disabled={statusForm}
+								>
+									{news?.id ? 'Update' : 'Send'}
+								</button>
 							</form>
 						</section>
 					)}
