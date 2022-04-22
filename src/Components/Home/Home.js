@@ -1,5 +1,4 @@
 import React from 'react';
-import Novedades from './Novedades';
 import Carrousel from '../../Components/Slides/Carrousel';
 import LayoutPublic from '../LayoutPublic/LayoutPublic';
 import './Home.css';
@@ -12,9 +11,6 @@ const Home = () => {
 				<h1 className='home_title'>Somos más</h1>
 				<div>
 					<Carrousel />
-				</div>
-				<div>
-					<Novedades />
 				</div>
 			</LayoutPublic>
 		</>
