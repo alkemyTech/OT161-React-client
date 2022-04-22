@@ -62,7 +62,7 @@ const Carrousel = () => {
 										className='carrousel-image'
 									/>
 								</div>
-								<p className='carrousel-description'>
+								<p className='carrousel-description carrousel-responsive'>
 									{parser(
 										slide.description !== 'string'
 											? slide.description
