@@ -30,11 +30,11 @@ const FooterPublic = () => {
 	}, []);
 
 	const links = [
-		{ text: 'INICIO', link: '/' },
+		{ text: 'Inicio', link: '/' },
 		{ text: 'Campaña en Escuela', link: '/school-campaign' },
-		{ text: 'NOSOTROS', link: '/nosotros' },
+		{ text: 'Nosotros', link: '/nosotros' },
 		{ text: 'Campaña de Juguetes', link: '/toys-campaign' },
-		{ text: 'CONTACTO', link: '/contact' },
+		{ text: 'Contacto', link: '/contact' },
 	];
 	const socialMedia = [
 		{

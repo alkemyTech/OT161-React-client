@@ -8,8 +8,12 @@ const initialState = {
 };
 
 export const getNewsData = createAsyncThunk('news/getNews', async () => {
-	const response = await getNews();
-	return response.data;
+	try {
+		const response = await getNews();
+		return response.data.data;
+	} catch (error) {
+		throw new Error('News slice error to get data');
+	}
 });
 
 const newsSlice = createSlice({
