@@ -22,8 +22,8 @@ const HomeForms = () => {
 		});
 	};
 	return (
-		<div>
-			<HeaderBackoffice>
+		<HeaderBackoffice>
+			<section className='form__section form__backoffice'>
 				<Formik
 					initialValues={{
 						textWelcome: '',
@@ -62,7 +62,7 @@ const HomeForms = () => {
 						};
 						const slideOne = async () => {
 							try {
-								await axios.put(`https://ongapi.alkemy.org/api/slides/995`, {
+								await axios.put(`https://ongapi.alkemy.org/api/slides/1126`, {
 									name: textSlide,
 									image: image,
 								});
@@ -72,7 +72,7 @@ const HomeForms = () => {
 						};
 						const slideTwo = async () => {
 							try {
-								await axios.put(`https://ongapi.alkemy.org/api/slides/1004`, {
+								await axios.put(`https://ongapi.alkemy.org/api/slides/1127`, {
 									name: textSlide2,
 									image: image2,
 								});
@@ -82,7 +82,7 @@ const HomeForms = () => {
 						};
 						const slideThree = async () => {
 							try {
-								await axios.put(`https://ongapi.alkemy.org/api/slides/1005`, {
+								await axios.put(`https://ongapi.alkemy.org/api/slides/1129`, {
 									name: textSlide3,
 									image: image3,
 								});
@@ -193,8 +193,8 @@ const HomeForms = () => {
 						</form>
 					)}
 				</Formik>
-			</HeaderBackoffice>
-		</div>
+			</section>
+		</HeaderBackoffice>
 	);
 };
 

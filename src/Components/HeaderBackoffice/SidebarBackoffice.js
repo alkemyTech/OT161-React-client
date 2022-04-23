@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 import { DataSidebarBackoffice } from './DataSidebarBackoffice';
 import './SidebarBackoffice.css';
 import { GiHamburgerMenu } from 'react-icons/gi';
@@ -28,14 +28,16 @@ const SidebarBackoffice = () => {
 							<AiOutlineClose />
 						</div>
 					</li>
-					<li className='backoffice_sidebar--title'>Somos más</li>
+					<li className='backoffice_sidebar--title'>
+						<Link to='/backoffice'>Somos más</Link>
+					</li>
 					{DataSidebarBackoffice.map((e, i) => {
 						return (
 							<li key={i} className='backoffice_data--items'>
-								<Link to={e.link}>
+								<NavLink to={e.link}>
 									<span>{e.icon}</span>
 									<span>{e.title}</span>
-								</Link>
+								</NavLink>
 							</li>
 						);
 					})}

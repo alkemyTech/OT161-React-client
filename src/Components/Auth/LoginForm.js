@@ -7,7 +7,7 @@ import { useHistory } from 'react-router-dom';
 const LoginForm = () => {
 	const history = useHistory();
 	return (
-		<>
+		<section className='form__section'>
 			<Formik
 				initialValues={{
 					email: '',
@@ -62,43 +62,48 @@ const LoginForm = () => {
 			>
 				{({ errors, handleChange, handleBlur, handleSubmit, values }) => (
 					<Form onSubmit={handleSubmit} className='form-container'>
-						<Field
-							className='input-field'
-							type='text'
-							name='email'
-							placeholder='Email'
-							value={values.email}
-							onChange={handleChange}
-							onBlur={handleBlur}
-						/>
-						<ErrorMessage
-							name='email'
-							component={() => (
-								<div className='error-message-form'>{errors.email}</div>
-							)}
-						/>
-						<Field
-							className='input-field'
-							type='password'
-							name='password'
-							placeholder='Contraseña'
-							value={values.password}
-							onChange={handleChange}
-							onBlur={handleBlur}
-						/>
-						<ErrorMessage
-							name='password'
-							component={() => (
-								<div className='error-message-form'>{errors.password}</div>
-							)}
-						/>
+						<header>Login</header>
+						<div className='input__container'>
+							<Field
+								className='input-field'
+								type='text'
+								name='email'
+								placeholder='Email'
+								value={values.email}
+								onChange={handleChange}
+								onBlur={handleBlur}
+							/>
+							<ErrorMessage
+								name='email'
+								component={() => (
+									<div className='error-message-form'>{errors.email}</div>
+								)}
+							/>
+						</div>
+						<div className='input__container'>
+							<Field
+								className='input-field'
+								type='password'
+								name='password'
+								placeholder='Contraseña'
+								value={values.password}
+								onChange={handleChange}
+								onBlur={handleBlur}
+							/>
+							<ErrorMessage
+								name='password'
+								component={() => (
+									<div className='error-message-form'>{errors.password}</div>
+								)}
+							/>
+						</div>
 						<button className='submit-btn' type='submit'>
 							Log In
 						</button>
 					</Form>
 				)}
 			</Formik>
-		</>
+		</section>
 	);
 };
 

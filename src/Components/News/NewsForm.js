@@ -80,7 +80,6 @@ const NewsForm = ({ news }) => {
 	return (
 		<div>
 			<HeaderBackoffice>
-				<h1>Formulario de novedades</h1>
 				<Formik
 					initialValues={{
 						name: news?.name || '',
@@ -130,56 +129,63 @@ const NewsForm = ({ news }) => {
 						setFieldValue,
 						setFieldTouched,
 					}) => (
-						<section className='new-section'>
+						<section className='form__section form__backoffice'>
 							<form className='form-container' onSubmit={handleSubmit}>
-								<label htmlFor='titulo'>Titulo</label>
-								<input
-									data-testid='titulo'
-									className='input-field'
-									type='text'
-									name='name'
-									id='titulo'
-									onChange={handleChange}
-									onBlur={handleBlur}
-									value={values.name}
-									placeholder='Titulo'
-								/>
-
-								<span className='input-error'>
-									{touched.name && errors.name}
-								</span>
-								<label>Contenido</label>
-								<CKEditor
-									data-testid='content'
-									editor={ClassicEditor}
-									data={values.content}
-									onBlur={() => setFieldTouched('content', true)}
-									onChange={(event, editor) => {
-										const data = editor.getData();
-										setFieldValue('content', data);
-									}}
-								/>
-								<span className='input-error'>
-									{touched.content && errors.content}
-								</span>
-								<label className='input-file'>
-									Subir imagen
+								<header>Formulario de novedades</header>
+								<div className='input__container'>
+									<label htmlFor='titulo'>Titulo</label>
 									<input
-										data-testid='image'
-										type='file'
-										accept='image/png, image/jpeg'
-										onChange={async event => {
-											setFieldTouched('image', true);
-											const imageBase64 = await getBase64(
-												event.target.files[0]
-											);
-											setFieldValue('image', imageBase64);
+										data-testid='titulo'
+										className='input-field'
+										type='text'
+										name='name'
+										id='titulo'
+										onChange={handleChange}
+										onBlur={handleBlur}
+										value={values.name}
+										placeholder='Titulo'
+									/>
+									<span className='error-message-form'>
+										{touched.name && errors.name}
+									</span>
+								</div>
+								<div className='input__container'>
+									<label>Contenido</label>
+									<CKEditor
+										className='news__ckeditor'
+										data-testid='content'
+										editor={ClassicEditor}
+										data={values.content}
+										onBlur={() => setFieldTouched('content', true)}
+										onChange={(event, editor) => {
+											const data = editor.getData();
+											setFieldValue('content', data);
 										}}
 									/>
-								</label>
-								<span className='input-error'>
-									{touched.image && errors.image}
-								</span>
+									<span className='error-message-form'>
+										{touched.content && errors.content}
+									</span>
+								</div>
+								<div className='input__container'>
+									<label className='input-file'>
+										Subir imagen
+										<input
+											data-testid='image'
+											type='file'
+											accept='image/png, image/jpeg'
+											onChange={async event => {
+												setFieldTouched('image', true);
+												const imageBase64 = await getBase64(
+													event.target.files[0]
+												);
+												setFieldValue('image', imageBase64);
+											}}
+										/>
+									</label>
+									<span className='error-message-form'>
+										{touched.image && errors.image}
+									</span>
+								</div>
 								{previewImage && (
 									<img
 										src={previewImage}
@@ -189,26 +195,28 @@ const NewsForm = ({ news }) => {
 										style={{ objectFit: 'cover' }}
 									/>
 								)}
-								<label htmlFor='category_id'>Categoria</label>
-								<select
-									className='select-field'
-									name='category_id'
-									data-testid='categoria'
-									value={values.category_id || ''}
-									onChange={handleChange}
-								>
-									<option value='' disabled>
-										Selecciona categoria
-									</option>
-									{categories.map((el, index) => (
-										<option key={index} value={el.id}>
-											{el.name}
+								<div className='input__container'>
+									<label htmlFor='category_id'>Categoria</label>
+									<select
+										className='select-field'
+										name='category_id'
+										data-testid='categoria'
+										value={values.category_id || ''}
+										onChange={handleChange}
+									>
+										<option value='' disabled>
+											Selecciona categoria
 										</option>
-									))}
-								</select>
-								<span className='input-error'>
-									{touched.category_id && errors.category_id}
-								</span>
+										{categories.map((el, index) => (
+											<option key={index} value={el.id}>
+												{el.name}
+											</option>
+										))}
+									</select>
+									<span className='error-message-form'>
+										{touched.category_id && errors.category_id}
+									</span>
+								</div>
 
 								<button
 									className='submit-btn'

@@ -41,6 +41,9 @@
 
 	transition: 0.2s ease-in-out;
 }
+.table-container.three tr {
+	grid-template-columns: repeat(3, minmax(75px, 1fr));
+}
 .table-container .title {
 	max-height: 60px;
 	text-overflow: ellipsis;
