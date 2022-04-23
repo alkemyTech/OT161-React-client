@@ -13,13 +13,15 @@ const ShowTitle = ({ patchData }) => {
 	return (
 		<>
 			<h1 style={{ fontFamily: 'Englebert' }}>{patchData.title}</h1>
-			<img
-				src={previewImage}
-				alt='preview'
-				width={100}
-				height={100}
-				style={{ objectFit: 'cover' }}
-			/>
+			{patchData?.image && (
+				<img
+					src={previewImage}
+					alt='preview'
+					width={100}
+					height={100}
+					style={{ objectFit: 'cover' }}
+				/>
+			)}
 		</>
 	);
 };

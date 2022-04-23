@@ -32,7 +32,9 @@ const PublicWebRutes = () => {
 				<Route path='/nosotros' component={About} />
 				<Route path='/contact' component={Contact} />
 				<Route path='/' exact component={Home} />
-				<Route path='*' component={PageNotFound} />
+				{!window.location.href.includes('backoffice') && (
+					<Route path='*' component={PageNotFound} />
+				)}
 			</TransitionSwitch>
 		</Suspense>
 	);
