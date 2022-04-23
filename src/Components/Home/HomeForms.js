@@ -23,7 +23,7 @@ const HomeForms = () => {
 	};
 	return (
 		<HeaderBackoffice>
-			<section className='form__section'>
+			<section className='form__section form__backoffice'>
 				<Formik
 					initialValues={{
 						textWelcome: '',

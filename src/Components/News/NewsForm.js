@@ -129,7 +129,7 @@ const NewsForm = ({ news }) => {
 						setFieldValue,
 						setFieldTouched,
 					}) => (
-						<section className='form__section'>
+						<section className='form__section form__backoffice'>
 							<form className='form-container' onSubmit={handleSubmit}>
 								<header>Formulario de novedades</header>
 								<div className='input__container'>
