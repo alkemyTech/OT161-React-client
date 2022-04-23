@@ -3,19 +3,19 @@
 	flex-direction: row;
 	background-color: #e0d7a3;
 	align-items: center;
-	height: 10vh;
-	padding: 5px;
+	height: 70px;
+	padding: 5px 15px;
 	box-sizing: border-box;
 }
 .nav-bar-logo {
-	height: 160px;
+	height: 140px;
 	width: auto;
 	cursor: pointer;
 }
 .nav-bar-links {
 	display: flex;
+	flex: 1;
 	flex-direction: row;
-	justify-content: space-between;
 	align-items: center;
 }
 
@@ -62,7 +62,8 @@
 .login-button,
 .register-button,
 .cerrar-Seccion-button {
-	padding: 10px;
+	width: 90px;
+	padding: 10px 0;
 	border-radius: 5px;
 	border: 1px solid var(--secondary);
 	cursor: pointer;
@@ -73,8 +74,7 @@
 }
 
 .login-button:hover {
-	background-color: #e0d7a3;
-	color: #fff;
+	opacity: 0.75;
 }
 
 .cerrar-Seccion-button {
@@ -93,6 +93,9 @@
 }
 
 @media (max-width: 800px) {
+	.nav-bar-logo {
+		height: 80px;
+	}
 	.hamburger {
 		display: block;
 		margin-right: 15px;

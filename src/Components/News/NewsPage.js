@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import './NewsPage.css';
-import { Link } from 'react-router-dom';
 import ShowTitle from '../../shared/ShowTitle';
 import { getNews } from '../../Services/newService';
 import Spinner from '../../shared/Spinner';
 import LayoutPublic from '../LayoutPublic/LayoutPublic';
 import CustomReactPlayer from '../../shared/VideoPlayer/CustomVideoPlayer';
+import NewCard from './NewCard';
 export default function NewsPage() {
 	const [news, setNews] = useState([]);
 	const [newsStatus, setNewsStatus] = useState('idle');
@@ -38,11 +38,7 @@ export default function NewsPage() {
 					)}
 					{newsStatus === 'success' &&
 						news.map(({ image, created_at: createdAt, name, id }) => (
-							<Link to={`/novedades/${id}`} className='news__card' key={id}>
-								<img src={image} alt='' />
-								<span>{new Date(createdAt).toLocaleDateString()}</span>
-								<div className='news__card--title'>{name}</div>
-							</Link>
+							<NewCard key={id} newData={{ image, createdAt, name, id }} />
 						))}
 				</section>
 

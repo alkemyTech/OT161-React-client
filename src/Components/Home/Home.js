@@ -2,7 +2,7 @@ import React from 'react';
 import Carrousel from '../../Components/Slides/Carrousel';
 import LayoutPublic from '../LayoutPublic/LayoutPublic';
 import './Home.css';
-
+import Novedades from './Novedades';
 const Home = () => {
 	return (
 		<>
@@ -11,7 +11,6 @@ const Home = () => {
 				<h1 className='home_title'>Somos más</h1>
 				<Carrousel />
 				<Novedades />
-
 			</LayoutPublic>
 		</>
 	);
