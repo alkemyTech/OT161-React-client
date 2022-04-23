@@ -10,8 +10,6 @@ const Home = () => {
 				{/* Este texto viene del endpoint de datos públicos */}
 				<h1 className='home_title'>Somos más</h1>
 				<Carrousel />
-				<Novedades />
-
 			</LayoutPublic>
 		</>
 	);

@@ -9,6 +9,7 @@ function UserForm({ patchData }) {
 	const [previewImage, setPreviewImage] = useState(
 		patchData?.profilePhoto || null
 	);
+	console.log(patchData);
 	const [previewRole, setPreviewRole] = useState(patchData?.role || null);
 	const [statusForm, setStatusForm] = useState(false);
 	const SUPPORTED_FORMATS = /(jpg|png)/;
@@ -83,73 +84,85 @@ function UserForm({ patchData }) {
 	}
 
 	return (
-		<div>
-			<HeaderBackoffice>
+		<HeaderBackoffice>
+			<section className='form__section'>
 				<form className='form-container' onSubmit={handleSubmit}>
-					<input
-						className='input-field'
-						type='text'
-						name='name'
-						onChange={handleChange}
-						value={values.name}
-						onBlur={handleBlur}
-						placeholder='Nombre'
-					/>
-					<span className='input-error'>{touched.name && errors.name}</span>
-					<input
-						className='input-field'
-						type='text'
-						name='email'
-						onChange={handleChange}
-						value={values.email}
-						onBlur={handleBlur}
-						placeholder='Email'
-					/>
-					<span className='input-error'>{touched.email && errors.email}</span>
-					<select
-						className='input-field'
-						value={values.role}
-						onChange={e =>
-							setPreviewRole({ ...previewRole, role: e.target.value })
-						}
-					>
-						<option value='' disabled>
-							Select the role
-						</option>
-						<option value='1'>USER</option>
-						<option value='2'>ADMIN</option>
-					</select>
-					<span className='input-error'>{touched.role && errors.role}</span>
-					<label className='input-file'>
-						Imagen de Perfil
+					<header>Formulario de usuarios</header>
+					<div className='input__container'>
 						<input
-							type='file'
-							accept='image/png, image/jpeg'
-							onChange={async event => {
-								setFieldTouched('image', true);
-								const imageBase64 = await getBase64(event.target.files[0]);
-								setFieldValue('image', imageBase64);
-							}}
+							className='input-field'
+							type='text'
+							name='name'
+							onChange={handleChange}
+							value={values.name}
+							onBlur={handleBlur}
+							placeholder='Nombre'
 						/>
-					</label>
-					<span className='input-error'>
-						{touched.profilePhoto && errors.profilePhoto}
-					</span>
-					{previewImage && (
-						<img
-							src={previewImage}
-							alt='preview'
-							width={100}
-							height={100}
-							style={{ objectFit: 'cover' }}
+						<span className='input-error'>{touched.name && errors.name}</span>
+					</div>
+
+					<div className='input__container'>
+						<input
+							className='input-field'
+							type='text'
+							name='email'
+							onChange={handleChange}
+							value={values.email}
+							onBlur={handleBlur}
+							placeholder='Email'
 						/>
-					)}
+						<span className='input-error'>{touched.email && errors.email}</span>
+					</div>
+
+					<div className='input__container'>
+						<select
+							className='input-field'
+							value={values.role}
+							onChange={e =>
+								setPreviewRole({ ...previewRole, role: e.target.value })
+							}
+						>
+							<option value='' disabled>
+								Select the role
+							</option>
+							<option value='1'>USER</option>
+							<option value='2'>ADMIN</option>
+						</select>
+						<span className='input-error'>{touched.role && errors.role}</span>
+					</div>
+
+					<div className='input__container'>
+						<label className='input-file'>
+							Imagen de Perfil
+							<input
+								type='file'
+								accept='image/png, image/jpeg'
+								onChange={async event => {
+									setFieldTouched('image', true);
+									const imageBase64 = await getBase64(event.target.files[0]);
+									setFieldValue('image', imageBase64);
+								}}
+							/>
+						</label>
+						<span className='input-error'>
+							{touched.profilePhoto && errors.profilePhoto}
+						</span>
+						{previewImage && (
+							<img
+								src={previewImage}
+								alt='preview'
+								width={100}
+								height={100}
+								style={{ objectFit: 'cover' }}
+							/>
+						)}
+					</div>
 					<button className='submit-btn' type='submit' disabled={statusForm}>
 						{patchData?.id ? 'Update' : 'Send'}
 					</button>
 				</form>
-			</HeaderBackoffice>
-		</div>
+			</section>
+		</HeaderBackoffice>
 	);
 }
 

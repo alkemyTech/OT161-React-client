@@ -42,7 +42,10 @@ const BackOfficeRutes = () => {
 				path='/backoffice/organization/edit'
 				component={HomeForms}
 			/>
-			<PrivateRoutes path='/backoffice/create-users' component={UserForm} />
+			<PrivateRoutes
+				path='/backoffice/create-users'
+				render={data => <UserForm patchData={data.location.state} />}
+			/>
 			<PrivateRoutes path='/backoffice/create-member' component={MembersForm} />
 			{/* <Route path='/backoffice/members/edit' component={MembersForm} /> */}
 			<PrivateRoutes
