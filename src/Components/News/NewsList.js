@@ -60,9 +60,10 @@ const NewsList = () => {
 						<th>Creado el</th>
 						<th>Opciones</th>
 					</tr>
+					{console.log(news)}
 					{newsStatus.status === 'loading' && <Spinner />}
 					{newsStatus.status === 'succeeded' &&
-						news.news.data.map(element => {
+						news.news.map(element => {
 							return (
 								<tr key={element.id}>
 									<td>

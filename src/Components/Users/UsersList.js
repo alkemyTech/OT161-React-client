@@ -44,7 +44,7 @@ const UsersList = () => {
 						className='primary-button'
 						role='button'
 					>
-						Crear novedad
+						Crear usuario
 					</Link>
 				</header>
 				<table className='table-container three'>
