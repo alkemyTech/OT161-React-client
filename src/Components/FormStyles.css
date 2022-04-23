@@ -106,6 +106,13 @@
 	font-size: 11px;
 	position: absolute;
 }
+.input-error {
+	color: red;
+	left: 0;
+	bottom: -15px;
+	font-size: 11px;
+	position: absolute;
+}
 
 .ck.ck-reset.ck-editor.ck-rounded-corners {
 	width: 99%;
