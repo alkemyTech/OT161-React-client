@@ -8,7 +8,7 @@
 	--fontLongText: 'Oxygen', sans-serif;
 }
 
-.load-suspence{
+.load-suspence {
 	height: 100vh;
 	background-color: #ffff;
 	color: #000;
@@ -16,4 +16,11 @@
 	display: flex;
 	justify-content: center;
 	align-items: center;
+}
+.route-wrapper {
+	position: relative;
+}
+
+.route-wrapper > div {
+	position: absolute;
 }

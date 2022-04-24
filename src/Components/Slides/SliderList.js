@@ -27,52 +27,50 @@ const SliderList = () => {
 	];
 
 	return (
-		<section>
-			<HeaderBackoffice>
-				<header className='news-header'>
-					<h1>Listado de Slides</h1>
-					<Link
-						to='/backoffice/create-slide'
-						role='button'
-						className='primary-button'
-					>
-						Crear Slider
-					</Link>
-				</header>
-				<table className='table-container'>
-					<tr>
-						<th scope='col'>Order</th>
-						<th scope='col'>Nombre</th>
-						<th scope='col'>Image</th>
-						<th scope='col'>Creado</th>
-						<th scope='col'>Editar</th>
-						<th scope='col'>Eliminar</th>
-					</tr>
+		<HeaderBackoffice>
+			<header className='news-header'>
+				<h1>Listado de Slides</h1>
+				<Link
+					to='/backoffice/create-slide'
+					role='button'
+					className='primary-button'
+				>
+					Crear Slider
+				</Link>
+			</header>
+			<table className='table-container'>
+				<tr>
+					<th scope='col'>Order</th>
+					<th scope='col'>Nombre</th>
+					<th scope='col'>Image</th>
+					<th scope='col'>Creado</th>
+					<th scope='col'>Editar</th>
+					<th scope='col'>Eliminar</th>
+				</tr>
 
-					{data.length > 0 ? (
-						data.map(el => (
-							<tr key={el.id}>
-								<td>
-									<img src={el.image} alt={el.name} />
-								</td>
-								<td className='title'>{el.name}</td>
-								<td>{el.createdAt}</td>
-								<td className='options'>
-									<button>
-										<MdModeEdit />
-									</button>
-									<button>
-										<IoMdTrash />
-									</button>
-								</td>
-							</tr>
-						))
-					) : (
-						<span>No hay datos para mostrar</span>
-					)}
-				</table>
-			</HeaderBackoffice>
-		</section>
+				{data.length > 0 ? (
+					data.map(el => (
+						<tr key={el.id}>
+							<td>
+								<img src={el.image} alt={el.name} />
+							</td>
+							<td className='title'>{el.name}</td>
+							<td>{el.createdAt}</td>
+							<td className='options'>
+								<button>
+									<MdModeEdit />
+								</button>
+								<button>
+									<IoMdTrash />
+								</button>
+							</td>
+						</tr>
+					))
+				) : (
+					<span>No hay datos para mostrar</span>
+				)}
+			</table>
+		</HeaderBackoffice>
 	);
 };
 

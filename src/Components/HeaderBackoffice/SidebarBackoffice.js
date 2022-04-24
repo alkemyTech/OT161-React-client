@@ -29,7 +29,7 @@ const SidebarBackoffice = () => {
 						</div>
 					</li>
 					<li className='backoffice_sidebar--title'>
-						<Link to='/'>Somos más</Link>
+						<Link to='/backoffice'>Somos más</Link>
 					</li>
 					{DataSidebarBackoffice.map((e, i) => {
 						return (
