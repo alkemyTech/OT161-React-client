@@ -51,8 +51,8 @@ const MembersForm = ({ member }) => {
 	});
 
 	return (
-		<div>
-			<HeaderBackoffice>
+		<HeaderBackoffice>
+			<section className='form__section form__backoffice'>
 				<Formik
 					initialValues={{
 						name: member?.name || '',
@@ -95,10 +95,12 @@ const MembersForm = ({ member }) => {
 						handleSubmit,
 						setFieldValue,
 					}) => (
-						<section className='new-section'>
-							<form className='new-form' onSubmit={handleSubmit}>
+						<form className='form-container' onSubmit={handleSubmit}>
+							<header>Formulario de miembros</header>
+							<div className='input__container'>
 								<label htmlFor='name'>Nombre</label>
 								<input
+									className='input-field'
 									type='text'
 									name='name'
 									onChange={handleChange}
@@ -106,20 +108,28 @@ const MembersForm = ({ member }) => {
 									value={values.name}
 									placeholder='Titulo'
 								/>
-								<span>{touched.name && errors.name}</span>
-								<label htmlFor='image'>Imagen</label>
-								<input
-									type='file'
-									name='image'
-									accept='image/png, image/jpeg'
-									onChange={async e => {
-										const imageBase64 = await getBase64(e.target.files[0]);
-										setFieldValue('image', imageBase64);
-									}}
-								/>
-								<span>{touched.image && errors.image}</span>
+							</div>
+							<span>{touched.name && errors.name}</span>
+							<div className='input__container'>
+								<label className='input-file'>
+									Subir imagen
+									<input
+										data-testid='image'
+										type='file'
+										name='image'
+										accept='image/png, image/jpeg'
+										onChange={async e => {
+											const imageBase64 = await getBase64(e.target.files[0]);
+											setFieldValue('image', imageBase64);
+										}}
+									/>
+								</label>
+							</div>
+							<span>{touched.image && errors.image}</span>
+							<div className='input__container'>
 								<label htmlFor='description'>Description</label>
 								<CKEditor
+									className='input-field'
 									editor={ClassicEditor}
 									data={values.description}
 									onReady={editor => {
@@ -130,9 +140,12 @@ const MembersForm = ({ member }) => {
 										setFieldValue('description', data);
 									}}
 								/>
-								<span>{touched.description && errors.description}</span>
+							</div>
+							<span>{touched.description && errors.description}</span>
+							<div className='input__container'>
 								<label htmlFor='facebookUrl'>Facebook</label>
 								<input
+									className='input-field'
 									type='text'
 									name='facebookUrl'
 									onChange={handleChange}
@@ -140,10 +153,12 @@ const MembersForm = ({ member }) => {
 									value={values.facebookUrl}
 									placeholder='Facebook'
 								/>
-								<span>{touched.facebookUrl && errors.facebookUrl}</span>
-
+							</div>
+							<span>{touched.facebookUrl && errors.facebookUrl}</span>
+							<div className='input__container'>
 								<label htmlFor='facebookUrl'>Linkedin</label>
 								<input
+									className='input-field'
 									type='text'
 									name='linkedinUrl'
 									onChange={handleChange}
@@ -151,15 +166,17 @@ const MembersForm = ({ member }) => {
 									value={values.linkedinUrl}
 									placeholder='Facebook'
 								/>
-								<span>{touched.linkedinUrl && errors.linkedinUrl}</span>
+							</div>
+							<span>{touched.linkedinUrl && errors.linkedinUrl}</span>
 
-								<button type='submit'>Submit</button>
-							</form>
-						</section>
+							<button className='submit-btn' type='submit'>
+								Submit
+							</button>
+						</form>
 					)}
 				</Formik>
-			</HeaderBackoffice>
-		</div>
+			</section>
+		</HeaderBackoffice>
 	);
 };
 

@@ -23,31 +23,36 @@ const CategoriesForm = () => {
 	};
 
 	return (
-		<div>
-			<HeaderBackoffice>
+		<HeaderBackoffice>
+			<section className='form__section form__backoffice'>
 				<form className='form-container' onSubmit={handleSubmit}>
-					<input
-						className='input-field'
-						type='text'
-						name='name'
-						value={initialValues.name}
-						onChange={handleChange}
-						placeholder='Title'
-					></input>
-					<input
-						className='input-field'
-						type='text'
-						name='description'
-						value={initialValues.description}
-						onChange={handleChange}
-						placeholder='Write some description'
-					></input>
+					<header>Formulario de categorias</header>
+					<div className='input__container'>
+						<input
+							className='input-field'
+							type='text'
+							name='name'
+							value={initialValues.name}
+							onChange={handleChange}
+							placeholder='Title'
+						></input>
+					</div>
+					<div className='input__container'>
+						<input
+							className='input-field'
+							type='text'
+							name='description'
+							value={initialValues.description}
+							onChange={handleChange}
+							placeholder='Write some description'
+						></input>
+					</div>
 					<button className='submit-btn' type='submit'>
 						Send
 					</button>
 				</form>
-			</HeaderBackoffice>
-		</div>
+			</section>
+		</HeaderBackoffice>
 	);
 };
 

@@ -1,6 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import HeaderBackoffice from '../HeaderBackoffice/HeaderBackoffice';
+import { MdModeEdit } from 'react-icons/md';
+import { IoMdTrash } from 'react-icons/io';
 
 const SliderList = () => {
 	const data = [
@@ -27,45 +29,47 @@ const SliderList = () => {
 	return (
 		<section>
 			<HeaderBackoffice>
-				<header>
+				<header className='news-header'>
 					<h1>Listado de Slides</h1>
-					<Link to='/backoffice/create-slide' role='button'>
+					<Link
+						to='/backoffice/create-slide'
+						role='button'
+						className='primary-button'
+					>
 						Crear Slider
 					</Link>
 				</header>
-				<table>
-					<thead>
-						<tr>
-							<th scope='col'>Order</th>
-							<th scope='col'>Nombre</th>
-							<th scope='col'>Image</th>
-							<th scope='col'>Creado</th>
-							<th scope='col'>Editar</th>
-							<th scope='col'>Eliminar</th>
-						</tr>
-					</thead>
-					<tbody>
-						{data.length > 0 ? (
-							data.map(el => (
-								<tr key={el.id}>
-									<td>{el.id}</td>
-									<td>{el.name}</td>
-									<td>
-										<img src={el.image} alt={el.name} />
-									</td>
-									<td>{el.createdAt}</td>
-									<td>
-										<button>Editar</button>
-									</td>
-									<td>
-										<button>Eliminar</button>
-									</td>
-								</tr>
-							))
-						) : (
-							<span>No hay datos para mostrar</span>
-						)}
-					</tbody>
+				<table className='table-container'>
+					<tr>
+						<th scope='col'>Order</th>
+						<th scope='col'>Nombre</th>
+						<th scope='col'>Image</th>
+						<th scope='col'>Creado</th>
+						<th scope='col'>Editar</th>
+						<th scope='col'>Eliminar</th>
+					</tr>
+
+					{data.length > 0 ? (
+						data.map(el => (
+							<tr key={el.id}>
+								<td>
+									<img src={el.image} alt={el.name} />
+								</td>
+								<td className='title'>{el.name}</td>
+								<td>{el.createdAt}</td>
+								<td className='options'>
+									<button>
+										<MdModeEdit />
+									</button>
+									<button>
+										<IoMdTrash />
+									</button>
+								</td>
+							</tr>
+						))
+					) : (
+						<span>No hay datos para mostrar</span>
+					)}
 				</table>
 			</HeaderBackoffice>
 		</section>

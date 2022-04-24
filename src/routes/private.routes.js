@@ -6,7 +6,7 @@ import { authSelector } from '../features/auth/authSlice';
 export default function PrivateRoutes(props) {
 	const location = useLocation();
 	const { isAuthenticated } = useSelector(authSelector);
-	return isAuthenticated ? (
+	return !isAuthenticated ? (
 		<Route {...props} />
 	) : (
 		<Redirect
