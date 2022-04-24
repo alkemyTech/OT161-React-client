@@ -10,13 +10,14 @@
 }
 .form-container {
 	display: grid;
-	width: 60%;
-	min-width: 400px;
+	width: 60vw;
+	min-width: fit-content;
 	max-width: 600px;
 	background: white;
 	border-radius: 5px;
 	padding: 30px 40px;
 	box-sizing: border-box;
+	margin: 0 auto;
 }
 .form-container > header {
 	font-size: 28px;
@@ -33,6 +34,9 @@
 	margin-bottom: 22px;
 	box-sizing: border-box;
 	row-gap: 5px;
+}
+.input__container p {
+	margin: 0;
 }
 .input__container label {
 	font-size: 14px;
@@ -99,7 +103,8 @@
 	text-decoration: underline;
 	cursor: pointer;
 }
-.error-message-form {
+.error-message-form,
+.input-error {
 	color: red;
 	left: 0;
 	bottom: -15px;

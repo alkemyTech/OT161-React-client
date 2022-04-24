@@ -1,11 +1,11 @@
 .mySlides {
 	display: flex;
 	justify-content: center;
+	min-height: 550px;
 }
 
 .slider {
 	position: relative;
-	min-height: 550px;
 }
 .carrousel-image-container {
 	width: 100%;

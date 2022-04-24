@@ -92,8 +92,9 @@
 }
 
 /*** HeaderBackoffice ***/
-
 .backoffice_header {
+	min-height: 100vh;
+}
+.backoffice_header > div:first-child {
 	background-color: var(--secondary);
-	height: 80px;
 }

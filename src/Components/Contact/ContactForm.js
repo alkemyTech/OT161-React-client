@@ -55,59 +55,75 @@ const ContactForm = () => {
 			>
 				{({ values, handleSubmit, handleChange, handleBlur }) => (
 					<form className='form-container' onSubmit={handleSubmit}>
-						<input
-							className='input-field'
-							name='name'
-							id='name'
-							type='text'
-							placeholder='Nombre'
-							value={values.name}
-							onChange={handleChange}
-							onBlur={handleBlur}
-							required
-						/>
-						<ErrorMessage name='name' component='p' className='input-error' />
-						<input
-							className='input-field'
-							name='email'
-							id='email'
-							type='email'
-							placeholder='Email'
-							value={values.email}
-							onChange={handleChange}
-							onBlur={handleBlur}
-							required
-						/>
-						<ErrorMessage name='email' component='p' className='input-error' />
+						<div className='input__container'>
+							<input
+								className='input-field'
+								name='name'
+								id='name'
+								type='text'
+								placeholder='Nombre'
+								value={values.name}
+								onChange={handleChange}
+								onBlur={handleBlur}
+								required
+							/>
+							<ErrorMessage name='name' component='p' className='input-error' />
+						</div>
 
-						<Field
-							className='input-field'
-							name='phone'
-							id='phone'
-							type='number'
-							placeholder='Teléfono'
-							value={values.phone}
-							onChange={handleChange}
-							onBlur={handleBlur}
-							required
-						/>
-						<ErrorMessage name='phone' component='p' className='input-error' />
-						<textarea
-							className='input-field'
-							name='message'
-							id='message'
-							type='text'
-							placeholder='Escriba su consulta'
-							value={values.message}
-							onChange={handleChange}
-							onBlur={handleBlur}
-							required
-						/>
-						<ErrorMessage
-							name='message'
-							component='p'
-							className='input-error'
-						/>
+						<div className='input__container'>
+							<input
+								className='input-field'
+								name='email'
+								id='email'
+								type='email'
+								placeholder='Email'
+								value={values.email}
+								onChange={handleChange}
+								onBlur={handleBlur}
+								required
+							/>
+							<ErrorMessage
+								name='email'
+								component='p'
+								className='input-error'
+							/>
+						</div>
+						<div className='input__container'>
+							<Field
+								className='input-field'
+								name='phone'
+								id='phone'
+								type='number'
+								placeholder='Teléfono'
+								value={values.phone}
+								onChange={handleChange}
+								onBlur={handleBlur}
+								required
+							/>
+							<ErrorMessage
+								name='phone'
+								component='p'
+								className='input-error'
+							/>
+						</div>
+						<div className='input__container'>
+							<textarea
+								className='input-field'
+								name='message'
+								id='message'
+								type='text'
+								placeholder='Escriba su consulta'
+								value={values.message}
+								onChange={handleChange}
+								onBlur={handleBlur}
+								required
+							/>
+							<ErrorMessage
+								name='message'
+								component='p'
+								className='input-error'
+							/>
+						</div>
 
 						<button
 							className='submit-btn'
