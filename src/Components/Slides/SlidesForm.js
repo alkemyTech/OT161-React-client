@@ -39,8 +39,8 @@ const SlidesForm = props => {
 	};
 
 	return (
-		<div>
-			<HeaderBackoffice>
+		<HeaderBackoffice>
+			<section className='form__section form__backoffice'>
 				<Formik
 					initialValues={{
 						image: patchData ? patchData.image : '',
@@ -55,11 +55,12 @@ const SlidesForm = props => {
 				>
 					{({ isSubmitting, setFieldValue }) => (
 						<Form className='form-container'>
+							<header>Formulario de slides</header>
 							{previewImage && (
 								<img className='preview-img' src={previewImage} alt='Slide' />
 							)}
 							<input
-								className='input-field'
+								className='input-field input__container'
 								type='file'
 								name='image'
 								onChange={e => {
@@ -79,36 +80,42 @@ const SlidesForm = props => {
 								name='image'
 								component='div'
 							/>
-							<Field
-								className='input-field'
-								type='text'
-								name='name'
-								placeholder='Slide Title'
-								required
-							/>
+							<div className='input__container'>
+								<Field
+									className='input-field'
+									type='text'
+									name='name'
+									placeholder='Slide Title'
+									required
+								/>
+							</div>
 							<ErrorMessage
 								className='input-error'
 								name='name'
 								component='div'
 							/>
-							<Field
-								className='input-field'
-								type='number'
-								name='order'
-								placeholder='Slide Order'
-								required
-							/>
+							<div className='input__container'>
+								<Field
+									className='input-field'
+									type='number'
+									name='order'
+									placeholder='Slide Order'
+									required
+								/>
+							</div>
 							<ErrorMessage
 								className='input-error'
 								name='order'
 								component='div'
 							/>
-							<CKEditor
-								editor={ClassicEditor}
-								onChange={(event, editor) => {
-									setFieldValue('description', editor.getData());
-								}}
-							/>
+							<div className='input__container'>
+								<CKEditor
+									editor={ClassicEditor}
+									onChange={(event, editor) => {
+										setFieldValue('description', editor.getData());
+									}}
+								/>
+							</div>
 							<ErrorMessage
 								className='input-error'
 								name='description'
@@ -124,8 +131,8 @@ const SlidesForm = props => {
 						</Form>
 					)}
 				</Formik>
-			</HeaderBackoffice>
-		</div>
+			</section>
+		</HeaderBackoffice>
 	);
 };
 

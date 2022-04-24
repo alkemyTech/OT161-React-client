@@ -83,45 +83,50 @@ function TestimonialForm({ patchData }) {
 	}
 
 	return (
-		<div>
-			<HeaderBackoffice>
+		<HeaderBackoffice>
+			<section className='form__section form__backoffice'>
 				<form className='form-container' onSubmit={handleSubmit}>
-					<input
-						className='input-field'
-						type='text'
-						name='name'
-						onChange={handleChange}
-						value={values.name}
-						onBlur={handleBlur}
-						placeholder='Testimonial Title'
-					/>
+					<header>Formulario de testimonios</header>
+					<div className='input__container'>
+						<input
+							className='input-field'
+							type='text'
+							name='name'
+							onChange={handleChange}
+							value={values.name}
+							onBlur={handleBlur}
+							placeholder='Testimonial Title'
+						/>
+					</div>
 					<span className='input-error'>{touched.name && errors.name}</span>
-
-					<CKEditor
-						data={values.description}
-						editor={ClassicEditor}
-						onBlur={() => setFieldTouched('description', true)}
-						onChange={(_, editor) => {
-							const data = editor.getData();
-							setFieldValue('description', data);
-						}}
-					/>
+					<div className='input__container'>
+						<CKEditor
+							data={values.description}
+							editor={ClassicEditor}
+							onBlur={() => setFieldTouched('description', true)}
+							onChange={(_, editor) => {
+								const data = editor.getData();
+								setFieldValue('description', data);
+							}}
+						/>
+					</div>
 					<span className='input-error'>
 						{touched.description && errors.description}
 					</span>
-
-					<label className='input-file'>
-						Subir imagen
-						<input
-							type='file'
-							accept='image/png, image/jpeg'
-							onChange={async event => {
-								setFieldTouched('image', true);
-								const imageBase64 = await getBase64(event.target.files[0]);
-								setFieldValue('image', imageBase64);
-							}}
-						/>
-					</label>
+					<div className='input__container'>
+						<label className='input-file'>
+							Subir imagen
+							<input
+								type='file'
+								accept='image/png, image/jpeg'
+								onChange={async event => {
+									setFieldTouched('image', true);
+									const imageBase64 = await getBase64(event.target.files[0]);
+									setFieldValue('image', imageBase64);
+								}}
+							/>
+						</label>
+					</div>
 					<span className='input-error'>{touched.image && errors.image}</span>
 					{previewImage && (
 						<img
@@ -136,8 +141,8 @@ function TestimonialForm({ patchData }) {
 						{patchData?.id ? 'Update' : 'Send'}
 					</button>
 				</form>
-			</HeaderBackoffice>
-		</div>
+			</section>
+		</HeaderBackoffice>
 	);
 }
 

@@ -28,8 +28,8 @@ function OrganizationData() {
 	}, []);
 
 	return (
-		<section className='backoffice_organization'>
-			<HeaderBackoffice>
+		<HeaderBackoffice>
+			<section className='backoffice_organization'>
 				<header className='header'>Datos actuales de la organización</header>
 				<div className='backoffice_organization--data '>
 					{statusData === 'success' && (
@@ -57,8 +57,8 @@ function OrganizationData() {
 						Editar datos
 					</Link>
 				</div>
-			</HeaderBackoffice>
-		</section>
+			</section>
+		</HeaderBackoffice>
 	);
 }
 

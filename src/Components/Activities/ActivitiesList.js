@@ -2,6 +2,8 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import '../CardListStyles.css';
 import HeaderBackoffice from '../HeaderBackoffice/HeaderBackoffice';
+import { MdModeEdit } from 'react-icons/md';
+import { IoMdTrash } from 'react-icons/io';
 
 const ActivitiesList = () => {
 	const defaultImage =
@@ -61,10 +63,10 @@ const ActivitiesList = () => {
 									<td>{element.createdAt}</td>
 									<td className='options'>
 										<button>
-											<i className='fa-solid fa-pencil'></i>
+											<MdModeEdit />
 										</button>
 										<button>
-											<i className='fa-solid fa-trash'></i>
+											<IoMdTrash />
 										</button>
 									</td>
 								</tr>
