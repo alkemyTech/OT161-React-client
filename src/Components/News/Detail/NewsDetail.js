@@ -4,6 +4,7 @@ import { useHistory, useParams } from 'react-router-dom';
 import { getNewsId } from '../../../Services/newService';
 import Spinner from '../../../shared/Spinner';
 import RenderHTML from '../../../shared/RenderHTML';
+import BotonRegresar from '../../../shared/BotonRegresar';
 export default function NewsDetail() {
 	const [newStatus, setNewStatus] = useState('idle');
 	const [singleNew, setSigleNew] = useState();
@@ -35,6 +36,7 @@ export default function NewsDetail() {
 					<i className='fa-solid fa-angle-left' />
 				</span>
 				Novedades
+				<BotonRegresar/>
 			</header>
 			{newStatus === 'loading' && <Spinner />}
 			{newStatus === 'error' && (
