@@ -68,9 +68,9 @@ const Footer = () => {
 	];
 
 	return (
-		<footer className='footer-public'>
-			<nav className='nav-footer'>
-				<Link className='nav-footer-logo' to='/'>
+		<footer className='footer-public-school'>
+			<nav className='nav-footer-school'>
+				<Link className='nav-footer-logo-school' to='/'>
 					<img
 						src={logoLocal || data.logo}
 						alt={data.name}
@@ -78,21 +78,29 @@ const Footer = () => {
 					></img>
 				</Link>
 
-				<ul className='nav-footer-links'>
+				<ul className='nav-footer-links-school'>
 					{links.map((li, index) => {
 						return (
-							<li key={`${li.text}${index}footer`} className='footer-link'>
+							<li
+								key={`${li.text}${index}footer`}
+								className='footer-link-school'
+							>
 								<NavLink to={li.link}>{li.text}</NavLink>
 							</li>
 						);
 					})}
 				</ul>
-				<ul id='links__campaigns' className=' nav-footer-links'>
+				<ul id='links__campaigns-school' className=' nav-footer-links-school'>
 					{linksCampaigns.map((li, index) => {
 						return (
-							<li key={`${li.text}${index}footer`} className='footer-link'>
+							<li
+								key={`${li.text}${index}footer`}
+								className='footer-link-school'
+							>
 								<NavLink
-									className={({ isActive }) => (isActive ? 'link__active' : '')}
+									className={({ isActive }) =>
+										isActive ? 'link__active-school' : ''
+									}
 									to={li.link}
 								>
 									{li.text}
@@ -102,10 +110,13 @@ const Footer = () => {
 					})}
 				</ul>
 
-				<ul className='nav-footer-socialMedia'>
+				<ul className='nav-footer-socialMedia-school'>
 					{socialMedia.map((li, index) => {
 						return (
-							<li key={`${li.text}${index}`} className='footer-socialMedia'>
+							<li
+								key={`${li.text}${index}`}
+								className='footer-socialMedia-school'
+							>
 								<a
 									href={li.link}
 									title={li.text}
@@ -113,14 +124,14 @@ const Footer = () => {
 									rel='noreferrer'
 								>
 									{li.img}
-									<p className='socialMedia-text'>{li.text}</p>
+									<p className='socialMedia-text-school'>{li.text}</p>
 								</a>
 							</li>
 						);
 					})}
 				</ul>
 			</nav>
-			<span className='footer-address'>{data.address}</span>
+			<span className='footer-address-school'>{data.address}</span>
 		</footer>
 	);
 };

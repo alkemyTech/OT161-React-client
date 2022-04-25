@@ -1,24 +1,24 @@
 /* Extra small devices (phones) */
-.footer-public {
+.footer-public-school {
 	background-color: white;
 	width: 100%;
 	place-content: center;
 }
-.nav-footer {
+.nav-footer-school {
 	display: grid;
 	grid-template-columns: repeat(1, 1fr);
 	grid-template-rows: repeat(3, 1fr);
 	gap: 0px;
 }
 
-.nav-footer-logo {
+.nav-footer-logo-school {
 	place-self: center;
 }
-.nav-footer-logo img {
+.nav-footer-logo-school img {
 	height: 25%;
 	width: auto;
 }
-.nav-footer-links {
+.nav-footer-links-school {
 	list-style: none;
 	border: solid 1px #214763;
 	padding: 10px;
@@ -31,7 +31,7 @@
 	gap: 10px;
 }
 
-.footer-link a {
+.footer-link-school a {
 	text-decoration: none;
 	font-weight: 700;
 	font-size: 1.5rem;
@@ -39,7 +39,7 @@
 	color: #214763;
 }
 
-.nav-footer-socialMedia {
+.nav-footer-socialMedia-school {
 	list-style: none;
 	display: grid;
 	grid-template-rows: repeat(2, 1fr);
@@ -47,88 +47,88 @@
 	justify-content: center;
 	align-items: center;
 }
-.footer-socialMedia a {
+.footer-socialMedia-school a {
 	text-decoration: none;
 	font-family: 'Raleway', sans-serif;
 	font-size: 4rem;
 	margin: 5px;
 	color: #214763;
 }
-.footer-address {
+.footer-address-school {
 	font-family: 'Raleway', sans-serif;
 	margin-left: 10px;
 	font-size: 12px;
 	display: none;
 }
 
-.socialMedia-text {
+.socialMedia-text-school {
 	display: none;
 }
-#links__campaigns{
+#links__campaigns-school{
     display: none;
 }
 /* Small devices (portrait tablets and large phones) */
 /* @media only screen and (min-width: 481px) and (max-width:768px) { */
 @media only screen and (min-width: 481px) {
-	.nav-footer {
+	.nav-footer-school {
 		grid-template-columns: repeat(1, 1fr);
 		grid-template-rows: repeat(3, 1fr);
 		gap: 0px;
 	}
-	.nav-footer-links {
+	.nav-footer-links-school {
 		display: grid;
 	}
-	.nav-footer-socialMedia {
+	.nav-footer-socialMedia-school {
 		display: grid;
 		gap: 35px;
 	}
-	.nav-footer-logo img {
+	.nav-footer-logo-school img {
 		height: 30vh;
 	}
 }
 /* Medium devices (laptops/desktops) */
 /* @media only screen and (min-width: 769px) and (max-width:1280px){ */
 @media only screen and (min-width: 769px) {
-	.nav-footer {
+	.nav-footer-school {
 		grid-template-columns: repeat(3, 1fr);
 		grid-template-rows: repeat(1, 1fr);
 		gap: 5px;
         place-items: center;
 	}
-	.nav-footer-logo img {
+	.nav-footer-logo-school img {
 		height: 40vh;
 	}
-	.nav-footer-links {
+	.nav-footer-links-school {
 		margin: 5px;
         padding: 10px;
 		text-align: center;
 		align-items: center;
         height: 70%;
 	}
-	.footer-link a {
+	.footer-link-school a {
 		font-weight: 600;
 		font-size: 1rem;
         margin: 10px 40px;     
 	}
-	.nav-footer-socialMedia {
+	.nav-footer-socialMedia-school {
 		display: grid;
 		gap: 5px;
 		text-align: center;
 		grid-template-columns: repeat(2, 1fr);
 		grid-template-rows: repeat(3, 1fr);
 	}
-	.footer-socialMedia {
+	.footer-socialMedia-school {
 		display: flex;
 		flex-direction: column;
 		justify-content: center;
 		align-items: center;
         
 	}
-	.footer-socialMedia a {
+	.footer-socialMedia-school a {
 		font-size: 2.5rem;
 		margin: 15px;
 	}
-	.socialMedia-text {
+	.socialMedia-text-school {
 		display: flex;
 		font-family: 'Raleway', sans-serif;
 		font-weight: 600;
@@ -139,39 +139,43 @@
 }
 /* Large devices (smart tv) */
 @media only screen and (min-width: 1200px) {
-    .nav-footer{
+    .nav-footer-school{
         grid-template-columns: repeat(4,1fr);
         padding: 10px 30px 0px;       
     }
-	.nav-footer-socialMedia {
+	.nav-footer-socialMedia-school {
 		display: grid;
 		gap: 20px;
 		text-align: center;
 		grid-template-columns: repeat(3, 1fr);
 		grid-template-rows: repeat(2, 1fr);
 	}
-    .footer-socialMedia a {
+    .footer-socialMedia-school a {
 		font-size: 3rem;
         margin: 0px;
 	}
-    .footer-link a {
+    .footer-link-school a {
 		font-weight: 600;
 		font-size: 1.2rem;
         margin: 10px 10px;     
 	}
-    .footer-address {
+
+	.nav-footer-logo-school img {
+		height: 25vh;
+	}
+    .footer-address-school {
 		display: block;
 	}
-    .nav-footer-links{
+    .nav-footer-links-school{
         height: max-content;
         padding: 30px;
  
     }
-    #links__campaigns{
+    #links__campaigns-school{
         display: grid;
         
     }
-    .link__active{
+    .link__active-school{
         color: #fff;
         background-color: #214763;
         padding: 5px;
