@@ -42,11 +42,9 @@ const Content = () => {
 			</div>
 			<div className='content_descripcion'>
 				<p>
-					Particpá en una campaña solidaria de recogida de juguetes cuyo
-					objetivo es compartir aquellos con los que más han disfrutado los
-					niños para que sigan dando mucho juego. Además, también nos ayudan a
-					salvar el medio ambiente porque los juguetes que ya han jugado
-					demasiado y no pueden llegar a manos de otros niños, se reciclan.
+					Particpá en una campaña solidaria de recoleccion de elementos para que
+					los chicos puedan seguir estudiando.
+					<br /> Tu aporte ayuda a que estos chicos tengan un mejor futuro.
 				</p>
 			</div>
 			<div className='content_container-imgs'>
