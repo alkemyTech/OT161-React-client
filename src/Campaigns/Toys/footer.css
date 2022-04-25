@@ -1,24 +1,24 @@
 /* Extra small devices (phones) */
-.footer-public {
+.footer-public-cam {
 	background-color: white;
 	width: 100%;
 	place-content: center;
 }
-.nav-footer {
+.nav-footer-cam {
 	display: grid;
 	grid-template-columns: repeat(1, 1fr);
 	grid-template-rows: repeat(3, 1fr);
 	gap: 0px;
 }
 
-.nav-footer-logo {
+.nav-footer-logo-cam {
 	place-self: center;
 }
-.nav-footer-logo img {
+.nav-footer-logo-cam img {
 	height: 25%;
 	width: auto;
 }
-.nav-footer-links {
+.nav-footer-links-cam {
 	list-style: none;
 	border: solid 1px #214763;
 	padding: 10px;
@@ -31,7 +31,7 @@
 	gap: 10px;
 }
 
-.footer-link a {
+.footer-link-cam a {
 	text-decoration: none;
 	font-weight: 700;
 	font-size: 1.5rem;
@@ -39,7 +39,7 @@
 	color: #214763;
 }
 
-.nav-footer-socialMedia {
+.nav-footer-socialMedia-cam {
 	list-style: none;
 	display: grid;
 	grid-template-rows: repeat(2, 1fr);
@@ -47,88 +47,88 @@
 	justify-content: center;
 	align-items: center;
 }
-.footer-socialMedia a {
+.footer-socialMedia-cam a {
 	text-decoration: none;
 	font-family: 'Raleway', sans-serif;
 	font-size: 4rem;
 	margin: 5px;
 	color: #214763;
 }
-.footer-address {
+.footer-address-cam {
 	font-family: 'Raleway', sans-serif;
 	margin-left: 10px;
 	font-size: 12px;
 	display: none;
 }
 
-.socialMedia-text {
+.socialMedia-text-cam {
 	display: none;
 }
-#links__campaigns{
+#links__campaigns-cam{
     display: none;
 }
 /* Small devices (portrait tablets and large phones) */
 /* @media only screen and (min-width: 481px) and (max-width:768px) { */
 @media only screen and (min-width: 481px) {
-	.nav-footer {
+	.nav-footer-cam {
 		grid-template-columns: repeat(1, 1fr);
 		grid-template-rows: repeat(3, 1fr);
 		gap: 0px;
 	}
-	.nav-footer-links {
+	.nav-footer-links-cam {
 		display: grid;
 	}
-	.nav-footer-socialMedia {
+	.nav-footer-socialMedia-cam {
 		display: grid;
 		gap: 35px;
 	}
-	.nav-footer-logo img {
+	.nav-footer-logo-cam img {
 		height: 30vh;
 	}
 }
 /* Medium devices (laptops/desktops) */
 /* @media only screen and (min-width: 769px) and (max-width:1280px){ */
 @media only screen and (min-width: 769px) {
-	.nav-footer {
+	.nav-footer-cam {
 		grid-template-columns: repeat(3, 1fr);
 		grid-template-rows: repeat(1, 1fr);
 		gap: 5px;
         place-items: center;
 	}
-	.nav-footer-logo img {
+	.nav-footer-logo-cam img {
 		height: 40vh;
 	}
-	.nav-footer-links {
+	.nav-footer-links-cam {
 		margin: 5px;
         padding: 10px;
 		text-align: center;
 		align-items: center;
         height: 70%;
 	}
-	.footer-link a {
+	.footer-link-cam a {
 		font-weight: 600;
 		font-size: 1rem;
         margin: 10px 40px;     
 	}
-	.nav-footer-socialMedia {
+	.nav-footer-socialMedia-cam {
 		display: grid;
 		gap: 5px;
 		text-align: center;
 		grid-template-columns: repeat(2, 1fr);
 		grid-template-rows: repeat(3, 1fr);
 	}
-	.footer-socialMedia {
+	.footer-socialMedia-cam {
 		display: flex;
 		flex-direction: column;
 		justify-content: center;
 		align-items: center;
         
 	}
-	.footer-socialMedia a {
+	.footer-socialMedia-cam a {
 		font-size: 2.5rem;
 		margin: 15px;
 	}
-	.socialMedia-text {
+	.socialMedia-text-cam {
 		display: flex;
 		font-family: 'Raleway', sans-serif;
 		font-weight: 600;
@@ -139,39 +139,39 @@
 }
 /* Large devices (smart tv) */
 @media only screen and (min-width: 1200px) {
-    .nav-footer{
+    .nav-footer-cam{
         grid-template-columns: repeat(4,1fr);
         padding: 10px 30px 0px;       
     }
-	.nav-footer-socialMedia {
+	.nav-footer-socialMedia-cam {
 		display: grid;
 		gap: 20px;
 		text-align: center;
 		grid-template-columns: repeat(3, 1fr);
 		grid-template-rows: repeat(2, 1fr);
 	}
-    .footer-socialMedia a {
+    .footer-socialMedia-cam a {
 		font-size: 3rem;
         margin: 0px;
 	}
-    .footer-link a {
+    .footer-link-cam a {
 		font-weight: 600;
 		font-size: 1.2rem;
         margin: 10px 10px;     
 	}
-    .footer-address {
+    .footer-address-cam {
 		display: block;
 	}
-    .nav-footer-links{
+    .nav-footer-links-cam{
         height: max-content;
         padding: 30px;
  
     }
-    #links__campaigns{
+    #links__campaigns-cam{
         display: grid;
         
     }
-    .link__active{
+    .link__active-cam{
         color: #fff;
         background-color: #214763;
         padding: 5px;
