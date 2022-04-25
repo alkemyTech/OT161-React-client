@@ -68,9 +68,9 @@ const Footer = () => {
 	];
 
 	return (
-		<footer className='footer-public-cam'>
-			<nav className='nav-footer-cam'>
-				<Link className='nav-footer-logo-cam' to='/'>
+		<footer className='footer-public-toy'>
+			<nav className='nav-footer-toy'>
+				<Link className='nav-footer-logo-toy' to='/'>
 					<img
 						src={logoLocal || data.logo}
 						alt={data.name}
@@ -78,22 +78,22 @@ const Footer = () => {
 					></img>
 				</Link>
 
-				<ul className='nav-footer-links-cam'>
+				<ul className='nav-footer-links-toy'>
 					{links.map((li, index) => {
 						return (
-							<li key={`${li.text}${index}footer`} className='footer-link-cam'>
+							<li key={`${li.text}${index}footer`} className='footer-link-toy'>
 								<NavLink to={li.link}>{li.text}</NavLink>
 							</li>
 						);
 					})}
 				</ul>
-				<ul id='links__campaigns-cam' className=' nav-footer-links-cam'>
+				<ul id='links__campaigns-toy' className=' nav-footer-links-toy'>
 					{linksCampaigns.map((li, index) => {
 						return (
-							<li key={`${li.text}${index}footer`} className='footer-link-cam'>
+							<li key={`${li.text}${index}footer`} className='footer-link-toy'>
 								<NavLink
 									className={({ isActive }) =>
-										isActive ? 'link__active-cam' : ''
+										isActive ? 'link__active-toy' : ''
 									}
 									to={li.link}
 								>
@@ -104,10 +104,10 @@ const Footer = () => {
 					})}
 				</ul>
 
-				<ul className='nav-footer-socialMedia-cam'>
+				<ul className='nav-footer-socialMedia-toy'>
 					{socialMedia.map((li, index) => {
 						return (
-							<li key={`${li.text}${index}`} className='footer-socialMedia-cam'>
+							<li key={`${li.text}${index}`} className='footer-socialMedia-toy'>
 								<a
 									href={li.link}
 									title={li.text}
@@ -115,14 +115,14 @@ const Footer = () => {
 									rel='noreferrer'
 								>
 									{li.img}
-									<p className='socialMedia-text-cam'>{li.text}</p>
+									<p className='socialMedia-text-toy'>{li.text}</p>
 								</a>
 							</li>
 						);
 					})}
 				</ul>
 			</nav>
-			<span className='footer-address-cam'>{data.address}</span>
+			<span className='footer-address-toy'>{data.address}</span>
 		</footer>
 	);
 };
