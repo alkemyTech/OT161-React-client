@@ -4,12 +4,12 @@ import {
 	TwitterTweet,
 	LinkedinProfile,
 } from 'react-social-plugins';
-import {
-	TiSocialFacebook,
-	TiSocialInstagram,
-	TiSocialLinkedin,
-} from 'react-icons/ti';
-import { Link } from 'react-router-dom';
+// import {
+// 	TiSocialFacebook,
+// 	TiSocialInstagram,
+// 	TiSocialLinkedin,
+// } from 'react-icons/ti';
+// import { Link } from 'react-router-dom';
 import './SocialNetwork.css';
 
 const SocialNetworks = () => {
@@ -31,7 +31,7 @@ const SocialNetworks = () => {
 						width={325}
 					/>
 				</div>
-				<div className='socialnet_iconslist'>
+				{/* <div className='socialnet_iconslist'>
 					<Link href='https://www.linkedin.com/in/somos-mas-0b1436237/'>
 						<TiSocialLinkedin />
 					</Link>
@@ -41,7 +41,7 @@ const SocialNetworks = () => {
 					<Link href='https://www.facebook.com/somos.mas.9'>
 						<TiSocialFacebook />
 					</Link>
-				</div>
+				</div> */}
 			</div>
 
 			<TwitterButton target='somosmas161' type='Mention' size='large' />
