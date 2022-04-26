@@ -35,7 +35,7 @@ const MembersForm = ({ member }) => {
 		name: Yup.string()
 			.required('El titulo es requerido')
 			.min(4, 'El titulo debe tener minimo 4 caracteres'),
-		descripcion: Yup.string().required('La descripcion es requerida'),
+		description: Yup.string().required('La descripcion es requerida'),
 		image: Yup.mixed()
 			.required('La imagen es requerida')
 			.test('fileType', 'El formato no es correcto', image => {
