@@ -11,10 +11,7 @@ import { IoMdTrash } from 'react-icons/io';
 import { privateDeleteRequest } from '../../Services/privateApiService';
 const NewsList = () => {
 	const dispatch = useDispatch();
-	const news = useSelector(newsSelector);
-
-	const newsStatus = useSelector(states => states.news);
-
+	const { news, loading, hasError } = useSelector(newsSelector);
 	async function handleRemove(id) {
 		try {
 			await privateDeleteRequest({ url: `news/${id}` });
@@ -27,12 +24,10 @@ const NewsList = () => {
 		}
 	}
 	useEffect(() => {
-		if (newsStatus.status === 'idle') {
-			dispatch(getNewsData());
-		}
-	}, [newsStatus, dispatch]);
+		dispatch(getNewsData());
+	}, []);
 
-	if (newsStatus.status === 'failed') {
+	if (hasError) {
 		showAlert({
 			type: 'error',
 			title: 'Ups, hubo un error',
@@ -61,9 +56,10 @@ const NewsList = () => {
 						<th>Opciones</th>
 					</tr>
 					{console.log(news)}
-					{newsStatus.status === 'loading' && <Spinner />}
-					{newsStatus.status === 'succeeded' &&
-						news.news.map(element => {
+					{loading ? (
+						<Spinner />
+					) : (
+						news.map(element => {
 							return (
 								<tr key={element.id}>
 									<td>
@@ -87,7 +83,8 @@ const NewsList = () => {
 									</td>
 								</tr>
 							);
-						})}
+						})
+					)}
 				</table>
 			</HeaderBackoffice>
 		</section>
