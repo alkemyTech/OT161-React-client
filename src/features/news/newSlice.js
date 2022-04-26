@@ -3,7 +3,7 @@ import { getNews } from '../../Services/newService';
 
 const initialState = {
 	news: [],
-	status: 'idle',
+	loading: false,
 	error: false,
 };
 
@@ -22,15 +22,15 @@ const newsSlice = createSlice({
 	reducers: {},
 	extraReducers: {
 		[getNewsData.pending]: state => {
-			state.status = 'loading';
+			state.loading = true;
 		},
 		[getNewsData.fulfilled]: (state, { payload }) => {
+			state.loading = false;
 			state.news = payload;
-			state.status = 'succeeded';
 		},
 		[getNewsData.rejected]: state => {
+			state.loading = false;
 			state.error = true;
-			state.status = 'failed';
 		},
 	},
 });

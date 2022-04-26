@@ -1,30 +1,20 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import './NewsPage.css';
 import ShowTitle from '../../shared/ShowTitle';
-import { getNews } from '../../Services/newService';
+// import { getNews } from '../../Services/newService';
 import Spinner from '../../shared/Spinner';
 import LayoutPublic from '../LayoutPublic/LayoutPublic';
 import CustomReactPlayer from '../../shared/VideoPlayer/CustomVideoPlayer';
 import NewCard from './NewCard';
+import { useDispatch, useSelector } from 'react-redux';
+import { getNewsData, newsSelector } from '../../features/news/newSlice';
 export default function NewsPage() {
-	const [news, setNews] = useState([]);
-	const [newsStatus, setNewsStatus] = useState('idle');
+	const dispatch = useDispatch();
+	const { news, loading, hasError } = useSelector(newsSelector);
 
 	useEffect(() => {
-		async function fetchNews() {
-			setNewsStatus('loading');
-			try {
-				const { data } = await getNews();
-				if (!data.success) return setNewsStatus('error');
-				setNews(data.data);
-				setNewsStatus('success');
-			} catch (error) {
-				console.error(error);
-				setNewsStatus('error');
-			}
-		}
-		fetchNews();
+		dispatch(getNewsData());
 	}, []);
 
 	return (
@@ -32,14 +22,16 @@ export default function NewsPage() {
 			<section className='news'>
 				<ShowTitle patchData={{ title: 'Novedades' }} />
 				<section className='news__container'>
-					{newsStatus === 'loading' && <Spinner />}
-					{newsStatus === 'error' && (
+					{hasError && (
 						<p>Ups! Algo salio mal, estamos trabajando en ello 👨‍💻</p>
 					)}
-					{newsStatus === 'success' &&
+					{loading ? (
+						<Spinner />
+					) : (
 						news.map(({ image, created_at: createdAt, name, id }) => (
 							<NewCard key={id} newData={{ image, createdAt, name, id }} />
-						))}
+						))
+					)}
 				</section>
 
 				<section className='news__video'>

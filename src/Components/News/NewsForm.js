@@ -12,6 +12,7 @@ import {
 	privatePostRequest,
 } from '../../Services/privateApiService';
 import showAlert from '../../shared/showAlert';
+import { useHistory } from 'react-router-dom';
 
 /**
  *  news Form
@@ -29,6 +30,7 @@ const NewsForm = ({ news }) => {
 	const [categories, setCategories] = useState([]);
 	const [previewImage, setPreviewImage] = useState(() => news?.image || null);
 	const [statusForm, setStatusForm] = useState(false);
+	const history = useHistory();
 
 	const SUPPORTED_FORMATS = /(jpg|png|jpeg)/;
 	function getBase64(file) {
@@ -103,6 +105,7 @@ const NewsForm = ({ news }) => {
 								if (!putRes.data.success)
 									throw new Error('error while editing');
 								showAlert({ type: 'success', title: 'Editado correctamente' });
+								history.push('/backoffice/news');
 								return;
 							}
 							const postRes = await privatePostRequest('news', {
@@ -111,6 +114,7 @@ const NewsForm = ({ news }) => {
 							});
 							if (!postRes.success) throw new Error('error while posting');
 							showAlert({ type: 'success', title: 'Creado correctamente' });
+							history.push('/backoffice/news');
 						} catch (err) {
 							console.log(err);
 							showAlert({ type: 'error', message: 'Ocurrio un error' });

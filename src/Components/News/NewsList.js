@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import '../CardListStyles.css';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
@@ -11,14 +11,13 @@ import { IoMdTrash } from 'react-icons/io';
 import { privateDeleteRequest } from '../../Services/privateApiService';
 const NewsList = () => {
 	const dispatch = useDispatch();
-	const news = useSelector(newsSelector);
-
-	const newsStatus = useSelector(states => states.news);
-
+	const { news, loading, hasError } = useSelector(newsSelector);
+	const [deletedNew, setDeletedNew] = useState(false);
 	async function handleRemove(id) {
 		try {
 			await privateDeleteRequest({ url: `news/${id}` });
 			showAlert({ type: 'success', title: 'Eliminado correctamente' });
+			setDeletedNew(true);
 		} catch (error) {
 			showAlert({
 				type: 'error',
@@ -27,12 +26,13 @@ const NewsList = () => {
 		}
 	}
 	useEffect(() => {
-		if (newsStatus.status === 'idle') {
-			dispatch(getNewsData());
+		dispatch(getNewsData());
+		if (deletedNew) {
+			setDeletedNew(false);
 		}
-	}, [newsStatus, dispatch]);
+	}, [deletedNew]);
 
-	if (newsStatus.status === 'failed') {
+	if (hasError) {
 		showAlert({
 			type: 'error',
 			title: 'Ups, hubo un error',
@@ -61,9 +61,10 @@ const NewsList = () => {
 						<th>Opciones</th>
 					</tr>
 					{console.log(news)}
-					{newsStatus.status === 'loading' && <Spinner />}
-					{newsStatus.status === 'succeeded' &&
-						news.news.map(element => {
+					{loading ? (
+						<Spinner />
+					) : (
+						news.map(element => {
 							return (
 								<tr key={element.id}>
 									<td>
@@ -87,7 +88,8 @@ const NewsList = () => {
 									</td>
 								</tr>
 							);
-						})}
+						})
+					)}
 				</table>
 			</HeaderBackoffice>
 		</section>
