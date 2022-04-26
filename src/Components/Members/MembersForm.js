@@ -7,6 +7,7 @@ import * as Yup from 'yup';
 import PropTypes from 'prop-types';
 import axios from 'axios';
 import HeaderBackoffice from '../HeaderBackoffice/HeaderBackoffice';
+import showAlert from '../../shared/showAlert';
 
 /**
  *  member Form
@@ -81,6 +82,7 @@ const MembersForm = ({ member }) => {
 								}
 							);
 							console.log(res);
+							showAlert({ type: 'success', title: 'Miembro creado con exito' });
 						} catch (err) {
 							console.log('Error', err);
 						}
