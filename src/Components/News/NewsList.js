@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import '../CardListStyles.css';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
@@ -12,10 +12,12 @@ import { privateDeleteRequest } from '../../Services/privateApiService';
 const NewsList = () => {
 	const dispatch = useDispatch();
 	const { news, loading, hasError } = useSelector(newsSelector);
+	const [deletedNew, setDeletedNew] = useState(false);
 	async function handleRemove(id) {
 		try {
 			await privateDeleteRequest({ url: `news/${id}` });
 			showAlert({ type: 'success', title: 'Eliminado correctamente' });
+			setDeletedNew(true);
 		} catch (error) {
 			showAlert({
 				type: 'error',
@@ -25,7 +27,10 @@ const NewsList = () => {
 	}
 	useEffect(() => {
 		dispatch(getNewsData());
-	}, []);
+		if (deletedNew) {
+			setDeletedNew(false);
+		}
+	}, [deletedNew]);
 
 	if (hasError) {
 		showAlert({
