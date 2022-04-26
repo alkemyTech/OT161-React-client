@@ -114,6 +114,7 @@ const NewsForm = ({ news }) => {
 							});
 							if (!postRes.success) throw new Error('error while posting');
 							showAlert({ type: 'success', title: 'Creado correctamente' });
+							history.push('/backoffice/news');
 						} catch (err) {
 							console.log(err);
 							showAlert({ type: 'error', message: 'Ocurrio un error' });
